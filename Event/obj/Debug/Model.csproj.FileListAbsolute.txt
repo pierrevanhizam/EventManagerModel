@@ -1,0 +1,8 @@
+C:\Users\zen9\Documents\Visual Studio 2010\Projects\EventProject\Event\bin\Debug\Event.dll
+C:\Users\zen9\Documents\Visual Studio 2010\Projects\EventProject\Event\bin\Debug\Event.pdb
+C:\Users\zen9\Documents\Visual Studio 2010\Projects\EventProject\Event\obj\Debug\ResolveAssemblyReference.cache
+C:\Users\zen9\Documents\Visual Studio 2010\Projects\EventProject\Event\obj\Debug\Event.dll
+C:\Users\zen9\Documents\Visual Studio 2010\Projects\EventProject\Event\obj\Debug\Event.pdb
+C:\Users\zen9\Documents\Visual Studio 2010\Projects\EventProject\Event\bin\Debug\Event.dll.config
+C:\Users\zen9\Documents\Visual Studio 2010\Projects\EventProject\Event\bin\Debug\EntityFramework.dll
+C:\Users\zen9\Documents\Visual Studio 2010\Projects\EventProject\Event\bin\Debug\EntityFramework.xml

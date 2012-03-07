@@ -1,0 +1,285 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="2.0" xmlns:edmx="http://schemas.microsoft.com/ado/2008/10/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="Event.Store" Alias="Self" Provider="System.Data.SqlServerCe.4.0" ProviderManifestToken="4.0" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/02/edm/ssdl">
+  <EntityContainer Name="EventStoreContainer">
+    <EntitySet Name="Students" EntityType="Event.Store.Students" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="Events" EntityType="Event.Store.Events" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="Venues" EntityType="Event.Store.Venues" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="EventRegistratration" EntityType="Event.Store.EventRegistratration" store:Type="Tables" Schema="dbo" />
+    <AssociationSet Name="Organize" Association="Event.Store.Organize">
+      <End Role="Student" EntitySet="Students" />
+      <End Role="Event" EntitySet="Events" />
+    </AssociationSet>
+    <AssociationSet Name="FK_EventRegistratration_Student" Association="Event.Store.FK_EventRegistratration_Student">
+      <End Role="Student" EntitySet="Students" />
+      <End Role="EventRegistratration" EntitySet="EventRegistratration" />
+    </AssociationSet>
+    <AssociationSet Name="FK_EventRegistratration_Event" Association="Event.Store.FK_EventRegistratration_Event">
+      <End Role="Event" EntitySet="Events" />
+      <End Role="EventRegistratration" EntitySet="EventRegistratration" />
+    </AssociationSet>
+    <AssociationSet Name="EventVenue" Association="Event.Store.EventVenue">
+      <End Role="Event" EntitySet="Events" />
+      <End Role="Venue" EntitySet="Venues" />
+    </AssociationSet>
+  </EntityContainer>
+  <EntityType Name="Students">
+    <Key>
+      <PropertyRef Name="MatricId" />
+    </Key>
+    <Property Name="Name" Type="nvarchar" Nullable="false" />
+    <Property Name="MatricId" Type="nvarchar" Nullable="false" />
+    <Property Name="Password" Type="nvarchar" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Events">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Capacity" Type="int" Nullable="false" />
+    <Property Name="Start" Type="datetime" Nullable="false" />
+    <Property Name="End" Type="datetime" Nullable="false" />
+    <Property Name="Budget" Type="decimal" Nullable="false" />
+    <Property Name="Name" Type="nvarchar" Nullable="false" />
+    <Property Name="Description" Type="nvarchar" Nullable="false" />
+    <Property Name="TimeCreated" Type="datetime" Nullable="false" />
+    <Property Name="StudentMatricId" Type="nvarchar" Nullable="false" />
+    <Property Name="VenueId" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Venues">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Name" Type="nvarchar" Nullable="false" />
+  </EntityType>
+  <EntityType Name="EventRegistratration">
+    <Key>
+      <PropertyRef Name="Guests_MatricId" />
+      <PropertyRef Name="RegisteredEvents_Id" />
+    </Key>
+    <Property Name="Guests_MatricId" Type="nvarchar" Nullable="false" />
+    <Property Name="RegisteredEvents_Id" Type="int" Nullable="false" />
+  </EntityType>
+  <Association Name="Organize">
+    <End Role="Student" Type="Event.Store.Students" Multiplicity="1" />
+    <End Role="Event" Type="Event.Store.Events" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Student">
+        <PropertyRef Name="MatricId" />
+      </Principal>
+      <Dependent Role="Event">
+        <PropertyRef Name="StudentMatricId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="EventVenue">
+    <End Role="Event" Type="Event.Store.Events" Multiplicity="*" />
+    <End Role="Venue" Type="Event.Store.Venues" Multiplicity="1" />
+    <ReferentialConstraint>
+      <Principal Role="Venue">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Event">
+        <PropertyRef Name="VenueId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_EventRegistratration_Student">
+    <End Role="Student" Type="Event.Store.Students" Multiplicity="1" />
+    <End Role="EventRegistratration" Type="Event.Store.EventRegistratration" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Student">
+        <PropertyRef Name="MatricId" />
+      </Principal>
+      <Dependent Role="EventRegistratration">
+        <PropertyRef Name="Guests_MatricId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_EventRegistratration_Event">
+    <End Role="EventRegistratration" Type="Event.Store.EventRegistratration" Multiplicity="*" />
+    <End Role="Event" Type="Event.Store.Events" Multiplicity="1" />
+    <ReferentialConstraint>
+      <Principal Role="Event">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="EventRegistratration">
+        <PropertyRef Name="RegisteredEvents_Id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+</Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema xmlns="http://schemas.microsoft.com/ado/2008/09/edm" xmlns:cg="http://schemas.microsoft.com/ado/2006/04/codegeneration" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" Namespace="Event" Alias="Self" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation">
+        <EntityContainer Name="EventContainer" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Students" EntityType="Event.Student" />
+          <EntitySet Name="Events" EntityType="Event.Event" />
+          <EntitySet Name="Venues" EntityType="Event.Venue" />
+          <AssociationSet Name="Organize" Association="Event.Organize">
+            <End Role="Student" EntitySet="Students" />
+            <End Role="Event" EntitySet="Events" />
+          </AssociationSet>
+          <AssociationSet Name="EventRegistratration" Association="Event.EventRegistratration">
+            <End Role="Student" EntitySet="Students" />
+            <End Role="Event" EntitySet="Events" />
+          </AssociationSet>
+          <AssociationSet Name="EventVenue" Association="Event.EventVenue">
+            <End Role="Event" EntitySet="Events" />
+            <End Role="Venue" EntitySet="Venues" />
+          </AssociationSet>
+        </EntityContainer>
+        <EntityType Name="Student">
+          <Key>
+            <PropertyRef Name="MatricId" />
+          </Key>
+          <Property Name="Name" Nullable="false" Type="String" />
+          <Property Type="String" Name="MatricId" Nullable="false" />
+          <Property Name="Password" Nullable="false" Type="String" />
+          <NavigationProperty Name="OwnedEvents" Relationship="Event.Organize" FromRole="Student" ToRole="Event" />
+          <NavigationProperty Name="RegisteredEvents" Relationship="Event.EventRegistratration" FromRole="Student" ToRole="Event" />
+        </EntityType>
+        <EntityType Name="Event">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Type="Int32" Name="Id" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Type="Int32" Name="Capacity" Nullable="false" />
+          <Property Type="DateTime" Name="Start" Nullable="false" />
+          <Property Type="DateTime" Name="End" Nullable="false" />
+          <Property Type="Decimal" Name="Budget" Nullable="false" />
+          <Property Type="String" Name="Name" Nullable="false" />
+          <Property Type="String" Name="Description" Nullable="false" />
+          <Property Type="DateTime" Name="TimeCreated" Nullable="false" />
+          <NavigationProperty Name="Owner" Relationship="Event.Organize" FromRole="Event" ToRole="Student" />
+          <Property Type="String" Name="StudentMatricId" Nullable="false" />
+          <NavigationProperty Name="Guests" Relationship="Event.EventRegistratration" FromRole="Event" ToRole="Student" />
+          <NavigationProperty Name="Venue" Relationship="Event.EventVenue" FromRole="Event" ToRole="Venue" />
+          <Property Type="Int32" Name="VenueId" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Venue">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Type="Int32" Name="Id" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Type="String" Name="Name" Nullable="false" />
+        </EntityType>
+        <Association Name="Organize">
+          <End Type="Event.Student" Role="Student" Multiplicity="1" />
+          <End Type="Event.Event" Role="Event" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Student">
+              <PropertyRef Name="MatricId" />
+            </Principal>
+            <Dependent Role="Event">
+              <PropertyRef Name="StudentMatricId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="EventRegistratration">
+          <End Type="Event.Student" Role="Student" Multiplicity="*" />
+          <End Type="Event.Event" Role="Event" Multiplicity="*" />
+        </Association>
+        <Association Name="EventVenue">
+          <End Type="Event.Event" Role="Event" Multiplicity="*" />
+          <End Type="Event.Venue" Role="Venue" Multiplicity="1" />
+          <ReferentialConstraint>
+            <Principal Role="Venue">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Event">
+              <PropertyRef Name="VenueId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+    <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2008/09/mapping/cs">
+  <EntityContainerMapping StorageEntityContainer="EventStoreContainer" CdmEntityContainer="EventContainer">
+    <EntitySetMapping Name="Students">
+      <EntityTypeMapping TypeName="IsTypeOf(Event.Student)">
+        <MappingFragment StoreEntitySet="Students">
+          <ScalarProperty Name="MatricId" ColumnName="MatricId" />
+          <ScalarProperty Name="Name" ColumnName="Name" />
+          <ScalarProperty Name="Password" ColumnName="Password" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Events">
+      <EntityTypeMapping TypeName="IsTypeOf(Event.Event)">
+        <MappingFragment StoreEntitySet="Events">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="Capacity" ColumnName="Capacity" />
+          <ScalarProperty Name="Start" ColumnName="Start" />
+          <ScalarProperty Name="End" ColumnName="End" />
+          <ScalarProperty Name="Budget" ColumnName="Budget" />
+          <ScalarProperty Name="Name" ColumnName="Name" />
+          <ScalarProperty Name="Description" ColumnName="Description" />
+          <ScalarProperty Name="TimeCreated" ColumnName="TimeCreated" />
+          <ScalarProperty Name="StudentMatricId" ColumnName="StudentMatricId" />
+          <ScalarProperty Name="VenueId" ColumnName="VenueId" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Venues">
+      <EntityTypeMapping TypeName="IsTypeOf(Event.Venue)">
+        <MappingFragment StoreEntitySet="Venues">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="Name" ColumnName="Name" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <AssociationSetMapping Name="EventRegistratration" TypeName="Event.EventRegistratration" StoreEntitySet="EventRegistratration">
+      <EndProperty Name="Student">
+        <ScalarProperty Name="MatricId" ColumnName="Guests_MatricId" />
+      </EndProperty>
+      <EndProperty Name="Event">
+        <ScalarProperty Name="Id" ColumnName="RegisteredEvents_Id" />
+      </EndProperty>
+    </AssociationSetMapping>
+  </EntityContainerMapping>
+</Mapping></edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2008/10/edmx">
+    <edmx:Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </edmx:Connection>
+    <edmx:Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="True" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </edmx:Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram Name="Event" >
+        <EntityTypeShape EntityType="Event.Student" Width="1.5" PointX="0.5" PointY="0.75" Height="1.9802864583333335" />
+        <EntityTypeShape EntityType="Event.Event" Width="1.5" PointX="3.375" PointY="0.75" Height="2.7494921874999996" />
+        <EntityTypeShape EntityType="Event.Venue" Width="1.5" PointX="6.25" PointY="0.75" Height="1.4033821614583331" />
+        <AssociationConnector Association="Event.Organize">
+          <ConnectorPoint PointX="2" PointY="1.6439925130208335" />
+          <ConnectorPoint PointX="3.375" PointY="1.6439925130208335" />
+        </AssociationConnector>
+        <AssociationConnector Association="Event.EventRegistratration">
+          <ConnectorPoint PointX="2" PointY="1.3099456787109376" />
+          <ConnectorPoint PointX="3.375" PointY="1.3099456787109376" />
+        </AssociationConnector>
+        <AssociationConnector Association="Event.EventVenue">
+          <ConnectorPoint PointX="4.875" PointY="1.4516910807291668" />
+          <ConnectorPoint PointX="6.25" PointY="1.4516910807291668" />
+        </AssociationConnector>
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>
