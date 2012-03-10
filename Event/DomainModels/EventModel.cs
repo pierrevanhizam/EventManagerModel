@@ -88,6 +88,18 @@ namespace EventManagerPro.Model.DomainModels
             }
         }
 
+        public static List<Event> getAllByYearMonth(DateTime date)
+        {
+            using (var context = new EventContainer())
+            {
+                IEnumerable<Event> events = from s in context.Events.Include("Venue").Include("Owner").Include("Guests")
+                                            where s.ViewAtLoginPage == 1 && s.Start.Year == date.Year && s.Start.Month == date.Month
+                                            orderby s.TimeCreated descending
+                                            select s;
+                return events.ToList();
+            }
+        }
+
         public static List<Event> getByOwner(string matricId)
         {
             using (var context = new EventContainer())

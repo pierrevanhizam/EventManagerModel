@@ -21,13 +21,13 @@ namespace EventManagerApp
     public partial class LoginScreen : Page
     {
         private List<model.Event> _upcomingEventsList;
-        public Dictionary<string,int> _monthFiltersDict { get; set;}
+        public Dictionary<string, DateTime> _monthFiltersDict { get; set; }
 
         public LoginScreen()
         {
             this.InitializeComponent();
             this._createMonthFilters();
-            this._getUpcomingEvents(DateTime.Now.Month);
+            this._getUpcomingEvents(DateTime.Now);
         }
 
         private void UpcomingEventsFilter_SelectionChanged(object sender, System.Windows.Controls.SelectionChangedEventArgs e)
@@ -36,11 +36,11 @@ namespace EventManagerApp
             if (!filter.Equals("View By Month"))
             {
                 DateTime filterMonth = DateTime.Parse(filter);
-                this._getUpcomingEvents(filterMonth.Month);
+                this._getUpcomingEvents(filterMonth);
             }
             else
             {
-                this._getUpcomingEvents(DateTime.Now.Month);
+                this._getUpcomingEvents(DateTime.Now);
             }
         }
 
@@ -84,20 +84,22 @@ namespace EventManagerApp
 
         private void _createMonthFilters()
         {
-            var month = DateTime.Now;
-            this._monthFiltersDict = new Dictionary<string,int>();
-            this._monthFiltersDict.Add("View By Month",0);
-            for(int i=1;i<=12;i++)
-            {
-                month = month.AddMonths(1);
-                this._monthFiltersDict.Add(month.ToString("y"),i);
-            }
+            var dateCounter = DateTime.Now;
+            this._monthFiltersDict = new Dictionary<string,DateTime>();
 
+            // Add default option.
+            this._monthFiltersDict.Add(dateCounter.ToString("y"), dateCounter);
+            
+            for (int i = 0; i < 12; i++)
+            {
+                dateCounter = dateCounter.AddMonths(1);
+                this._monthFiltersDict.Add(dateCounter.ToString("y"), dateCounter);
+            }
         }
 
-        private void _getUpcomingEvents(int month)
+        private void _getUpcomingEvents(DateTime dateFilter)
         {
-            this._upcomingEventsList = model.DomainModels.EventModel.getAllByMonth(month);
+            this._upcomingEventsList = model.DomainModels.EventModel.getAllByYearMonth(dateFilter);
             this.upcomingEventsListBox.ItemsSource = this._upcomingEventsList;
         }
 
