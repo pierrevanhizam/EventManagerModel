@@ -54,12 +54,12 @@ namespace EventManagerApp
             } else {
                 day = DateTime.Now;
             }
-            var selected_start_time = eventStartTimeBox.SelectedValue.ToString();
-            var selected_end_time = (string) eventEndTimeBox.SelectedValue.getValue();
-            string start_time = day.ToShortDateString() + ':' + selected_start_time;
-            string end_time = day.ToShortDateString() + ':' + selected_end_time;
-            Console.WriteLine(start_time);
-            Console.WriteLine(end_time);
+            //var selected_start_time = eventStartTimeBox.SelectedValue.ToString();
+            //var selected_end_time = (string) eventEndTimeBox.SelectedValue.();
+            //string start_time = day.ToShortDateString() + ':' + selected_start_time;
+            //string end_time = day.ToShortDateString() + ':' + selected_end_time;
+            //Console.WriteLine(start_time);
+            //Console.WriteLine(end_time);
             //this.start = DateTime.Parse(start_time);
             //this.end = DateTime.Parse(end_time);
             this.start = DateTime.Now;
