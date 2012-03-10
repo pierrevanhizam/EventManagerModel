@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -21,61 +21,50 @@ namespace EventManagerApp
     public partial class LoginScreen : Page
     {
         private List<model.Event> _upcomingEventsList;
-        private int _monthToBeDisplayed;
+        public Dictionary<string,int> _monthFiltersDict { get; set;}
 
         public LoginScreen()
         {
             this.InitializeComponent();
-            this.GetUpcomingEvents();
-            this.upcomingEventsListBox.ItemsSource = this._upcomingEventsList;
+            this._createMonthFilters();
+            this._getUpcomingEvents(DateTime.Now.Month);
         }
 
-        private void GetUpcomingEvents()
-        {
-            this._monthToBeDisplayed = DateTime.Now.Month;
-            this._upcomingEventsList = model.DomainModels.EventModel.getAllByMonth(_monthToBeDisplayed);
-        }
-
-        // Method to validate user login information.
-        private bool ValidateUser(string matricId, string password)
-        {
-            return model.DomainModels.StudentModel.authenticate(matricId, password);
-        }
-
-        // Event handler for getting more events from DB.
         private void UpcomingEventsFilter_SelectionChanged(object sender, System.Windows.Controls.SelectionChangedEventArgs e)
         {
-            Console.WriteLine(upcomingEventsFilter.SelectedItem.ToString());
+            string filter = this.upcomingEventsFilter.SelectedValue.ToString();
+            if (!filter.Equals("View By Month"))
+            {
+                DateTime filterMonth = DateTime.Parse(filter);
+                this._getUpcomingEvents(filterMonth.Month);
+            }
+            else
+            {
+                this._getUpcomingEvents(DateTime.Now.Month);
+            }
         }
 
-        // Event handler for 'Previous' button.
         private void PrevButton_Click(object sender, System.Windows.RoutedEventArgs e)
         {
-            this._upcomingEventsList = model.DomainModels.EventModel.getAllByMonth(_monthToBeDisplayed-1);
-            if (this._upcomingEventsList.Count > 0)
+            if (this.upcomingEventsFilter.SelectedIndex != 0)
             {
-                this.upcomingEventsListBox.ItemsSource = this._upcomingEventsList;
-                this._monthToBeDisplayed--;
+                this.upcomingEventsFilter.SelectedIndex--;
             }
         }
 
-        // Event handler for 'Next' button.
         private void NextButton_Click(object sender, System.Windows.RoutedEventArgs e)
         {
-            this._upcomingEventsList = model.DomainModels.EventModel.getAllByMonth(_monthToBeDisplayed + 1);
-            if (this._upcomingEventsList.Count > 0)
+            if (this.upcomingEventsFilter.Items.Count != this.upcomingEventsFilter.SelectedIndex)
             {
-                this.upcomingEventsListBox.ItemsSource = this._upcomingEventsList;
-                this._monthToBeDisplayed++;
-            }
+                this.upcomingEventsFilter.SelectedIndex++;
+            }        
         }
 
-        // Event handler when user clicks on 'Login' button.
         private void LoginButton_Click(object sender, System.Windows.RoutedEventArgs e)
         {
             string matricId = usernameText.Text;
             string password = passwordText.Password;
-            if (this.ValidateUser(matricId, password))
+            if (this._validateUser(matricId, password))
             {
                 Console.WriteLine("authentication successful");
 
@@ -93,6 +82,30 @@ namespace EventManagerApp
                 );
                 Console.WriteLine("authentication failed");
             }
+        }
+
+        private void _createMonthFilters()
+        {
+            var month = DateTime.Now;
+            this._monthFiltersDict = new Dictionary<string,int>();
+            this._monthFiltersDict.Add("View By Month",0);
+            for(int i=1;i<=12;i++)
+            {
+                month = month.AddMonths(1);
+                this._monthFiltersDict.Add(month.ToString("y"),i);
+            }
+
+        }
+
+        private void _getUpcomingEvents(int month)
+        {
+            this._upcomingEventsList = model.DomainModels.EventModel.getAllByMonth(month);
+            this.upcomingEventsListBox.ItemsSource = this._upcomingEventsList;
+        }
+
+        private bool _validateUser(string matricId, string password)
+        {
+            return model.DomainModels.StudentModel.authenticate(matricId, password);
         }
 
     }
