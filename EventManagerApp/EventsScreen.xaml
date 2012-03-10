@@ -49,7 +49,7 @@
             <TabItem Header="My Events">
                 <StackPanel Margin="0" d:LayoutOverrides="Width" Height="565">
                     <Label Content="CREATED EVENTS" HorizontalAlignment="Left" Margin="0,20,0,0" FontSize="16" FontWeight="Bold"/>
-                    <DataGrid x:Name="createdEventsListGrid" Margin="5,10" AutoGenerateColumns="False" HeadersVisibility="Column" IsReadOnly="True">
+                    <DataGrid x:Name="createdEventsListGrid" Margin="5,10" AutoGenerateColumns="False" HeadersVisibility="Column" IsReadOnly="True" MaxHeight="300" ScrollViewer.HorizontalScrollBarVisibility="Hidden">
                         <DataGrid.Columns>
                             <DataGridTextColumn Header="EVENT NAME" Width="*" Binding="{Binding Name}" />
                             <DataGridTextColumn Header="DATE" Width="100" Binding="{Binding Path=Start,Converter={StaticResource dateSplitter},ConverterParameter=date}" />
