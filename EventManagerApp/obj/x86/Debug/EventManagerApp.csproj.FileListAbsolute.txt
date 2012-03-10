@@ -6,6 +6,7 @@ C:\Users\zen9\Documents\Visual Studio 2010\Projects\EventManagerApp\EventManager
 C:\Users\zen9\Documents\Visual Studio 2010\Projects\EventManagerApp\EventManagerApp\obj\x86\Debug\LoginScreen.g.cs
 C:\Users\zen9\Documents\Visual Studio 2010\Projects\EventManagerApp\EventManagerApp\obj\x86\Debug\MainWindow.g.cs
 C:\Users\zen9\Documents\Visual Studio 2010\Projects\EventManagerApp\EventManagerApp\obj\x86\Debug\App.g.cs
+C:\Users\zen9\Documents\Visual Studio 2010\Projects\EventManagerApp\EventManagerApp\obj\x86\Debug\GeneratedInternalTypeHelper.g.cs
 C:\Users\zen9\Documents\Visual Studio 2010\Projects\EventManagerApp\EventManagerApp\obj\x86\Debug\EventManagerApp_MarkupCompile.cache
 C:\Users\zen9\Documents\Visual Studio 2010\Projects\EventManagerApp\EventManagerApp\obj\x86\Debug\EventManagerApp_MarkupCompile.lref
 C:\Users\zen9\Documents\Visual Studio 2010\Projects\EventManagerApp\EventManagerApp\bin\Debug\EventManagerApp.exe.config
@@ -23,4 +24,3 @@ C:\Users\zen9\Documents\Visual Studio 2010\Projects\EventManagerApp\EventManager
 C:\Users\zen9\Documents\Visual Studio 2010\Projects\EventManagerApp\EventManagerApp\obj\x86\Debug\EventManagerApp.csproj.GenerateResource.Cache
 C:\Users\zen9\Documents\Visual Studio 2010\Projects\EventManagerApp\EventManagerApp\obj\x86\Debug\EventManagerApp.exe
 C:\Users\zen9\Documents\Visual Studio 2010\Projects\EventManagerApp\EventManagerApp\obj\x86\Debug\EventManagerApp.pdb
-C:\Users\zen9\Documents\Visual Studio 2010\Projects\EventManagerApp\EventManagerApp\obj\x86\Debug\GeneratedInternalTypeHelper.g.cs
