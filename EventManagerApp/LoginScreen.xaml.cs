@@ -31,7 +31,7 @@ namespace EventManagerApp
 
         private void GetUpcomingEvents()
         {
-            this._upcomingEventsList = model.DomainModels.EventModel.getAllByMonth(3);
+            this._upcomingEventsList = model.DomainModels.EventModel.getAllByMonth(10);
         }
 
         // Method to validate user login information.
