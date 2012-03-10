@@ -6,7 +6,7 @@ using System.Collections;
 
 namespace EventManagerPro.Model.DomainModels
 {
-    class StudentModel
+    public class StudentModel
     {
         public static Student create(string matricId, string password, string name = "student")
         {

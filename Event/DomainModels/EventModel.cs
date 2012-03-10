@@ -58,6 +58,19 @@ namespace EventManagerPro.Model.DomainModels
             using (var context = new EventContainer())
             {
                 IEnumerable<Event> events = from s in context.Events.Include("Venue").Include("Owner").Include("Guests")
+                                            where s.ViewAtLoginPage == 1
+                                            orderby s.TimeCreated descending
+                                            select s;
+                return events.ToList();
+            }
+        }
+
+        public static List<Event> getAllByMonth(int month)
+        {
+            using (var context = new EventContainer())
+            {
+                IEnumerable<Event> events = from s in context.Events.Include("Venue").Include("Owner").Include("Guests")
+                                            where s.ViewAtLoginPage == 1 && s.Start.Month == month
                                             orderby s.TimeCreated descending
                                             select s;
                 return events.ToList();

@@ -1,0 +1,55 @@
+﻿'EventManagerApp.vshost.exe' (Managed (v4.0.30319)): Loaded 'C:\Windows\Microsoft.Net\assembly\GAC_32\mscorlib\v4.0_4.0.0.0__b77a5c561934e089\mscorlib.dll', Skipped loading symbols. Module is optimized and the debugger option 'Just My Code' is enabled.
+'EventManagerApp.vshost.exe' (Managed (v4.0.30319)): Loaded 'C:\Windows\assembly\GAC_MSIL\Microsoft.VisualStudio.HostingProcess.Utilities\10.0.0.0__b03f5f7f11d50a3a\Microsoft.VisualStudio.HostingProcess.Utilities.dll', Skipped loading symbols. Module is optimized and the debugger option 'Just My Code' is enabled.
+'EventManagerApp.vshost.exe' (Managed (v4.0.30319)): Loaded 'C:\Windows\Microsoft.Net\assembly\GAC_MSIL\System.Windows.Forms\v4.0_4.0.0.0__b77a5c561934e089\System.Windows.Forms.dll', Skipped loading symbols. Module is optimized and the debugger option 'Just My Code' is enabled.
+'EventManagerApp.vshost.exe' (Managed (v4.0.30319)): Loaded 'C:\Windows\Microsoft.Net\assembly\GAC_MSIL\System.Drawing\v4.0_4.0.0.0__b03f5f7f11d50a3a\System.Drawing.dll', Skipped loading symbols. Module is optimized and the debugger option 'Just My Code' is enabled.
+'EventManagerApp.vshost.exe' (Managed (v4.0.30319)): Loaded 'C:\Windows\Microsoft.Net\assembly\GAC_MSIL\System\v4.0_4.0.0.0__b77a5c561934e089\System.dll', Skipped loading symbols. Module is optimized and the debugger option 'Just My Code' is enabled.
+'EventManagerApp.vshost.exe' (Managed (v4.0.30319)): Loaded 'C:\Windows\assembly\GAC_MSIL\Microsoft.VisualStudio.HostingProcess.Utilities.Sync\10.0.0.0__b03f5f7f11d50a3a\Microsoft.VisualStudio.HostingProcess.Utilities.Sync.dll', Skipped loading symbols. Module is optimized and the debugger option 'Just My Code' is enabled.
+'EventManagerApp.vshost.exe' (Managed (v4.0.30319)): Loaded 'C:\Windows\assembly\GAC_MSIL\Microsoft.VisualStudio.Debugger.Runtime\10.0.0.0__b03f5f7f11d50a3a\Microsoft.VisualStudio.Debugger.Runtime.dll', Skipped loading symbols. Module is optimized and the debugger option 'Just My Code' is enabled.
+'EventManagerApp.vshost.exe' (Managed (v4.0.30319)): Loaded 'C:\Users\zen9\Documents\Visual Studio 2010\Projects\EventManagerApp\EventManagerApp\bin\Debug\EventManagerApp.vshost.exe', Skipped loading symbols. Module is optimized and the debugger option 'Just My Code' is enabled.
+'EventManagerApp.vshost.exe' (Managed (v4.0.30319)): Loaded 'C:\Windows\Microsoft.Net\assembly\GAC_32\System.Data\v4.0_4.0.0.0__b77a5c561934e089\System.Data.dll', Skipped loading symbols. Module is optimized and the debugger option 'Just My Code' is enabled.
+'EventManagerApp.vshost.exe' (Managed (v4.0.30319)): Loaded 'C:\Windows\Microsoft.Net\assembly\GAC_MSIL\System.Core\v4.0_4.0.0.0__b77a5c561934e089\System.Core.dll', Skipped loading symbols. Module is optimized and the debugger option 'Just My Code' is enabled.
+'EventManagerApp.vshost.exe' (Managed (v4.0.30319)): Loaded 'C:\Windows\Microsoft.Net\assembly\GAC_MSIL\System.Xml\v4.0_4.0.0.0__b77a5c561934e089\System.Xml.dll', Skipped loading symbols. Module is optimized and the debugger option 'Just My Code' is enabled.
+'EventManagerApp.vshost.exe' (Managed (v4.0.30319)): Loaded 'C:\Windows\Microsoft.Net\assembly\GAC_MSIL\Microsoft.CSharp\v4.0_4.0.0.0__b03f5f7f11d50a3a\Microsoft.CSharp.dll', Skipped loading symbols. Module is optimized and the debugger option 'Just My Code' is enabled.
+'EventManagerApp.vshost.exe' (Managed (v4.0.30319)): Loaded 'C:\Windows\Microsoft.Net\assembly\GAC_MSIL\System.Xml.Linq\v4.0_4.0.0.0__b77a5c561934e089\System.Xml.Linq.dll', Skipped loading symbols. Module is optimized and the debugger option 'Just My Code' is enabled.
+'EventManagerApp.vshost.exe' (Managed (v4.0.30319)): Loaded 'C:\Windows\Microsoft.Net\assembly\GAC_MSIL\System.Data.DataSetExtensions\v4.0_4.0.0.0__b77a5c561934e089\System.Data.DataSetExtensions.dll', Skipped loading symbols. Module is optimized and the debugger option 'Just My Code' is enabled.
+'EventManagerApp.vshost.exe' (Managed (v4.0.30319)): Loaded 'C:\Windows\Microsoft.Net\assembly\GAC_MSIL\System.Xaml\v4.0_4.0.0.0__b77a5c561934e089\System.Xaml.dll', Skipped loading symbols. Module is optimized and the debugger option 'Just My Code' is enabled.
+'EventManagerApp.vshost.exe' (Managed (v4.0.30319)): Loaded 'C:\Windows\Microsoft.Net\assembly\GAC_MSIL\WindowsBase\v4.0_4.0.0.0__31bf3856ad364e35\WindowsBase.dll', Skipped loading symbols. Module is optimized and the debugger option 'Just My Code' is enabled.
+'EventManagerApp.vshost.exe' (Managed (v4.0.30319)): Loaded 'C:\Windows\Microsoft.Net\assembly\GAC_32\PresentationCore\v4.0_4.0.0.0__31bf3856ad364e35\PresentationCore.dll', Skipped loading symbols. Module is optimized and the debugger option 'Just My Code' is enabled.
+'EventManagerApp.vshost.exe' (Managed (v4.0.30319)): Loaded 'C:\Windows\Microsoft.Net\assembly\GAC_MSIL\PresentationFramework\v4.0_4.0.0.0__31bf3856ad364e35\PresentationFramework.dll', Skipped loading symbols. Module is optimized and the debugger option 'Just My Code' is enabled.
+The thread 'vshost.LoadReference' (0x10fc) has exited with code 0 (0x0).
+'EventManagerApp.vshost.exe' (Managed (v4.0.30319)): Loaded 'C:\Users\zen9\Documents\Visual Studio 2010\Projects\EventManagerApp\EventManagerApp\bin\Debug\EventManagerApp.exe', Symbols loaded.
+The thread '<No Name>' (0x8ec) has exited with code 0 (0x0).
+'EventManagerApp.vshost.exe' (Managed (v4.0.30319)): Loaded 'C:\Windows\Microsoft.Net\assembly\GAC_MSIL\System.Configuration\v4.0_4.0.0.0__b03f5f7f11d50a3a\System.Configuration.dll', Skipped loading symbols. Module is optimized and the debugger option 'Just My Code' is enabled.
+Step into: Stepping over non-user code 'EventManagerApp.App.App'
+Step into: Stepping over non-user code 'EventManagerApp.App.InitializeComponent'
+'EventManagerApp.vshost.exe' (Managed (v4.0.30319)): Loaded 'C:\Users\zen9\Documents\Visual Studio 2010\Projects\EventManagerApp\EventManagerApp\bin\Debug\Elysium.Theme.dll'
+'EventManagerApp.vshost.exe' (Managed (v4.0.30319)): Loaded 'C:\Windows\Microsoft.Net\assembly\GAC_MSIL\PresentationFramework.Aero\v4.0_4.0.0.0__31bf3856ad364e35\PresentationFramework.Aero.dll', Skipped loading symbols. Module is optimized and the debugger option 'Just My Code' is enabled.
+'EventManagerApp.vshost.exe' (Managed (v4.0.30319)): Loaded 'C:\Users\zen9\Documents\Visual Studio 2010\Projects\EventManagerApp\EventManagerApp\bin\Debug\Eventmodel.exe', Symbols loaded.
+'EventManagerApp.vshost.exe' (Managed (v4.0.30319)): Loaded 'C:\Windows\Microsoft.Net\assembly\GAC_MSIL\UIAutomationProvider\v4.0_4.0.0.0__31bf3856ad364e35\UIAutomationProvider.dll', Skipped loading symbols. Module is optimized and the debugger option 'Just My Code' is enabled.
+'EventManagerApp.vshost.exe' (Managed (v4.0.30319)): Loaded 'C:\Windows\Microsoft.Net\assembly\GAC_MSIL\Microsoft.Expression.Drawing\v4.0_4.0.0.0__31bf3856ad364e35\Microsoft.Expression.Drawing.dll', Skipped loading symbols. Module is optimized and the debugger option 'Just My Code' is enabled.
+'EventManagerApp.vshost.exe' (Managed (v4.0.30319)): Loaded 'C:\Windows\Microsoft.Net\assembly\GAC_MSIL\PresentationFramework-SystemXml\v4.0_4.0.0.0__b77a5c561934e089\PresentationFramework-SystemXml.dll', Skipped loading symbols. Module is optimized and the debugger option 'Just My Code' is enabled.
+System.Windows.Controls.ComboBoxItem: View by Month
+'EventManagerApp.vshost.exe' (Managed (v4.0.30319)): Loaded 'C:\Users\zen9\Documents\Visual Studio 2010\Projects\EventManagerApp\EventManagerApp\bin\Debug\EntityFramework.dll'
+'EventManagerApp.vshost.exe' (Managed (v4.0.30319)): Loaded 'C:\Windows\Microsoft.Net\assembly\GAC_MSIL\System.Data.Entity\v4.0_4.0.0.0__b77a5c561934e089\System.Data.Entity.dll', Skipped loading symbols. Module is optimized and the debugger option 'Just My Code' is enabled.
+'EventManagerApp.vshost.exe' (Managed (v4.0.30319)): Loaded 'Anonymously Hosted DynamicMethods Assembly'
+'EventManagerApp.vshost.exe' (Managed (v4.0.30319)): Loaded 'C:\Windows\Microsoft.Net\assembly\GAC_MSIL\System.Numerics\v4.0_4.0.0.0__b77a5c561934e089\System.Numerics.dll', Skipped loading symbols. Module is optimized and the debugger option 'Just My Code' is enabled.
+'EventManagerApp.vshost.exe' (Managed (v4.0.30319)): Loaded 'C:\Windows\Microsoft.Net\assembly\GAC_32\System.Data.OracleClient\v4.0_4.0.0.0__b77a5c561934e089\System.Data.OracleClient.dll', Skipped loading symbols. Module is optimized and the debugger option 'Just My Code' is enabled.
+'EventManagerApp.vshost.exe' (Managed (v4.0.30319)): Loaded 'C:\Windows\assembly\GAC_MSIL\System.Data.SqlServerCe\4.0.0.0__89845dcd8080cc91\System.Data.SqlServerCe.dll'
+'EventManagerApp.vshost.exe' (Managed (v4.0.30319)): Loaded 'C:\Windows\Microsoft.Net\assembly\GAC_32\System.Transactions\v4.0_4.0.0.0__b77a5c561934e089\System.Transactions.dll', Skipped loading symbols. Module is optimized and the debugger option 'Just My Code' is enabled.
+'EventManagerApp.vshost.exe' (Managed (v4.0.30319)): Loaded 'C:\Windows\Microsoft.Net\assembly\GAC_32\System.Web\v4.0_4.0.0.0__b03f5f7f11d50a3a\System.Web.dll'
+'EventManagerApp.vshost.exe' (Managed (v4.0.30319)): Loaded 'C:\Windows\Microsoft.Net\assembly\GAC_32\System.EnterpriseServices\v4.0_4.0.0.0__b03f5f7f11d50a3a\System.EnterpriseServices.dll', Skipped loading symbols. Module is optimized and the debugger option 'Just My Code' is enabled.
+'EventManagerApp.vshost.exe' (Managed (v4.0.30319)): Loaded 'C:\Windows\Microsoft.Net\assembly\GAC_32\System.EnterpriseServices\v4.0_4.0.0.0__b03f5f7f11d50a3a\System.EnterpriseServices.Wrapper.dll', Skipped loading symbols. Module is optimized and the debugger option 'Just My Code' is enabled.
+'EventManagerApp.vshost.exe' (Managed (v4.0.30319)): Loaded 'C:\Windows\Microsoft.Net\assembly\GAC_MSIL\System.Data.SqlServerCe.Entity\v4.0_4.0.0.0__89845dcd8080cc91\System.Data.SqlServerCe.Entity.dll'
+'EventManagerApp.vshost.exe' (Managed (v4.0.30319)): Loaded 'EntityFrameworkDynamicProxies-Eventmodel'
+'EventManagerApp.vshost.exe' (Managed (v4.0.30319)): Loaded 'C:\Windows\Microsoft.Net\assembly\GAC_MSIL\System.Runtime.Serialization\v4.0_4.0.0.0__b77a5c561934e089\System.Runtime.Serialization.dll', Skipped loading symbols. Module is optimized and the debugger option 'Just My Code' is enabled.
+'EventManagerApp.vshost.exe' (Managed (v4.0.30319)): Loaded 'C:\Windows\Microsoft.Net\assembly\GAC_MSIL\PresentationFramework-SystemXmlLinq\v4.0_4.0.0.0__b77a5c561934e089\PresentationFramework-SystemXmlLinq.dll', Skipped loading symbols. Module is optimized and the debugger option 'Just My Code' is enabled.
+'EventManagerApp.vshost.exe' (Managed (v4.0.30319)): Loaded 'C:\Windows\Microsoft.Net\assembly\GAC_MSIL\PresentationFramework-SystemData\v4.0_4.0.0.0__b77a5c561934e089\PresentationFramework-SystemData.dll', Skipped loading symbols. Module is optimized and the debugger option 'Just My Code' is enabled.
+page
+page
+page
+page
+page
+page
+page
+page
+The thread '<No Name>' (0x1178) has exited with code 0 (0x0).
