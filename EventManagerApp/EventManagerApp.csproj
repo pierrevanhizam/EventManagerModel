@@ -39,6 +39,9 @@
     <Reference Include="Elysium.Theme">
       <HintPath>..\packages\Elysium.Theme.1.3\lib\net40\Elysium.Theme.dll</HintPath>
     </Reference>
+    <Reference Include="Microsoft.Windows.Shell">
+      <HintPath>..\packages\Elysium.Theme.1.3\lib\net40\Microsoft.Windows.Shell.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Xml" />
