@@ -66,9 +66,19 @@ namespace EventManagerApp
             if (this.ValidateUser(matricId, password))
             {
                 Console.WriteLine("authentication successful");
+
+                // Navigate to EventsScreen.xaml with user ID for authentication.
+                // int userID = ?;
+                // this.NavigationService.Navigate(new Uri("EventsScreen.xaml"), UriKind.Relative, userID);
             }
             else
             {
+                MessageBox.Show(
+                    "Your matriculation number and password were not recognized. Please check and try again.",
+                    "Authentication Failed",
+                    MessageBoxButton.OK,
+                    MessageBoxImage.Exclamation
+                );
                 Console.WriteLine("authentication failed");
             }
         }
