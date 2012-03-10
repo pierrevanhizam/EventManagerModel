@@ -53,6 +53,14 @@ namespace EventManagerPro.Model.DomainModels
             }
         }
 
+        public void deleteById(int id)
+        {
+            using (var context = new EventContainer())
+            {
+                var tb_delete_event = new Event() { Id = id };
+            }
+        }
+
         public static List<Event> getAll()
         {
             using (var context = new EventContainer())

@@ -26,3 +26,7 @@ C:\Users\zen9\Documents\Visual Studio 2010\Projects\EventManagerApp\EventManager
 C:\Users\zen9\Documents\Visual Studio 2010\Projects\EventManagerApp\EventManagerApp\obj\x86\Debug\EventManagerApp.pdb
 C:\Users\zen9\Documents\Visual Studio 2010\Projects\EventManagerApp\EventManagerApp\obj\x86\Debug\EventsScreen.baml
 C:\Users\zen9\Documents\Visual Studio 2010\Projects\EventManagerApp\EventManagerApp\obj\x86\Debug\EventsScreen.g.cs
+C:\Users\zen9\Documents\Visual Studio 2010\Projects\EventManagerApp\EventManagerApp\bin\Debug\EventManagerApp.exe.manifest
+C:\Users\zen9\Documents\Visual Studio 2010\Projects\EventManagerApp\EventManagerApp\bin\Debug\EventManagerApp.application
+C:\Users\zen9\Documents\Visual Studio 2010\Projects\EventManagerApp\EventManagerApp\obj\x86\Debug\EventManagerApp.exe.manifest
+C:\Users\zen9\Documents\Visual Studio 2010\Projects\EventManagerApp\EventManagerApp\obj\x86\Debug\EventManagerApp.application
