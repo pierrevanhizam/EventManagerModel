@@ -44,6 +44,7 @@
     <NavigationProperty Name="Guests" Relationship="Event.EventRegistratration" FromRole="Event" ToRole="Student" />
     <NavigationProperty Name="Venue" Relationship="Event.EventVenue" FromRole="Event" ToRole="Venue" />
     <Property Type="Int32" Name="VenueId" Nullable="false" />
+    <Property Type="Int16" Name="ViewAtLoginPage" Nullable="false" />
   </EntityType>
   <EntityType Name="Venue">
     <Key>

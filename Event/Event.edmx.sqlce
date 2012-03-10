@@ -2,8 +2,8 @@
 -- --------------------------------------------------
 -- Entity Designer DDL Script for SQL Server Compact Edition
 -- --------------------------------------------------
--- Date Created: 03/07/2012 02:15:00
--- Generated from EDMX file: C:\Users\zen9\Documents\Visual Studio 2010\Projects\EventProject\Event\Event.edmx
+-- Date Created: 03/10/2012 12:14:44
+-- Generated from EDMX file: C:\Users\zen9\Documents\Visual Studio 2010\Projects\EventManagerApp\Event\Event.edmx
 -- --------------------------------------------------
 
 
@@ -58,7 +58,8 @@ CREATE TABLE [Events] (
     [Description] nvarchar(4000)  NOT NULL,
     [TimeCreated] datetime  NOT NULL,
     [StudentMatricId] nvarchar(4000)  NOT NULL,
-    [VenueId] int  NOT NULL
+    [VenueId] int  NOT NULL,
+    [ViewAtLoginPage] smallint  NOT NULL
 );
 GO
 

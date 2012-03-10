@@ -44,6 +44,7 @@
     <Property Name="TimeCreated" Type="datetime" Nullable="false" />
     <Property Name="StudentMatricId" Type="nvarchar" Nullable="false" />
     <Property Name="VenueId" Type="int" Nullable="false" />
+    <Property Name="ViewAtLoginPage" Type="smallint" Nullable="false" />
   </EntityType>
   <EntityType Name="Venues">
     <Key>

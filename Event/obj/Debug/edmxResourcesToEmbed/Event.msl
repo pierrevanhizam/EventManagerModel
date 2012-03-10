@@ -23,6 +23,7 @@
           <ScalarProperty Name="TimeCreated" ColumnName="TimeCreated" />
           <ScalarProperty Name="StudentMatricId" ColumnName="StudentMatricId" />
           <ScalarProperty Name="VenueId" ColumnName="VenueId" />
+          <ScalarProperty Name="ViewAtLoginPage" ColumnName="ViewAtLoginPage" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>

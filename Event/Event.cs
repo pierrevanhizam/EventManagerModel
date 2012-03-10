@@ -29,10 +29,16 @@ namespace EventManagerPro.Model
         public System.DateTime TimeCreated { get; set; }
         public string StudentMatricId { get; set; }
         public int VenueId { get; set; }
+        public short ViewAtLoginPage { get; set; }
     
         public virtual Student Owner { get; set; }
         public virtual ICollection<Student> Guests { get; set; }
         public virtual Venue Venue { get; set; }
+
+        public override string ToString()
+        {
+            return this.Name;
+        }
     }
     
 }

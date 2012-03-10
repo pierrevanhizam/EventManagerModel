@@ -49,6 +49,7 @@
     <Property Name="TimeCreated" Type="datetime" Nullable="false" />
     <Property Name="StudentMatricId" Type="nvarchar" Nullable="false" />
     <Property Name="VenueId" Type="int" Nullable="false" />
+    <Property Name="ViewAtLoginPage" Type="smallint" Nullable="false" />
   </EntityType>
   <EntityType Name="Venues">
     <Key>
@@ -161,6 +162,7 @@
           <NavigationProperty Name="Guests" Relationship="Event.EventRegistratration" FromRole="Event" ToRole="Student" />
           <NavigationProperty Name="Venue" Relationship="Event.EventVenue" FromRole="Event" ToRole="Venue" />
           <Property Type="Int32" Name="VenueId" Nullable="false" />
+          <Property Type="Int16" Name="ViewAtLoginPage" Nullable="false" />
         </EntityType>
         <EntityType Name="Venue">
           <Key>
@@ -225,6 +227,7 @@
           <ScalarProperty Name="TimeCreated" ColumnName="TimeCreated" />
           <ScalarProperty Name="StudentMatricId" ColumnName="StudentMatricId" />
           <ScalarProperty Name="VenueId" ColumnName="VenueId" />
+          <ScalarProperty Name="ViewAtLoginPage" ColumnName="ViewAtLoginPage" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
@@ -265,15 +268,15 @@
     <edmx:Diagrams>
       <Diagram Name="Event" >
         <EntityTypeShape EntityType="Event.Student" Width="1.5" PointX="0.5" PointY="0.75" Height="1.9802864583333335" />
-        <EntityTypeShape EntityType="Event.Event" Width="1.5" PointX="3.375" PointY="0.75" Height="2.7494921874999996" />
+        <EntityTypeShape EntityType="Event.Event" Width="1.5" PointX="3.375" PointY="0.75" Height="3.7109993489583326" />
         <EntityTypeShape EntityType="Event.Venue" Width="1.5" PointX="6.25" PointY="0.75" Height="1.4033821614583331" />
         <AssociationConnector Association="Event.Organize">
-          <ConnectorPoint PointX="2" PointY="1.6439925130208335" />
-          <ConnectorPoint PointX="3.375" PointY="1.6439925130208335" />
+          <ConnectorPoint PointX="2" PointY="2.1045472462972006" />
+          <ConnectorPoint PointX="3.375" PointY="2.1045472462972006" />
         </AssociationConnector>
         <AssociationConnector Association="Event.EventRegistratration">
-          <ConnectorPoint PointX="2" PointY="1.3099456787109376" />
-          <ConnectorPoint PointX="3.375" PointY="1.3099456787109376" />
+          <ConnectorPoint PointX="2" PointY="1.3647736231486003" />
+          <ConnectorPoint PointX="3.375" PointY="1.3647736231486003" />
         </AssociationConnector>
         <AssociationConnector Association="Event.EventVenue">
           <ConnectorPoint PointX="4.875" PointY="1.4516910807291668" />
