@@ -68,7 +68,7 @@ namespace EventManagerApp
             {
                 Console.WriteLine("authentication successful");
                 model.Student student = model.DomainModels.StudentModel.getByMatricId(matricId);
-                //this.NavigationService.Navigate(new Uri("EventsScreen.xaml"), UriKind.Relative, student);
+                this.NavigationService.Navigate(new Uri("EventsScreen.xaml", UriKind.Relative));
             }
             else
             {

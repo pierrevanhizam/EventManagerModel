@@ -23,7 +23,7 @@
         </StackPanel>
         <StackPanel Margin="30,20,30,0" d:LayoutOverrides="Width" Orientation="Horizontal">
             <TextBlock TextWrapping="Wrap" Text="Events Management" FontSize="32" HorizontalAlignment="Left" d:LayoutOverrides="HorizontalAlignment, GridBox"/>
-            <Button Content="Create Event" VerticalAlignment="Center" HorizontalAlignment="Right" FontSize="16" FontWeight="Normal" Margin="20,0,0,0" Padding="10,7,10,9"/>
+            <Button Content="Create Event" VerticalAlignment="Center" HorizontalAlignment="Right" FontSize="16" FontWeight="Normal" Margin="20,0,0,0" Padding="10,7,10,9" Name="createEventBtn" Click="createEventBtn_Click" />
         </StackPanel>
         <TabControl DockPanel.Dock="Right" Margin="30,15,30,0">
             <TabItem Header="Upcoming" IsSelected="True">

@@ -22,13 +22,20 @@ namespace EventManagerApp
     {
 
         private List<model.Event> _upcomingEventsList;
+        private List<model.Event> _createdEventsList;
 
         public EventsScreen()
         {
             InitializeComponent();
-            this._upcomingEventsList = model.DomainModels.EventModel.getByOwner("U096988R");
+            this._createdEventsList = model.DomainModels.EventModel.getByOwner("U096988R");
+            this._upcomingEventsList = model.DomainModels.EventModel.getAll();
             this.upcomingEventsListGrid.ItemsSource = this._upcomingEventsList;
             this.createdEventsListGrid.ItemsSource = this._upcomingEventsList;
+        }
+
+        private void createEventBtn_Click(object sender, RoutedEventArgs e)
+        {
+            this.NavigationService.Navigate(new Uri("EditEventScreen.xaml", UriKind.Relative));
         }
     }
 }

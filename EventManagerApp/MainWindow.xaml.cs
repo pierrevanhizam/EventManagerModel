@@ -23,7 +23,7 @@ namespace EventManagerApp
         {
             InitializeComponent();
             //this._mainFrame.Navigate(new Uri("EditEventScreen.xaml", UriKind.Relative));
-            this._mainFrame.Navigate(new Uri("EventsScreen.xaml", UriKind.Relative));
+            //this._mainFrame.Navigate(new Uri("EventsScreen.xaml", UriKind.Relative));
         }
     }
 }

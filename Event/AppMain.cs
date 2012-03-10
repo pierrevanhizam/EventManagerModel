@@ -43,7 +43,7 @@ namespace EventManagerPro.Model
             Console.WriteLine("\nTESTING EVENT MANAGER:");
             var newEvent = EventModel.create("U096988R","My new event 2",2,new DateTime(2012,2,5,6,0,0),new DateTime(2012,2,5,9,0,0),100,30,"Just another event");
             Console.WriteLine("{0}, {1}",newEvent.Name,newEvent.Description);
-            var allEvents = EventModel.getAll();
+            var allEvents = EventModel.getAllForLoginPage();
             Console.WriteLine("Loading all events:");
             foreach (var s in allEvents)
             {
