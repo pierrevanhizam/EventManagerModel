@@ -11,6 +11,18 @@
 	Width="1024" Height="768" Background="{DynamicResource {x:Static SystemColors.WindowBrushKey}}">
     <Page.Resources>
         <converters:DateSplitter x:Key="dateSplitter" />
+        <Storyboard x:Key="StatusMessageFadeIn">
+        	<DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(FrameworkElement.Height)" Storyboard.TargetName="statusMessage">
+        		<EasingDoubleKeyFrame KeyTime="0" Value="0"/>
+        		<EasingDoubleKeyFrame KeyTime="0:0:0.4" Value="45"/>
+        	</DoubleAnimationUsingKeyFrames>
+        </Storyboard>
+        <DataTemplate x:Key="ActionCellTemplate">
+            <StackPanel Orientation="Horizontal">
+                <Button Content="EDIT" HorizontalAlignment="Left" Width="Auto" d:LayoutOverrides="Height" FontWeight="Normal" FontSize="12" Padding="8,5" Tag="{Binding Id}" Click="editButton_Click" />
+                <Button Content="DELETE" Background="Red" HorizontalAlignment="Left" Width="Auto" d:LayoutOverrides="Height" FontWeight="Normal" FontSize="12" Padding="8,5" Tag="{Binding Id}" Margin="5,0,0,0" Click="deleteButton_Click" />
+            </StackPanel>
+        </DataTemplate>
     </Page.Resources>
     <StackPanel>
         <StackPanel.Background>
@@ -19,16 +31,17 @@
         <StackPanel Orientation="Horizontal" Margin="0,15,30,0" d:LayoutOverrides="Width" HorizontalAlignment="Right">
             <Label Content="Logged in as" Margin="0" FontSize="13.333" Foreground="#CC000000"/>
             <Label x:Name="loggedInUserLabel" FontWeight="Bold" Content="Melvin" Padding="0,5" FontSize="13.333"/>
-            <Button Content="LOGOUT" Padding="8,0" Margin="10,0,0,0" FontSize="12" Background="#FF333333"/>
+            <Button Name="logoutButton" Content="LOGOUT" Padding="8,0" Margin="10,0,0,0" FontSize="12" Background="#FF333333" Click="logoutButton_Click" />
         </StackPanel>
         <StackPanel Margin="30,20,30,0" d:LayoutOverrides="Width" Orientation="Horizontal">
             <TextBlock TextWrapping="Wrap" Text="Events Management" FontSize="32" HorizontalAlignment="Left" d:LayoutOverrides="HorizontalAlignment, GridBox"/>
             <Button Content="Create Event" VerticalAlignment="Center" HorizontalAlignment="Right" FontSize="16" FontWeight="Normal" Margin="20,0,0,0" Padding="10,7,10,9" Name="createEventBtn" Click="createEventBtn_Click" />
         </StackPanel>
-        <TabControl DockPanel.Dock="Right" Margin="30,15,30,0">
+        <Label x:Name="statusMessage" Margin="30,20,30,0" Padding="10" Background="#FF52BE00" Foreground="White" FontSize="14.667" Content="This is a Status Message." BorderThickness="1" BorderBrush="#FF458712" Height="0" VerticalAlignment="Center"/>
+        <TabControl DockPanel.Dock="Right" Margin="30,15,30,0" Height="538">
             <TabItem Header="Upcoming" IsSelected="True">
-                <StackPanel Height="560">
-                    <DataGrid x:Name="upcomingEventsListGrid" Margin="0,20" AutoGenerateColumns="False" HeadersVisibility="Column" IsReadOnly="True" GridLinesVisibility="None">
+                <StackPanel Height="500">
+                    <DataGrid x:Name="upcomingEventsListGrid" MaxHeight="450" Margin="0,20" AutoGenerateColumns="False" HeadersVisibility="Column" IsReadOnly="True" GridLinesVisibility="None">
                         <DataGrid.BorderBrush>
                             <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
                                 <GradientStop Color="Black" Offset="0"/>
@@ -39,7 +52,7 @@
                             <DataGridTextColumn Header="EVENT NAME" Width="*" Binding="{Binding Name}" />
                             <DataGridTextColumn Header="DATE" Width="100" Binding="{Binding Path=Start,Converter={StaticResource dateSplitter},ConverterParameter=date}" />
                             <DataGridTextColumn Header="TIME" Width="120" Binding="{Binding Path=Start,Converter={StaticResource dateSplitter},ConverterParameter=time}" />
-                            <DataGridTextColumn Header="VENUE" Width="150" Binding="{Binding Venue}" />
+                            <DataGridTextColumn Header="VENUE" Width="250" Binding="{Binding Venue}" />
                             <!--<DataGridTemplateColumn Header="ACTION(S)" CellTemplate="{DynamicResource ActionCellTemplate}" />-->
                         </DataGrid.Columns>
                     </DataGrid>
@@ -47,19 +60,19 @@
                 </StackPanel>
             </TabItem>
             <TabItem Header="My Events">
-                <StackPanel Margin="0" d:LayoutOverrides="Width" Height="565">
+                <StackPanel Margin="0" d:LayoutOverrides="Width" Height="500">
                     <Label Content="CREATED EVENTS" HorizontalAlignment="Left" Margin="0,20,0,0" FontSize="16" FontWeight="Bold"/>
                     <DataGrid x:Name="createdEventsListGrid" Margin="5,10" AutoGenerateColumns="False" HeadersVisibility="Column" IsReadOnly="True" MaxHeight="300" ScrollViewer.HorizontalScrollBarVisibility="Hidden">
                         <DataGrid.Columns>
                             <DataGridTextColumn Header="EVENT NAME" Width="*" Binding="{Binding Name}" />
                             <DataGridTextColumn Header="DATE" Width="100" Binding="{Binding Path=Start,Converter={StaticResource dateSplitter},ConverterParameter=date}" />
                             <DataGridTextColumn Header="TIME" Width="120" Binding="{Binding Path=Start,Converter={StaticResource dateSplitter},ConverterParameter=time}" />
-                            <DataGridTextColumn Header="VENUE" Width="150" Binding="{Binding Venue}" />
-                            <!--<DataGridTemplateColumn Header="ACTION(S)" CellTemplate="{DynamicResource ActionCellTemplate}" />-->
+                            <DataGridTextColumn Header="VENUE" Width="250" Binding="{Binding Venue}" />
+                            <DataGridTemplateColumn Header="ACTION(S)" CellTemplate="{StaticResource ActionCellTemplate}" />
                         </DataGrid.Columns>
                     </DataGrid>
                     <metro:CircularProgressBar x:Name="createdEventsLoadingIcon_Copy" Width="32" State="Indeterminate" HorizontalAlignment="Center" Height="32" Visibility="Hidden" />
-                    <Separator Height="30" Margin="0"/>
+                    <Separator Height="10" Margin="0"/>
                     <Label Content="REGISTERED EVENTS" HorizontalAlignment="Left" Margin="0" FontSize="16" FontWeight="Bold"/>
                     <Label Content="Oops! You don't seem to have any events registered under your account." HorizontalAlignment="Left" Margin="0" FontSize="14.667"/>
                 </StackPanel>

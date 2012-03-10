@@ -56,11 +56,6 @@
                     </Trigger>
                 </Style.Triggers>
             </Style>
-            <DataTemplate x:Key="ActionCellTemplate">
-                <Grid>
-                    <Button Content="REGISTER" HorizontalAlignment="Left" Width="Auto" d:LayoutOverrides="Height" FontWeight="Normal" FontSize="12" Padding="8,5"/>
-                </Grid>
-            </DataTemplate>
             <Style x:Key="formLabel" TargetType="{x:Type Label}">
                 <Setter Property="FontSize" Value="14.667"/>
                 <Setter Property="Width" Value="Auto"/>

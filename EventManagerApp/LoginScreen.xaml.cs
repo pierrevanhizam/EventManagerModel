@@ -12,6 +12,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using model = EventManagerPro.Model;
+using System.Windows.Media.Animation;
 
 namespace EventManagerApp
 {
@@ -68,7 +69,14 @@ namespace EventManagerApp
             {
                 Console.WriteLine("authentication successful");
                 model.Student student = model.DomainModels.StudentModel.getByMatricId(matricId);
-                this.NavigationService.Navigate(new Uri("EventsScreen.xaml", UriKind.Relative));
+
+                // Create NavigationData object to store values and transport them between pages.
+                NavigationData navData = new NavigationData();
+                navData.loggedInUser = student;
+
+                EventsScreen eventsScreen = new EventsScreen();
+                eventsScreen.SetupNavigationHandler(this.NavigationService);
+                this.NavigationService.Navigate(eventsScreen, navData);
             }
             else
             {
@@ -101,6 +109,23 @@ namespace EventManagerApp
         {
             this._upcomingEventsList = model.DomainModels.EventModel.getAllByYearMonth(dateFilter);
             this.upcomingEventsListBox.ItemsSource = this._upcomingEventsList;
+
+            if (this._upcomingEventsList.Count > 0)
+            {
+                this.noUpcomingEventsNotice.Visibility = Visibility.Collapsed;
+                this.upcomingEventsScrollViewer.Visibility = Visibility.Visible;
+
+                Storyboard sb = (Storyboard)this.FindResource("ContentFadeIn");
+                this.upcomingEventsScrollViewer.BeginStoryboard(sb);
+            }
+            else
+            {
+                this.noUpcomingEventsNotice.Visibility = Visibility.Visible;
+                this.upcomingEventsScrollViewer.Visibility = Visibility.Collapsed;
+
+                Storyboard sb = (Storyboard)this.FindResource("ContentFadeIn");
+                this.noUpcomingEventsNotice.BeginStoryboard(sb);
+            }  
         }
 
         private bool _validateUser(string matricId, string password)

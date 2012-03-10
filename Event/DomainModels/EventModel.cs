@@ -100,6 +100,18 @@ namespace EventManagerPro.Model.DomainModels
             }
         }
 
+        public static List<Event> getNotByOwner(string matricId)
+        {
+            using (var context = new EventContainer())
+            {
+                IEnumerable<Event> events = from s in context.Events.Include("Venue").Include("Owner").Include("Guests")
+                                            where s.StudentMatricId != matricId
+                                            orderby s.TimeCreated descending
+                                            select s;
+                return events.ToList();
+            }
+        }
+
         public static List<Event> getByOwner(string matricId)
         {
             using (var context = new EventContainer())
@@ -109,6 +121,17 @@ namespace EventManagerPro.Model.DomainModels
                                             orderby s.TimeCreated descending
                                             select s;
                 return events.ToList();
+            }
+        }
+
+        public static Event getByID(int id)
+        {
+            using (var context = new EventContainer())
+            {
+                var events = from s in context.Events.Include("Venue").Include("Owner").Include("Guests")
+                             where s.Id == id
+                             select s;
+                return events.FirstOrDefault();
             }
         }
     }
