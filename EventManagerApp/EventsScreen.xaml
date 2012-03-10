@@ -1,10 +1,17 @@
 ﻿<Page
 	xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
 	xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-	xmlns:d="http://schemas.microsoft.com/expression/blend/2008" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" xmlns:metro="http://schemas.codeplex.com/elysium/theme" mc:Ignorable="d"
+	xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+    xmlns:metro="http://schemas.codeplex.com/elysium/theme" 
+    xmlns:converters="clr-namespace:EventManagerApp.Converters"
+    mc:Ignorable="d"
 	x:Class="EventManagerApp.EventsScreen"
 	x:Name="Page"
 	Width="1024" Height="768" Background="{DynamicResource {x:Static SystemColors.WindowBrushKey}}">
+    <Page.Resources>
+        <converters:DateSplitter x:Key="dateSplitter" />
+    </Page.Resources>
     <StackPanel>
         <StackPanel.Background>
             <ImageBrush/>
@@ -29,10 +36,10 @@
                             </LinearGradientBrush>
                         </DataGrid.BorderBrush>
                         <DataGrid.Columns>
-                            <DataGridTextColumn Header="EVENT NAME" Width="*" Binding="{Binding name}" />
-                            <DataGridTextColumn Header="DATE" Width="100" Binding="{Binding startDate}" />
-                            <DataGridTextColumn Header="TIME" Width="120" Binding="{Binding startTime}" />
-                            <DataGridTextColumn Header="VENUE" Width="150" Binding="{Binding venue}" />
+                            <DataGridTextColumn Header="EVENT NAME" Width="*" Binding="{Binding Name}" />
+                            <DataGridTextColumn Header="DATE" Width="100" Binding="{Binding Path=Start,Converter={StaticResource dateSplitter},ConverterParameter=date}" />
+                            <DataGridTextColumn Header="TIME" Width="120" Binding="{Binding Path=Start,Converter={StaticResource dateSplitter},ConverterParameter=time}" />
+                            <DataGridTextColumn Header="VENUE" Width="150" Binding="{Binding Venue}" />
                             <!--<DataGridTemplateColumn Header="ACTION(S)" CellTemplate="{DynamicResource ActionCellTemplate}" />-->
                         </DataGrid.Columns>
                     </DataGrid>
@@ -44,10 +51,10 @@
                     <Label Content="CREATED EVENTS" HorizontalAlignment="Left" Margin="0,20,0,0" FontSize="16" FontWeight="Bold"/>
                     <DataGrid x:Name="createdEventsListGrid" Margin="5,10" AutoGenerateColumns="False" HeadersVisibility="Column" IsReadOnly="True">
                         <DataGrid.Columns>
-                            <DataGridTextColumn Header="EVENT NAME" Width="*" Binding="{Binding name}" />
-                            <DataGridTextColumn Header="DATE" Width="100" Binding="{Binding startDate}" />
-                            <DataGridTextColumn Header="TIME" Width="120" Binding="{Binding startTime}" />
-                            <DataGridTextColumn Header="VENUE" Width="150" Binding="{Binding venue}" />
+                            <DataGridTextColumn Header="EVENT NAME" Width="*" Binding="{Binding Name}" />
+                            <DataGridTextColumn Header="DATE" Width="100" Binding="{Binding Path=Start,Converter={StaticResource dateSplitter},ConverterParameter=date}" />
+                            <DataGridTextColumn Header="TIME" Width="120" Binding="{Binding Path=Start,Converter={StaticResource dateSplitter},ConverterParameter=time}" />
+                            <DataGridTextColumn Header="VENUE" Width="150" Binding="{Binding Venue}" />
                             <!--<DataGridTemplateColumn Header="ACTION(S)" CellTemplate="{DynamicResource ActionCellTemplate}" />-->
                         </DataGrid.Columns>
                     </DataGrid>

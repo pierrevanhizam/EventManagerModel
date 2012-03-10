@@ -19,6 +19,8 @@ namespace EventManagerApp.Converters
                     return date.ToShortTimeString();
                 case "day":
                     return date.Day.ToString();
+                case "date":
+                    return date.ToShortDateString();
                 case "month":
                     string month = date.Month.ToString();
                     switch (month)

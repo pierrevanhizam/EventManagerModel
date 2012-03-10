@@ -81,7 +81,7 @@ namespace EventManagerPro.Model.DomainModels
         {
             using (var context = new EventContainer())
             {
-                IEnumerable<Event> events = from s in context.Events
+                IEnumerable<Event> events = from s in context.Events.Include("Venue").Include("Owner").Include("Guests")
                                             where s.StudentMatricId == matricId
                                             orderby s.TimeCreated descending
                                             select s;

@@ -26,8 +26,9 @@ namespace EventManagerApp
         public EventsScreen()
         {
             InitializeComponent();
-            this._upcomingEventsList = new List<model.Event>();
+            this._upcomingEventsList = model.DomainModels.EventModel.getByOwner("U096988R");
             this.upcomingEventsListGrid.ItemsSource = this._upcomingEventsList;
+            this.createdEventsListGrid.ItemsSource = this._upcomingEventsList;
         }
     }
 }
