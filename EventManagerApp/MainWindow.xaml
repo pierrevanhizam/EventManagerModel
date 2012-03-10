@@ -5,6 +5,6 @@
 	x:Name="Window"
 	Title="EventsAdministratorPro" WindowStartupLocation="CenterScreen" ResizeMode="CanMinimize" Width="1024" Height="768">
     <DockPanel>
-        <Frame x:Name="_mainFrame" />
+        <Frame x:Name="_mainFrame" Source="LoginScreen.xaml" NavigationUIVisibility="Hidden" />
     </DockPanel>
 </Window>

@@ -22,7 +22,6 @@ namespace EventManagerApp
         public MainWindow()
         {
             InitializeComponent();
-            this._mainFrame.Navigate(new Uri("LoginScreen.xaml", UriKind.Relative));
         }
     }
 }
