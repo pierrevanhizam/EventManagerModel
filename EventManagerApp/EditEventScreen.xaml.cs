@@ -46,28 +46,28 @@ namespace EventManagerApp
             this.budget = Convert.ToInt32(eventBudgetBox.Text);
             this.capacity = Convert.ToInt32(eventCapacityBox.Text);
 
-            DateTime day;
-            Nullable<DateTime> selected_date = eventDatePicker.SelectedDate;
-            if(selected_date.HasValue) 
-            {
-                day = selected_date.Value;
-            } else {
-                day = DateTime.Now;
-            }
-            //var selected_start_time = eventStartTimeBox.SelectedValue.ToString();
-            //var selected_end_time = (string) eventEndTimeBox.SelectedValue.();
-            //string start_time = day.ToShortDateString() + ':' + selected_start_time;
-            //string end_time = day.ToShortDateString() + ':' + selected_end_time;
-            //Console.WriteLine(start_time);
-            //Console.WriteLine(end_time);
-            //this.start = DateTime.Parse(start_time);
-            //this.end = DateTime.Parse(end_time);
-            this.start = DateTime.Now;
-            this.end = DateTime.Now;
+            // get selected date from DatePicker (default is NOW())
+            DateTime selected_date = (DateTime)eventDatePicker.SelectedDate;
 
-            this.visibleOnLoginPage = 1;
-            // TODO: change dummy matric and name, visibleOnLoginPage
-            model.DomainModels.EventModel.create("U096988R", "Felix", 1, this.start, this.end, this.capacity, this.budget, this.description, this.visibleOnLoginPage);
+            // merge date and time into DateTime
+            DateTime startHourDateTime = (DateTime)eventStartTimeBox.SelectedValue;
+            this.start = selected_date.Add(startHourDateTime.Subtract(new DateTime()));
+            DateTime endHourDateTime = (DateTime)eventEndTimeBox.SelectedValue;
+            this.end = selected_date.Add(endHourDateTime.Subtract(new DateTime()));
+
+            if (eventVisibleCheckbox.IsChecked.HasValue && (bool)(eventVisibleCheckbox.IsChecked))
+            {
+                this.visibleOnLoginPage = 1;
+            }
+            else
+            {
+                this.visibleOnLoginPage = 0;
+            }
+
+            // TODO: change dummy matric and name
+            //model.DomainModels.EventModel.create("U096988R", "Felix", 1, this.start, this.end, this.capacity, this.budget, this.description, this.visibleOnLoginPage);
+            
+            // TODO: Redirect back to Event Main screen with notify box that it has been saved.
             eventNameBox.Text = "SAVED";
         }
 

@@ -4,9 +4,47 @@
 	xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
     xmlns:metro="http://schemas.codeplex.com/elysium/theme" mc:Ignorable="d"
+    xmlns:sys="clr-namespace:System;assembly=mscorlib"
+    xmlns:col="clr-namespace:System.Collections;assembly=mscorlib"
 	x:Class="EventManagerApp.EditEventScreen"
 	x:Name="Page"
 	Width="1024" Height="768" Background="{DynamicResource {x:Static SystemColors.WindowBrushKey}}">
+    <Page.Resources>
+        <col:ArrayList x:Key="startHours">
+            <sys:DateTime>8:00</sys:DateTime>
+            <sys:DateTime>9:00</sys:DateTime>
+            <sys:DateTime>10:00</sys:DateTime>
+            <sys:DateTime>11:00</sys:DateTime>
+            <sys:DateTime>12:00</sys:DateTime>
+            <sys:DateTime>13:00</sys:DateTime>
+            <sys:DateTime>14:00</sys:DateTime>
+            <sys:DateTime>15:00</sys:DateTime>
+            <sys:DateTime>16:00</sys:DateTime>
+            <sys:DateTime>17:00</sys:DateTime>
+            <sys:DateTime>18:00</sys:DateTime>
+            <sys:DateTime>19:00</sys:DateTime>
+            <sys:DateTime>20:00</sys:DateTime>
+            <sys:DateTime>21:00</sys:DateTime>
+            <sys:DateTime>22:00</sys:DateTime>
+        </col:ArrayList>
+        <col:ArrayList x:Key="endHours">
+            <sys:DateTime>9:00</sys:DateTime>
+            <sys:DateTime>10:00</sys:DateTime>
+            <sys:DateTime>11:00</sys:DateTime>
+            <sys:DateTime>12:00</sys:DateTime>
+            <sys:DateTime>13:00</sys:DateTime>
+            <sys:DateTime>14:00</sys:DateTime>
+            <sys:DateTime>15:00</sys:DateTime>
+            <sys:DateTime>16:00</sys:DateTime>
+            <sys:DateTime>17:00</sys:DateTime>
+            <sys:DateTime>18:00</sys:DateTime>
+            <sys:DateTime>19:00</sys:DateTime>
+            <sys:DateTime>20:00</sys:DateTime>
+            <sys:DateTime>21:00</sys:DateTime>
+            <sys:DateTime>22:00</sys:DateTime>
+            <sys:DateTime>23:00</sys:DateTime>
+        </col:ArrayList>
+    </Page.Resources>
     <StackPanel>
         <StackPanel Orientation="Horizontal" Margin="0,15,30,0" d:LayoutOverrides="Width" HorizontalAlignment="Right">
             <Label Content="Logged in as" Margin="0" FontSize="13.333" Foreground="#CC000000"/>
@@ -40,41 +78,11 @@
                     <Label Content="Capacity" HorizontalAlignment="Left" Style="{DynamicResource formLabel}" Grid.Row="4"/>
                     <Label Content="Budget" HorizontalAlignment="Left" Style="{DynamicResource formLabel}" Grid.Row="5"/>
                     <Label Content="Visible to Public?" HorizontalAlignment="Left" Style="{DynamicResource formLabel}" Grid.Row="6"/>
-                    <DatePicker x:Name="eventDatePicker" Grid.Column="1" HorizontalAlignment="Left" FontSize="14.667" BorderThickness="1" Height="30" Width="120" VerticalAlignment="Top" />
+                    <DatePicker x:Name="eventDatePicker" Grid.Column="1" HorizontalAlignment="Left" FontSize="14.667" BorderThickness="1" Height="30" Width="120" VerticalAlignment="Top" SelectedDate="{x:Static sys:DateTime.Now}" DisplayDateStart="{x:Static sys:DateTime.Now}" />
                     <StackPanel Orientation="Horizontal" Grid.Row="1" Grid.Column="1" >
-                        <ComboBox x:Name="eventStartTimeBox" HorizontalAlignment="Left" d:LayoutOverrides="Height" VerticalAlignment="Top">
-                            <ComboBoxItem Content="08.00 AM" IsSelected="True" d:IsHidden="True"/>
-                            <ComboBoxItem Content="09:00 AM" />
-                            <ComboBoxItem Content="10:00 AM" />
-                            <ComboBoxItem Content="11:00 AM" />
-                            <ComboBoxItem Content="12:00 AM" />
-                            <ComboBoxItem Content="01:00 PM" />
-                            <ComboBoxItem Content="02:00 PM" />
-                            <ComboBoxItem Content="03:00 PM" />
-                            <ComboBoxItem Content="04:00 PM" />
-                            <ComboBoxItem Content="05:00 PM" />
-                            <ComboBoxItem Content="06:00 PM" />
-                            <ComboBoxItem Content="07:00 PM" />
-                            <ComboBoxItem Content="08:00 PM" />
-                            <ComboBoxItem Content="09:00 PM" />
-                            <ComboBoxItem Content="10:00 PM" />
-                        </ComboBox>
+                        <ComboBox x:Name="eventStartTimeBox" HorizontalAlignment="Left" d:LayoutOverrides="Height" VerticalAlignment="Top" ItemsSource="{Binding Source={StaticResource startHours}}" ItemStringFormat="t" SelectedIndex="0" />
                         <Label Content="to" Grid.Column="1" HorizontalAlignment="Left" d:LayoutOverrides="Height" VerticalAlignment="Top" Margin="10,0" FontSize="14.667"/>
-                        <ComboBox x:Name="eventEndTimeBox" HorizontalAlignment="Left" d:LayoutOverrides="Height" VerticalAlignment="Top">
-                            <ComboBoxItem Content="09.00 AM" IsSelected="True" d:IsHidden="True"/>
-                            <ComboBoxItem Content="10:00 AM" />
-                            <ComboBoxItem Content="11:00 AM" />
-                            <ComboBoxItem Content="12:00 AM" />
-                            <ComboBoxItem Content="01:00 PM" />
-                            <ComboBoxItem Content="02:00 PM" />
-                            <ComboBoxItem Content="03:00 PM" />
-                            <ComboBoxItem Content="04:00 PM" />
-                            <ComboBoxItem Content="05:00 PM" />
-                            <ComboBoxItem Content="06:00 PM" />
-                            <ComboBoxItem Content="07:00 PM" />
-                            <ComboBoxItem Content="08:00 PM" />
-                            <ComboBoxItem Content="09:00 PM" />
-                            <ComboBoxItem Content="10:00 PM" />
+                        <ComboBox x:Name="eventEndTimeBox" HorizontalAlignment="Left" d:LayoutOverrides="Height" VerticalAlignment="Top" ItemsSource="{Binding Source={StaticResource endHours}}" ItemStringFormat="t" SelectedIndex="0">
                         </ComboBox>
                     </StackPanel>
                     <ComboBox x:Name="eventVenueBox" HorizontalAlignment="Left"  d:LayoutOverrides="Height" VerticalAlignment="Top" Grid.Column="1" Grid.Row="2" Width="250"
