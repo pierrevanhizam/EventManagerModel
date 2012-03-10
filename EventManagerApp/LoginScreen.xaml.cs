@@ -21,6 +21,7 @@ namespace EventManagerApp
     public partial class LoginScreen : Page
     {
         private List<model.Event> _upcomingEventsList;
+        private int _monthToBeDisplayed;
 
         public LoginScreen()
         {
@@ -31,7 +32,8 @@ namespace EventManagerApp
 
         private void GetUpcomingEvents()
         {
-            this._upcomingEventsList = model.DomainModels.EventModel.getAllByMonth(3);
+            this._monthToBeDisplayed = DateTime.Now.Month;
+            this._upcomingEventsList = model.DomainModels.EventModel.getAllByMonth(_monthToBeDisplayed);
         }
 
         // Method to validate user login information.
@@ -49,13 +51,23 @@ namespace EventManagerApp
         // Event handler for 'Previous' button.
         private void PrevButton_Click(object sender, System.Windows.RoutedEventArgs e)
         {
-            // TODO: Get events from the previous month.
+            this._upcomingEventsList = model.DomainModels.EventModel.getAllByMonth(_monthToBeDisplayed-1);
+            if (this._upcomingEventsList.Count > 0)
+            {
+                this.upcomingEventsListBox.ItemsSource = this._upcomingEventsList;
+                this._monthToBeDisplayed--;
+            }
         }
 
         // Event handler for 'Next' button.
         private void NextButton_Click(object sender, System.Windows.RoutedEventArgs e)
         {
-            // TODO: Get events from the next month.
+            this._upcomingEventsList = model.DomainModels.EventModel.getAllByMonth(_monthToBeDisplayed + 1);
+            if (this._upcomingEventsList.Count > 0)
+            {
+                this.upcomingEventsListBox.ItemsSource = this._upcomingEventsList;
+                this._monthToBeDisplayed++;
+            }
         }
 
         // Event handler when user clicks on 'Login' button.
