@@ -11,19 +11,23 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using model = EventManagerPro.Model;
 
 namespace EventManagerApp
 {
     /// <summary>
-    /// Interaction logic for MainWindow.xaml
+    /// Interaction logic for EventsScreen.xaml
     /// </summary>
-    public partial class MainWindow : Window
+    public partial class EventsScreen : Page
     {
-        public MainWindow()
+
+        private List<model.Event> _upcomingEventsList;
+
+        public EventsScreen()
         {
             InitializeComponent();
-            //this._mainFrame.Navigate(new Uri("EditEventScreen.xaml", UriKind.Relative));
-            this._mainFrame.Navigate(new Uri("EventsScreen.xaml", UriKind.Relative));
+            this._upcomingEventsList = new List<model.Event>();
+            this.upcomingEventsListGrid.ItemsSource = this._upcomingEventsList;
         }
     }
 }

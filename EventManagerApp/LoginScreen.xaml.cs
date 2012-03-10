@@ -67,10 +67,8 @@ namespace EventManagerApp
             if (this._validateUser(matricId, password))
             {
                 Console.WriteLine("authentication successful");
-
-                // Navigate to EventsScreen.xaml with user ID for authentication.
-                // int userID = ?;
-                // this.NavigationService.Navigate(new Uri("EventsScreen.xaml"), UriKind.Relative, userID);
+                model.Student student = model.DomainModels.StudentModel.getByMatricId(matricId);
+                //this.NavigationService.Navigate(new Uri("EventsScreen.xaml"), UriKind.Relative, student);
             }
             else
             {
