@@ -5,6 +5,24 @@
 	x:Name="Window"
 	Title="EventsAdministratorPro" 
     WindowStartupLocation="CenterScreen" ResizeMode="CanMinimize" Width="1024" Height="768">
+    <Window.Resources>
+        <!-- Storyboards -->
+        <Storyboard x:Key="PageFadeOut">
+            <DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.Opacity)" Storyboard.TargetName="_mainFrame">
+                <EasingDoubleKeyFrame KeyTime="0:0:0.3" Value="0"/>
+            </DoubleAnimationUsingKeyFrames>
+        </Storyboard>
+        <Storyboard x:Key="PageFadeIn">
+            <DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.Opacity)" Storyboard.TargetName="_mainFrame">
+                <EasingDoubleKeyFrame KeyTime="0" Value="0"/>
+                <EasingDoubleKeyFrame KeyTime="0:0:0.3" Value="1"/>
+            </DoubleAnimationUsingKeyFrames>
+            <ThicknessAnimationUsingKeyFrames Storyboard.TargetProperty="(FrameworkElement.Margin)" Storyboard.TargetName="_mainFrame">
+                <EasingThicknessKeyFrame KeyTime="0" Value="-100,0,0,0"/>
+                <EasingThicknessKeyFrame KeyTime="0:0:0.3" Value="0"/>
+            </ThicknessAnimationUsingKeyFrames>
+        </Storyboard>
+    </Window.Resources>
     <DockPanel>
         <Frame x:Name="_mainFrame" Source="LoginScreen.xaml" NavigationUIVisibility="Hidden" />
     </DockPanel>

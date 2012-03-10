@@ -49,7 +49,7 @@
         <StackPanel Orientation="Horizontal" Margin="0,15,30,0" d:LayoutOverrides="Width" HorizontalAlignment="Right">
             <Label Content="Logged in as" Margin="0" FontSize="13.333" Foreground="#CC000000"/>
             <Label x:Name="loggedInUserLabel" FontWeight="Bold" Content="Melvin" Padding="0,5" FontSize="13.333"/>
-            <Button x:Name="logoutButton" Content="LOGOUT" Padding="8,0" Margin="10,0,0,0" FontSize="12" Background="#FF333333"/>
+            <Button x:Name="logoutButton" Content="LOGOUT" Padding="8,0" Margin="10,0,0,0" FontSize="12" Background="#FF333333" Click="logoutButton_Click"/>
         </StackPanel>
         <Label x:Name="eventActionTitle" FontSize="32" HorizontalAlignment="Left" d:LayoutOverrides="HorizontalAlignment, GridBox" Content="{Binding Title, ElementName=Page}" Margin="30,10" Padding="0,5"/>
         <TextBox TextWrapping="Wrap" Text="Event Name" Margin="30,10,30,0" FontSize="21.333" Width="500" HorizontalAlignment="Left" Padding="2" Name="eventNameBox" />
@@ -101,7 +101,7 @@
                     <CheckBox x:Name="eventVisibleCheckbox" Content="Check this if you wish to have your event displayed on the front page." Grid.Row="6" Grid.Column="1" VerticalAlignment="Top"/>
                     <StackPanel Orientation="Horizontal" Grid.Row="7" Grid.Column="0" >
                         <Button x:Name="saveButton" Content="Save" HorizontalAlignment="Left" d:LayoutOverrides="Height" VerticalAlignment="Top" IsDefault="True" FontSize="18.667" FontWeight="Normal" Padding="20,5,20,7" Click="saveButton_Click" />
-                        <Button x:Name="cancelButton" Content="Cancel" HorizontalAlignment="Left" VerticalAlignment="Top" FontSize="18.667" FontWeight="Normal" Padding="20,5,20,7" IsCancel="True" Margin="10,0,0,0"/>
+                        <Button x:Name="cancelButton" Content="Cancel" HorizontalAlignment="Left" VerticalAlignment="Top" FontSize="18.667" FontWeight="Normal" Padding="20,5,20,7" IsCancel="True" Margin="10,0,0,0" Click="cancelButton_Click" />
                     </StackPanel>
                 </Grid>
             </TabItem>

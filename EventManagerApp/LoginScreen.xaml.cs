@@ -12,6 +12,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using model = EventManagerPro.Model;
+using System.Windows.Media.Animation;
 
 namespace EventManagerApp
 {
@@ -21,13 +22,13 @@ namespace EventManagerApp
     public partial class LoginScreen : Page
     {
         private List<model.Event> _upcomingEventsList;
-        public Dictionary<string,int> _monthFiltersDict { get; set;}
+        public Dictionary<string, DateTime> _monthFiltersDict { get; set; }
 
         public LoginScreen()
         {
             this.InitializeComponent();
             this._createMonthFilters();
-            this._getUpcomingEvents(DateTime.Now.Month);
+            this._getUpcomingEvents(DateTime.Now);
         }
 
         private void UpcomingEventsFilter_SelectionChanged(object sender, System.Windows.Controls.SelectionChangedEventArgs e)
@@ -36,11 +37,11 @@ namespace EventManagerApp
             if (!filter.Equals("View By Month"))
             {
                 DateTime filterMonth = DateTime.Parse(filter);
-                this._getUpcomingEvents(filterMonth.Month);
+                this._getUpcomingEvents(filterMonth);
             }
             else
             {
-                this._getUpcomingEvents(DateTime.Now.Month);
+                this._getUpcomingEvents(DateTime.Now);
             }
         }
 
@@ -68,7 +69,14 @@ namespace EventManagerApp
             {
                 Console.WriteLine("authentication successful");
                 model.Student student = model.DomainModels.StudentModel.getByMatricId(matricId);
-                this.NavigationService.Navigate(new Uri("EventsScreen.xaml", UriKind.Relative));
+
+                // Create NavigationData object to store values and transport them between pages.
+                NavigationData navData = new NavigationData();
+                navData.loggedInUser = student;
+
+                EventsScreen eventsScreen = new EventsScreen();
+                eventsScreen.SetupNavigationHandler(this.NavigationService);
+                this.NavigationService.Navigate(eventsScreen, navData);
             }
             else
             {
@@ -84,21 +92,40 @@ namespace EventManagerApp
 
         private void _createMonthFilters()
         {
-            var month = DateTime.Now;
-            this._monthFiltersDict = new Dictionary<string,int>();
-            this._monthFiltersDict.Add("View By Month",0);
-            for(int i=1;i<=12;i++)
-            {
-                month = month.AddMonths(1);
-                this._monthFiltersDict.Add(month.ToString("y"),i);
-            }
+            var dateCounter = DateTime.Now;
+            this._monthFiltersDict = new Dictionary<string,DateTime>();
 
+            // Add default option.
+            this._monthFiltersDict.Add(dateCounter.ToString("y"), dateCounter);
+            
+            for (int i = 0; i < 12; i++)
+            {
+                dateCounter = dateCounter.AddMonths(1);
+                this._monthFiltersDict.Add(dateCounter.ToString("y"), dateCounter);
+            }
         }
 
-        private void _getUpcomingEvents(int month)
+        private void _getUpcomingEvents(DateTime dateFilter)
         {
-            this._upcomingEventsList = model.DomainModels.EventModel.getAllByMonth(month);
+            this._upcomingEventsList = model.DomainModels.EventModel.getAllByYearMonth(dateFilter);
             this.upcomingEventsListBox.ItemsSource = this._upcomingEventsList;
+
+            if (this._upcomingEventsList.Count > 0)
+            {
+                this.noUpcomingEventsNotice.Visibility = Visibility.Collapsed;
+                this.upcomingEventsScrollViewer.Visibility = Visibility.Visible;
+
+                Storyboard sb = (Storyboard)this.FindResource("ContentFadeIn");
+                this.upcomingEventsScrollViewer.BeginStoryboard(sb);
+            }
+            else
+            {
+                this.noUpcomingEventsNotice.Visibility = Visibility.Visible;
+                this.upcomingEventsScrollViewer.Visibility = Visibility.Collapsed;
+
+                Storyboard sb = (Storyboard)this.FindResource("ContentFadeIn");
+                this.noUpcomingEventsNotice.BeginStoryboard(sb);
+            }  
         }
 
         private bool _validateUser(string matricId, string password)
