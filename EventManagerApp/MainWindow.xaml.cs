@@ -11,6 +11,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using System.Windows.Media.Animation;
 
 namespace EventManagerApp
 {
@@ -22,8 +23,22 @@ namespace EventManagerApp
         public MainWindow()
         {
             InitializeComponent();
+            this._mainFrame.Navigating += new NavigatingCancelEventHandler(_mainFrame_Navigating);
+            this._mainFrame.Navigated += new NavigatedEventHandler(_mainFrame_Navigated);
             //this._mainFrame.Navigate(new Uri("EditEventScreen.xaml", UriKind.Relative));
             //this._mainFrame.Navigate(new Uri("EventsScreen.xaml", UriKind.Relative));
+        }
+
+        void _mainFrame_Navigated(object sender, NavigationEventArgs e)
+        {
+            Storyboard sb = (Storyboard)this.FindResource("PageFadeIn");
+            sb.Begin();
+        }
+
+        void _mainFrame_Navigating(object sender, NavigatingCancelEventArgs e)
+        {
+            Storyboard sb = (Storyboard)this.FindResource("PageFadeOut");
+            sb.Begin();
         }
     }
 }
