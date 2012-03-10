@@ -20,9 +20,13 @@
                     </StackPanel>
                     <StackPanel Height="Auto" Margin="15,0,0,0">
                         <Label x:Name="upcomingEventTitleLabel" Height="Auto" FontSize="21.333" Padding="0" Content="{Binding Name}"/>
-                        <Label x:Name="upcomingEventTimeLabel_Start" Height="Auto" FontSize="13.333" Padding="0" Content="{Binding Path=Start,Converter={StaticResource dateSplitter},ConverterParameter=time}" Foreground="#7F000000" />
-                        <Label x:Name="upcomingEventTimeLabel_End" Height="Auto" FontSize="13.333" Padding="0" Content="{Binding Path=End,Converter={StaticResource dateSplitter},ConverterParameter=time}" Foreground="#7F000000" />
+						<StackPanel Orientation="Horizontal" >
+							<Label x:Name="upcomingEventTimeLabel_Start" FontSize="13.333" Padding="0" Content="{Binding Path=Start,Converter={StaticResource dateSplitter},ConverterParameter=time}" Foreground="#7F000000" />
+                        	<Label Content=" - " FontSize="13.333" Foreground="#7F000000" Padding="0" />
+							<Label x:Name="upcomingEventTimeLabel_End" FontSize="13.333" Padding="0" Content="{Binding Path=End,Converter={StaticResource dateSplitter},ConverterParameter=time}" Foreground="#7F000000" />	
+						</StackPanel>
                         <TextBlock Height="Auto" TextWrapping="Wrap" Width="Auto" Margin="0,5,20,0" FontSize="13.333" Text="{Binding Description}" Foreground="#CC000000"/>
+                        
                     </StackPanel>
                 </DockPanel>
                 <Separator Height="50" Margin="0,0,0,0" Width="Auto" Background="#FFDDDDDD"/>
