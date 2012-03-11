@@ -60,7 +60,7 @@
                             <DataGridTextColumn Header="EVENT NAME" Width="*" Binding="{Binding Name}" />
                             <DataGridTextColumn Header="DATE" Width="100" Binding="{Binding Path=Start,Converter={StaticResource dateSplitter},ConverterParameter=date}" />
                             <DataGridTextColumn Header="TIME" Width="120" Binding="{Binding Path=Start,Converter={StaticResource dateSplitter},ConverterParameter=time}" />
-                            <DataGridTextColumn Header="VENUE" Width="250" Binding="{Binding Venue}" />
+                            <DataGridTextColumn Header="VENUE" Width="250" Binding="{Binding Venue}" SortMemberPath="Name"  />
                             <!--<DataGridTemplateColumn Header="ACTION(S)" CellTemplate="{DynamicResource ActionCellTemplate}" />-->
                         </DataGrid.Columns>
                     </DataGrid>
@@ -75,7 +75,7 @@
                             <DataGridTextColumn Header="EVENT NAME" Width="*" Binding="{Binding Name}" />
                             <DataGridTextColumn Header="DATE" Width="100" Binding="{Binding Path=Start,Converter={StaticResource dateSplitter},ConverterParameter=date}" />
                             <DataGridTextColumn Header="TIME" Width="120" Binding="{Binding Path=Start,Converter={StaticResource dateSplitter},ConverterParameter=time}" />
-                            <DataGridTextColumn Header="VENUE" Width="250" Binding="{Binding Venue}" />
+                            <DataGridTextColumn Header="VENUE" Width="250" Binding="{Binding Venue}" SortMemberPath="Name" />
                             <DataGridTemplateColumn Header="ACTION(S)" CellTemplate="{StaticResource ActionCellTemplate}" />
                         </DataGrid.Columns>
                     </DataGrid>
