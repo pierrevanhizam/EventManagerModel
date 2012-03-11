@@ -115,6 +115,7 @@ namespace EventManagerApp
             if (this.ID != -1)
             {
                 // @TODO: Edit existing entry to database.
+                model.DomainModels.EventModel.update(this.ID, this._loggedInUser.MatricId, this.eventName, 1, this.start, this.end, this.capacity, this.budget, this.description, this.visibleOnLoginPage);
             }
             else
             {
