@@ -86,7 +86,7 @@
                         </ComboBox>
                     </StackPanel>
                     <ComboBox x:Name="eventVenueBox" HorizontalAlignment="Left"  d:LayoutOverrides="Height" VerticalAlignment="Top" Grid.Column="1" Grid.Row="2" Width="250"
-                              ItemsSource="{Binding venues}" SelectedIndex="0">
+                              ItemsSource="{Binding venues}">
                         <!--<ComboBoxItem Content="Lecture Theatre 5" IsSelected="True" d:IsHidden="True"/>-->
                     </ComboBox>
                     <TextBox x:Name="eventDescText" Grid.Column="1" HorizontalAlignment="Left" Grid.Row="3" TextWrapping="Wrap" VerticalAlignment="Top" Width="400" Height="80" FontSize="13.333" Text="This is a redunant example for a description for an event."/>

@@ -21,6 +21,18 @@ namespace EventManagerPro.Model.DomainModels
             }
         }
 
+        public static Venue getByID(int id)
+        {
+            using (var context = new EventContainer())
+            {
+                var venues = from v in context.Venues
+                             where v.Id == id
+                             select v;
+
+                return venues.FirstOrDefault();
+            }  
+        }
+
         public static List<Venue> getAll()
         {
             using (var context = new EventContainer())

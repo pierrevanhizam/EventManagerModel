@@ -17,6 +17,14 @@
         		<EasingDoubleKeyFrame KeyTime="0:0:0.4" Value="45"/>
         	</DoubleAnimationUsingKeyFrames>
         </Storyboard>
+        <Style x:Key="StatusMessageNoticeStyle" TargetType="Label">
+            <Setter Property="Background" Value="#FF52BE00" />
+            <Setter Property="BorderBrush" Value="#FF458712" />
+        </Style>
+        <Style x:Key="StatusMessageErrorStyle" TargetType="Label">
+            <Setter Property="Background" Value="#FFCC0000" />
+            <Setter Property="BorderBrush" Value="#FFFF0000" />
+        </Style>
         <DataTemplate x:Key="ActionCellTemplate">
             <StackPanel Orientation="Horizontal">
                 <Button Content="EDIT" HorizontalAlignment="Left" Width="Auto" d:LayoutOverrides="Height" FontWeight="Normal" FontSize="12" Padding="8,5" Tag="{Binding Id}" Click="editButton_Click" />
@@ -37,7 +45,7 @@
             <TextBlock TextWrapping="Wrap" Text="Events Management" FontSize="32" HorizontalAlignment="Left" d:LayoutOverrides="HorizontalAlignment, GridBox"/>
             <Button Content="Create Event" VerticalAlignment="Center" HorizontalAlignment="Right" FontSize="16" FontWeight="Normal" Margin="20,0,0,0" Padding="10,7,10,9" Name="createEventBtn" Click="createEventBtn_Click" />
         </StackPanel>
-        <Label x:Name="statusMessage" Margin="30,20,30,0" Padding="10" Background="#FF52BE00" Foreground="White" FontSize="14.667" Content="This is a Status Message." BorderThickness="1" BorderBrush="#FF458712" Height="0" VerticalAlignment="Center"/>
+        <Label x:Name="statusMessage" Margin="30,20,30,0" Padding="10" Foreground="White" FontSize="14.667" Content="This is a Status Message." BorderThickness="1" Height="0" VerticalAlignment="Center" Style="{StaticResource StatusMessageNoticeStyle}" />
         <TabControl DockPanel.Dock="Right" Margin="30,15,30,0" Height="538">
             <TabItem Header="Upcoming" IsSelected="True">
                 <StackPanel Height="500">

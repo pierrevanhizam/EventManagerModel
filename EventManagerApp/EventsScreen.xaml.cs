@@ -83,6 +83,15 @@ namespace EventManagerApp
 
             if (navData.statusCode != NavigationData.STATUS_NONE)
             {
+                if (navData.statusCode == NavigationData.STATUS_NOTICE)
+                {
+                    this.statusMessage.Style = (Style)this.FindResource("StatusMessageNoticeStyle");
+                }
+                else if (navData.statusCode == NavigationData.STATUS_ERROR)
+                {
+                    this.statusMessage.Style = (Style)this.FindResource("StatusMessageErrorStyle");
+                }
+
                 this.statusMessage.Content = navData.statusMessage;
                 Storyboard sb = (Storyboard)this.FindResource("StatusMessageFadeIn");
                 this.statusMessage.BeginStoryboard(sb);
@@ -114,6 +123,12 @@ namespace EventManagerApp
                 Button b = (Button)e.Source;
                 model.DomainModels.EventModel.deleteById(Convert.ToInt32(b.Tag));
                 this.updateScreen();
+
+                // Display delete notice.
+                this.statusMessage.Content = "Your event has been successfully deleted.";
+                this.statusMessage.Style = (Style)this.FindResource("StatusMessageErrorStyle");
+                Storyboard sb = (Storyboard)this.FindResource("StatusMessageFadeIn");
+                this.statusMessage.BeginStoryboard(sb);
             } 
         }
 

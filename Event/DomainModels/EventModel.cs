@@ -54,6 +54,31 @@ namespace EventManagerPro.Model.DomainModels
             }
         }
 
+        public static Event update(int id, string matricId, string name, int venueId, DateTime start, DateTime end, int capacity, int budget = 0, string description = "", short viewAtLoginPage = 1)
+        {
+            using (var context = new EventContainer())
+            {
+                Event updatedEvent = new Event
+                {
+                    Id = id,
+                    StudentMatricId = matricId,
+                    Name = name,
+                    Description = description,
+                    Start = start,
+                    End = end,
+                    Capacity = capacity,
+                    Budget = budget,
+                    VenueId = venueId,
+                    TimeCreated = DateTime.Now,
+                    ViewAtLoginPage = viewAtLoginPage,
+                };
+                context.Events.Attach(updatedEvent);
+                context.Entry(updatedEvent).State = EntityState.Modified;
+                context.SaveChanges();
+                return updatedEvent;
+            }
+        }
+
         public static void deleteById(int id)
         {
 
