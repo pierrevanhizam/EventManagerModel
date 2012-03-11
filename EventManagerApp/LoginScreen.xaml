@@ -44,7 +44,7 @@
     <DockPanel Height="768">
         <StackPanel Width="320" HorizontalAlignment="Left" Background="{DynamicResource {x:Static SystemColors.ControlLightBrushKey}}">
             <TextBlock TextWrapping="Wrap" Text="Welcome!" Margin="30,70,30,10" FontSize="26.667"/>
-            <TextBlock Margin="30,0,30,0" TextWrapping="Wrap" FontSize="14.667" Foreground="#CC000000" TextAlignment="Justify" Text="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla vitae velit arcu. Sed eget dolor id lacus ornare placerat. Maecenas pulvinar nibh urna, id congue augue."/>
+            <TextBlock Margin="30,0,30,0" TextWrapping="Wrap" FontSize="14.667" Foreground="#CC000000" TextAlignment="Justify" Text="Event Manager Pro is an effective desktop application which helps students to plan and better organize events as well as view any upcoming events"/>
             <TextBlock Margin="30,30,30,0" TextWrapping="Wrap" FontSize="14.667" TextAlignment="Justify" Foreground="#CC000000" Text="•  View all available events&#xa;•  View all upcoming events&#xa;•  Register all events"/>
             <TextBlock TextWrapping="Wrap" Text="Login" Margin="30,50,30,10" FontSize="26.667"/>
             <Label Content="Username" FontSize="13.333" Margin="30,0" Padding="0,0,0,5" Foreground="#7F000000"/>
