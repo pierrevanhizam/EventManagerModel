@@ -78,19 +78,12 @@ namespace EventManagerApp
             {
                 this._loggedInUser = navData.loggedInUser;
                 this.loggedInUserLabel.Content = this._loggedInUser.Name;
-
-                // Load events based on logged in user (created events for now, registered events in the future).
-                this._createdEventsList = model.DomainModels.EventModel.getByOwner(_loggedInUser.MatricId);
-                this._upcomingEventsList = model.DomainModels.EventModel.getNotByOwner(_loggedInUser.MatricId);
-
-                this.upcomingEventsListGrid.ItemsSource = this._upcomingEventsList;
-                this.createdEventsListGrid.ItemsSource = this._createdEventsList;
+                this.updateScreen();
             }
 
             if (navData.statusCode != NavigationData.STATUS_NONE)
             {
                 this.statusMessage.Content = navData.statusMessage;
-
                 Storyboard sb = (Storyboard)this.FindResource("StatusMessageFadeIn");
                 this.statusMessage.BeginStoryboard(sb);
             }
@@ -116,13 +109,22 @@ namespace EventManagerApp
             MessageBoxResult result = MessageBox.Show("Are you sure you want to delete this event? THIS CANNOT BE UNDONE!", "Delete Event", MessageBoxButton.YesNo, MessageBoxImage.Question);
 
             if (result == MessageBoxResult.Yes)
-            {
-                // Delete the event.
-
+            {   
                 // Get event ID that user has requested to delete.
                 Button b = (Button)e.Source;
-                Console.WriteLine(b.Tag.ToString());
+                model.DomainModels.EventModel.deleteById(Convert.ToInt32(b.Tag));
+                this.updateScreen();
             } 
+        }
+
+        protected void updateScreen()
+        {
+            // Load events based on logged in user (created events for now, registered events in the future).
+            this._createdEventsList = model.DomainModels.EventModel.getByOwner(_loggedInUser.MatricId);
+            this._upcomingEventsList = model.DomainModels.EventModel.getNotByOwner(_loggedInUser.MatricId);
+
+            this.upcomingEventsListGrid.ItemsSource = this._upcomingEventsList;
+            this.createdEventsListGrid.ItemsSource = this._createdEventsList;
         }
     }
 }

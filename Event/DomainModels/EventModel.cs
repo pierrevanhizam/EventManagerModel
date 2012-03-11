@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Linq;
 using System.Text;
 
@@ -50,6 +51,17 @@ namespace EventManagerPro.Model.DomainModels
                     context.SaveChanges();
                     return true;
                 }
+            }
+        }
+
+        public static void deleteById(int id)
+        {
+            using (var context = new EventContainer())
+            {
+                var tb_delete_event = new Event() { Id = id };
+                context.Events.Attach(tb_delete_event);
+                context.Events.Remove(tb_delete_event);
+                context.SaveChanges();
             }
         }
 
