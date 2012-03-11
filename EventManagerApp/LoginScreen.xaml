@@ -29,8 +29,9 @@
 						<StackPanel Orientation="Horizontal" >
 							<Label x:Name="upcomingEventTimeLabel_Start" FontSize="13.333" Padding="0" Content="{Binding Path=Start,Converter={StaticResource dateSplitter},ConverterParameter=time}" Foreground="#7F000000" />
                         	<Label Content=" - " FontSize="13.333" Foreground="#7F000000" Padding="0" />
-							<Label x:Name="upcomingEventTimeLabel_End" FontSize="13.333" Padding="0" Content="{Binding Path=End,Converter={StaticResource dateSplitter},ConverterParameter=time}" Foreground="#7F000000" />	
+							<Label x:Name="upcomingEventTimeLabel_End" FontSize="13.333" Padding="0" Content="{Binding Path=End,Converter={StaticResource dateSplitter},ConverterParameter=time}" Foreground="#7F000000" />
 						</StackPanel>
+                        <Label x:Name="upcomingEventVenueLabel"  Content="{Binding Path=Venue.Name}" FontSize="13.333" Foreground="#8F000000" Padding="0" Margin="0,5" />
                         <TextBlock Height="Auto" TextWrapping="Wrap" Width="Auto" Margin="0,5,20,0" FontSize="13.333" Text="{Binding Description}" Foreground="#CC000000"/>
                         
                     </StackPanel>
