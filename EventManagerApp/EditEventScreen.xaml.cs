@@ -30,6 +30,7 @@ namespace EventManagerApp
         public string description;
         public string eventName;
         public short visibleOnLoginPage;
+        public int venueID;
         private model.Student _loggedInUser;
 
         public EditEventScreen()
@@ -78,6 +79,17 @@ namespace EventManagerApp
                     this.eventCapacityBox.Text = curEvent.Capacity.ToString();
                     this.eventDatePicker.SelectedDate = curEvent.Start;
 
+                    int count = 0;
+                    while(count < this.venues.Count)
+                    {
+                        if (this.venues[count].Id == curEvent.VenueId)
+                        {
+                            this.eventVenueBox.SelectedIndex = count;
+                            break;
+                        }
+                        count++;
+                    }
+
                     this.eventStartTimeBox.SelectedValue = new DateTime().AddHours(curEvent.Start.Hour);
                     this.eventEndTimeBox.SelectedValue = new DateTime().AddHours(curEvent.End.Hour);
 
@@ -93,6 +105,9 @@ namespace EventManagerApp
             this.description = eventDescText.Text;
             this.budget = Convert.ToInt32(eventBudgetBox.Text);
             this.capacity = Convert.ToInt32(eventCapacityBox.Text);
+
+            model.Venue selectedVenue = (model.Venue)this.eventVenueBox.SelectedValue;
+            this.venueID = selectedVenue.Id;
 
             // get selected date from DatePicker (default is NOW())
             DateTime selected_date = (DateTime)eventDatePicker.SelectedDate;
@@ -114,13 +129,13 @@ namespace EventManagerApp
 
             if (this.ID != -1)
             {
-                // @TODO: Edit existing entry to database.
-                model.DomainModels.EventModel.update(this.ID, this._loggedInUser.MatricId, this.eventName, 1, this.start, this.end, this.capacity, this.budget, this.description, this.visibleOnLoginPage);
+                // Update entry to database.
+                model.DomainModels.EventModel.update(this.ID, this._loggedInUser.MatricId, this.eventName, this.venueID, this.start, this.end, this.capacity, this.budget, this.description, this.visibleOnLoginPage);
             }
             else
             {
                 // Create new event entry to database.
-                model.DomainModels.EventModel.create(this._loggedInUser.MatricId, this.eventName, 1, this.start, this.end, this.capacity, this.budget, this.description, this.visibleOnLoginPage);
+                model.DomainModels.EventModel.create(this._loggedInUser.MatricId, this.eventName, this.venueID, this.start, this.end, this.capacity, this.budget, this.description, this.visibleOnLoginPage);
             }
             
             

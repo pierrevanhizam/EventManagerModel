@@ -31,6 +31,29 @@ namespace EventManagerPro.Model.DomainModels
             }
         }
 
+        public static Boolean registerGuest(string matricId, int eventId)
+        {
+            using (var context = new EventContainer())
+            {
+                var runningEvent = (from e in context.Events.Include("Venue").Include("Owner").Include("Guests")
+                                    where e.Id == eventId
+                                    select e).FirstOrDefault();
+                var student = (from s in context.Students
+                               where s.MatricId == matricId
+                               select s).FirstOrDefault();
+                if (runningEvent == null || student == null)
+                {
+                    return false;
+                }
+                else
+                {
+                    runningEvent.Guests.Add(student);
+                    context.SaveChanges();
+                    return true;
+                }
+            }
+        }
+
         public static Event update(int id, string matricId, string name, int venueId, DateTime start, DateTime end, int capacity, int budget = 0, string description = "", short viewAtLoginPage = 1)
         {
             using (var context = new EventContainer())
@@ -53,29 +76,6 @@ namespace EventManagerPro.Model.DomainModels
                 context.Entry(updatedEvent).State = EntityState.Modified;
                 context.SaveChanges();
                 return updatedEvent;
-            }
-        }
-
-        public static Boolean registerGuest(string matricId, int eventId)
-        {
-            using (var context = new EventContainer())
-            {
-                var runningEvent = (from e in context.Events.Include("Venue").Include("Owner").Include("Guests")
-                                    where e.Id == eventId
-                                    select e).FirstOrDefault();
-                var student = (from s in context.Students
-                               where s.MatricId == matricId
-                               select s).FirstOrDefault();
-                if (runningEvent == null || student == null)
-                {
-                    return false;
-                }
-                else
-                {
-                    runningEvent.Guests.Add(student);
-                    context.SaveChanges();
-                    return true;
-                }
             }
         }
 
