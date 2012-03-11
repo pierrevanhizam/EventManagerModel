@@ -56,12 +56,16 @@ namespace EventManagerPro.Model.DomainModels
 
         public static void deleteById(int id)
         {
+
+            Console.WriteLine(id);
             using (var context = new EventContainer())
             {
-                var tb_delete_event = new Event() { Id = id };
-                context.Events.Attach(tb_delete_event);
-                context.Events.Remove(tb_delete_event);
-                context.SaveChanges();
+                //var tb_delete_event = new Event() { Id = id };
+                //context.Events.Attach(tb_delete_event);
+                var tb_delete_event = context.Events.Find(new List<System32.Int32>() { id });
+                Console.WriteLine(tb_delete_event.Guests.ToList().FirstOrDefault());
+                    //context.Events.Remove(tb_delete_event);
+                //context.SaveChanges();
             }
         }
 

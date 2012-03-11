@@ -11,5 +11,6 @@ C:\Users\zen9\Documents\Visual Studio 2010\Projects\EventManagerApp\Event\bin\De
 C:\Users\zen9\Documents\Visual Studio 2010\Projects\EventManagerApp\Event\bin\Debug\Eventmodel.pdb
 C:\Users\zen9\Documents\Visual Studio 2010\Projects\EventManagerApp\Event\bin\Debug\EntityFramework.dll
 C:\Users\zen9\Documents\Visual Studio 2010\Projects\EventManagerApp\Event\bin\Debug\EntityFramework.xml
+C:\Users\zen9\Documents\Visual Studio 2010\Projects\EventManagerApp\Event\obj\Debug\EventManagerModel.csprojResolveAssemblyReference.cache
 C:\Users\zen9\Documents\Visual Studio 2010\Projects\EventManagerApp\Event\obj\Debug\Eventmodel.exe
 C:\Users\zen9\Documents\Visual Studio 2010\Projects\EventManagerApp\Event\obj\Debug\Eventmodel.pdb
