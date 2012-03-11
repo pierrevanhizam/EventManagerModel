@@ -4,6 +4,7 @@
 	x:Class="EventManagerApp.MainWindow"
 	x:Name="Window"
 	Title="EventsAdministratorPro" 
+    Icon="Application.ico"
     WindowStartupLocation="CenterScreen" ResizeMode="CanMinimize" Width="1024" Height="768">
     <Window.Resources>
         <!-- Storyboards -->
