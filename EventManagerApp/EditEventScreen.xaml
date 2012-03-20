@@ -3,13 +3,24 @@
 	xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
 	xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
-    xmlns:metro="http://schemas.codeplex.com/elysium/theme" mc:Ignorable="d"
+    xmlns:metro="http://schemas.codeplex.com/elysium/theme"
     xmlns:sys="clr-namespace:System;assembly=mscorlib"
     xmlns:col="clr-namespace:System.Collections;assembly=mscorlib"
+	xmlns:EventManagerApp_Converters="clr-namespace:EventManagerApp.Converters" mc:Ignorable="d"
 	x:Class="EventManagerApp.EditEventScreen"
 	x:Name="Page"
 	Width="1024" Height="768" Background="{DynamicResource {x:Static SystemColors.WindowBrushKey}}">
     <Page.Resources>
+    	<DataTemplate x:Key="GuestActionCellTemplate">
+            <StackPanel Orientation="Horizontal">
+                <Button Content="DELETE" Background="Red" HorizontalAlignment="Left" Width="Auto" d:LayoutOverrides="Height" FontWeight="Normal" FontSize="12" Padding="8,5" Margin="5,0,0,0" />
+            </StackPanel>
+        </DataTemplate>
+		<DataTemplate x:Key="BudgetActionCellTemplate">
+            <StackPanel Orientation="Horizontal">
+                <Button Content="DELETE" Background="Red" HorizontalAlignment="Left" Width="Auto" d:LayoutOverrides="Height" FontWeight="Normal" FontSize="12" Padding="8,5" Margin="5,0,0,0" />
+            </StackPanel>
+        </DataTemplate>
         <col:ArrayList x:Key="startHours">
             <sys:DateTime>8:00</sys:DateTime>
             <sys:DateTime>9:00</sys:DateTime>
@@ -44,76 +55,144 @@
             <sys:DateTime>22:00</sys:DateTime>
             <sys:DateTime>23:00</sys:DateTime>
         </col:ArrayList>
+    	<EventManagerApp_Converters:DateSplitter x:Key="dateSplitter" />
     </Page.Resources>
-    <StackPanel>
-        <StackPanel Orientation="Horizontal" Margin="0,15,30,0" d:LayoutOverrides="Width" HorizontalAlignment="Right">
-            <Label Content="Logged in as" Margin="0" FontSize="13.333" Foreground="#CC000000"/>
-            <Label x:Name="loggedInUserLabel" FontWeight="Bold" Content="Melvin" Padding="0,5" FontSize="13.333"/>
-            <Button x:Name="logoutButton" Content="LOGOUT" Padding="8,0" Margin="10,0,0,0" FontSize="12" Background="#FF333333" Click="logoutButton_Click"/>
-        </StackPanel>
-        <Label x:Name="eventActionTitle" FontSize="32" HorizontalAlignment="Left" d:LayoutOverrides="HorizontalAlignment, GridBox" Content="{Binding Title, ElementName=Page}" Margin="30,10" Padding="0,5"/>
-        <TextBox TextWrapping="Wrap" Text="Event Name" Margin="30,10,30,0" FontSize="21.333" Width="500" HorizontalAlignment="Left" Padding="2" Name="eventNameBox" />
-        <TextBlock Margin="30,5" Foreground="#7F000000" Text="Guidelines for naming events will be displayed here." FontSize="13.333" Padding="5,0"></TextBlock>
-        <TabControl DockPanel.Dock="Right" Margin="30,15,30,0">
-            <TabItem Header="General" IsSelected="True">
-                <Grid Margin="10,20" Height="350">
-                    <Grid.RowDefinitions>
-                        <RowDefinition Height="0.25*"/>
-                        <RowDefinition Height="0.25*"/>
-                        <RowDefinition Height="0.25*"/>
-                        <RowDefinition Height="100"/>
-                        <RowDefinition Height="0.25*"/>
-                        <RowDefinition Height="0.25*"/>
-                        <RowDefinition Height="0.4*"/>
-                    </Grid.RowDefinitions>
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="0.2*"/>
-                        <ColumnDefinition Width="0.8*"/>
-                    </Grid.ColumnDefinitions>
-                    <Label Content="Date" HorizontalAlignment="Left" Style="{DynamicResource formLabel}" />
-                    <Label Content="Time" HorizontalAlignment="Left" Style="{DynamicResource formLabel}" Grid.Row="1"/>
-                    <Label Content="Venue" HorizontalAlignment="Left" Style="{DynamicResource formLabel}" Grid.Row="2"/>
-                    <Label Content="Description" HorizontalAlignment="Left" Style="{DynamicResource formLabel}" Grid.Row="3"/>
-                    <Label Content="Capacity" HorizontalAlignment="Left" Style="{DynamicResource formLabel}" Grid.Row="4"/>
-                    <Label Content="Budget" HorizontalAlignment="Left" Style="{DynamicResource formLabel}" Grid.Row="5"/>
-                    <Label Content="Visible to Public?" HorizontalAlignment="Left" Style="{DynamicResource formLabel}" Grid.Row="6"/>
-                    <DatePicker x:Name="eventDatePicker" Grid.Column="1" HorizontalAlignment="Left" FontSize="14.667" BorderThickness="1" Height="30" Width="120" VerticalAlignment="Top" SelectedDate="{x:Static sys:DateTime.Now}" DisplayDateStart="{x:Static sys:DateTime.Now}" />
-                    <StackPanel Orientation="Horizontal" Grid.Row="1" Grid.Column="1" >
-                        <ComboBox x:Name="eventStartTimeBox" HorizontalAlignment="Left" d:LayoutOverrides="Height" VerticalAlignment="Top" ItemsSource="{Binding Source={StaticResource startHours}}" ItemStringFormat="t" SelectedIndex="0" />
-                        <Label Content="to" Grid.Column="1" HorizontalAlignment="Left" d:LayoutOverrides="Height" VerticalAlignment="Top" Margin="10,0" FontSize="14.667"/>
-                        <ComboBox x:Name="eventEndTimeBox" HorizontalAlignment="Left" d:LayoutOverrides="Height" VerticalAlignment="Top" ItemsSource="{Binding Source={StaticResource endHours}}" ItemStringFormat="t" SelectedIndex="0">
-                        </ComboBox>
-                    </StackPanel>
-                    <ComboBox x:Name="eventVenueBox" HorizontalAlignment="Left"  d:LayoutOverrides="Height" VerticalAlignment="Top" Grid.Column="1" Grid.Row="2" Width="250"
-                              ItemsSource="{Binding venues}">
-                        <!--<ComboBoxItem Content="Lecture Theatre 5" IsSelected="True" d:IsHidden="True"/>-->
-                    </ComboBox>
-                    <TextBox x:Name="eventDescText" Grid.Column="1" HorizontalAlignment="Left" Grid.Row="3" TextWrapping="Wrap" VerticalAlignment="Top" Width="400" Height="80" FontSize="13.333" Text="This is a redunant example for a description for an event."/>
-                    <StackPanel Orientation="Horizontal" Grid.Row="4" Grid.Column="1" >
-                        <TextBox x:Name="eventCapacityBox" HorizontalAlignment="Left" TextWrapping="Wrap" VerticalAlignment="Top" FontSize="13.333" Text="500" Width="75" />
-                        <Label Content="pax" Grid.Column="1" HorizontalAlignment="Left" d:LayoutOverrides="Height" VerticalAlignment="Top" Margin="10,0" FontSize="14.667"/>
-                    </StackPanel>
-                    <StackPanel Orientation="Horizontal" Grid.Row="5" Grid.Column="1" >
-                        <Label Content="$" Grid.Column="1" HorizontalAlignment="Left" d:LayoutOverrides="Height" VerticalAlignment="Top" FontSize="14.667"/>
-                        <TextBox x:Name="eventBudgetBox" HorizontalAlignment="Left" TextWrapping="Wrap" VerticalAlignment="Top" FontSize="13.333" Text="1000" Width="75" />
-                    </StackPanel>
-                    <CheckBox x:Name="eventVisibleCheckbox" Content="Check this if you wish to have your event displayed on the front page." Grid.Row="6" Grid.Column="1" VerticalAlignment="Top"/>
-                </Grid>
-            </TabItem>
-            <TabItem Header="Budget" IsEnabled="False">
-                <StackPanel Margin="0" d:LayoutOverrides="Width" Height="565">
-
-                </StackPanel>
-            </TabItem>
-            <TabItem Header="Guest List" IsSelected="True" IsEnabled="False">
-                <StackPanel Height="560">
-                </StackPanel>
-            </TabItem>
-        </TabControl>
-		<Separator Height="30" Margin="30,0" />
-		<StackPanel Orientation="Horizontal" Grid.Row="7" Grid.Column="0" Margin="45,0" >
-        	<Button x:Name="saveButton" Content="Save" HorizontalAlignment="Left" d:LayoutOverrides="Height" VerticalAlignment="Top" IsDefault="True" FontSize="18.667" FontWeight="Normal" Padding="20,5,20,7" Click="saveButton_Click" />
-        	<Button x:Name="cancelButton" Content="Cancel" HorizontalAlignment="Left" VerticalAlignment="Top" FontSize="18.667" FontWeight="Normal" Padding="20,5,20,7" IsCancel="True" Margin="10,0,0,0" Click="cancelButton_Click" />
+	<StackPanel>
+		<StackPanel Orientation="Horizontal" Margin="0,15,30,0" d:LayoutOverrides="Width" HorizontalAlignment="Right">
+			<Label Content="Logged in as" Margin="0" FontSize="13.333" Foreground="#CC000000"/>
+			<Label x:Name="loggedInUserLabel" FontWeight="Bold" Content="Melvin" Padding="0,5" FontSize="13.333"/>
+			<Button x:Name="logoutButton" Content="LOGOUT" Padding="8,0" Margin="10,0,0,0" FontSize="12" Background="#FF333333" Click="logoutButton_Click"/>
 		</StackPanel>
-    </StackPanel>
+		<Label x:Name="eventActionTitle" FontSize="32" HorizontalAlignment="Left" d:LayoutOverrides="HorizontalAlignment, GridBox" Content="{Binding Title, ElementName=Page}" Margin="30,10" Padding="0,5"/>
+		<TextBox TextWrapping="Wrap" Text="Event Name" Margin="30,10,30,0" FontSize="21.333" Width="500" HorizontalAlignment="Left" Padding="2" x:Name="eventNameBox" />
+		<TextBlock Margin="30,5" Foreground="#7F000000" Text="Guidelines for naming events will be displayed here." FontSize="13.333" Padding="5,0"/>
+		<TabControl DockPanel.Dock="Right" Margin="30,15,30,0">
+			<TabItem Header="General" IsSelected="True">
+				<Grid Margin="10,20" Height="350">
+					<Grid.RowDefinitions>
+						<RowDefinition Height="0.25*"/>
+						<RowDefinition Height="0.25*"/>
+						<RowDefinition Height="0.25*"/>
+						<RowDefinition Height="100"/>
+						<RowDefinition Height="0.25*"/>
+						<RowDefinition Height="0.25*"/>
+						<RowDefinition Height="0.4*"/>
+					</Grid.RowDefinitions>
+					<Grid.ColumnDefinitions>
+						<ColumnDefinition Width="0.2*"/>
+						<ColumnDefinition Width="0.8*"/>
+					</Grid.ColumnDefinitions>
+					<Label Content="Date" HorizontalAlignment="Left" Style="{DynamicResource formLabel}" />
+					<Label Content="Time" HorizontalAlignment="Left" Style="{DynamicResource formLabel}" Grid.Row="1"/>
+					<Label Content="Venue" HorizontalAlignment="Left" Style="{DynamicResource formLabel}" Grid.Row="2"/>
+					<Label Content="Description" HorizontalAlignment="Left" Style="{DynamicResource formLabel}" Grid.Row="3"/>
+					<Label Content="Capacity" HorizontalAlignment="Left" Style="{DynamicResource formLabel}" Grid.Row="4"/>
+					<Label Content="Budget" HorizontalAlignment="Left" Style="{DynamicResource formLabel}" Grid.Row="5"/>
+					<Label Content="Visible to Public?" HorizontalAlignment="Left" Style="{DynamicResource formLabel}" Grid.Row="6"/>
+					<DatePicker x:Name="eventDatePicker" Grid.Column="1" HorizontalAlignment="Left" FontSize="14.667" BorderThickness="1" Height="30" Width="120" VerticalAlignment="Top" SelectedDate="{x:Static sys:DateTime.Now}" DisplayDateStart="{x:Static sys:DateTime.Now}" />
+					<StackPanel Orientation="Horizontal" Grid.Row="1" Grid.Column="1" >
+						<ComboBox x:Name="eventStartTimeBox" HorizontalAlignment="Left" d:LayoutOverrides="Height" VerticalAlignment="Top" ItemsSource="{Binding Source={StaticResource startHours}}" ItemStringFormat="t" SelectedIndex="0" />
+						<Label Content="to" Grid.Column="1" HorizontalAlignment="Left" d:LayoutOverrides="Height" VerticalAlignment="Top" Margin="10,0" FontSize="14.667"/>
+						<ComboBox x:Name="eventEndTimeBox" HorizontalAlignment="Left" d:LayoutOverrides="Height" VerticalAlignment="Top" ItemsSource="{Binding Source={StaticResource endHours}}" ItemStringFormat="t" SelectedIndex="0"/>
+					</StackPanel>
+					<ComboBox x:Name="eventVenueBox" HorizontalAlignment="Left"  d:LayoutOverrides="Height" VerticalAlignment="Top" Grid.Column="1" Grid.Row="2" Width="250"
+						ItemsSource="{Binding venues}">
+						<!--<ComboBoxItem Content="Lecture Theatre 5" IsSelected="True" d:IsHidden="True"/>-->
+					</ComboBox>
+					<TextBox x:Name="eventDescText" Grid.Column="1" HorizontalAlignment="Left" Grid.Row="3" TextWrapping="Wrap" VerticalAlignment="Top" Width="400" Height="80" FontSize="13.333" Text="This is a redunant example for a description for an event."/>
+					<StackPanel Orientation="Horizontal" Grid.Row="4" Grid.Column="1" >
+						<TextBox x:Name="eventCapacityBox" HorizontalAlignment="Left" TextWrapping="Wrap" VerticalAlignment="Top" FontSize="13.333" Text="500" Width="75" />
+						<Label Content="pax" Grid.Column="1" HorizontalAlignment="Left" d:LayoutOverrides="Height" VerticalAlignment="Top" Margin="10,0" FontSize="14.667"/>
+					</StackPanel>
+					<StackPanel Orientation="Horizontal" Grid.Row="5" Grid.Column="1" >
+						<Label Content="$" Grid.Column="1" HorizontalAlignment="Left" d:LayoutOverrides="Height" VerticalAlignment="Top" FontSize="14.667"/>
+						<TextBox x:Name="eventBudgetBox" HorizontalAlignment="Left" TextWrapping="Wrap" VerticalAlignment="Top" FontSize="13.333" Text="1000" Width="75" />
+					</StackPanel>
+					<CheckBox x:Name="eventVisibleCheckbox" Content="Check this if you wish to have your event displayed on the front page." Grid.Row="6" Grid.Column="1" VerticalAlignment="Top"/>
+				</Grid>
+			</TabItem>
+			<TabItem Header="Itinerary" IsEnabled="False">
+				<StackPanel Margin="10,20,10,15" d:LayoutOverrides="Width" Height="355"/>
+			</TabItem>
+			<TabItem Header="Budget">
+				<Grid Margin="10,20,10,15" Height="355">
+					<Grid.RowDefinitions>
+						<RowDefinition Height="*" />
+						<RowDefinition Height="25" />
+						<RowDefinition Height="31" />
+					</Grid.RowDefinitions>
+					<Grid.ColumnDefinitions>
+						<ColumnDefinition Width="0.7*"/>
+						<ColumnDefinition Width="0.3*"/>
+					</Grid.ColumnDefinitions>
+					<DataGrid x:Name="budgetListGrid" AutoGenerateColumns="False" HeadersVisibility="Column" IsReadOnly="True" GridLinesVisibility="None" d:LayoutOverrides="Width">
+						<DataGrid.BorderBrush>
+							<LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+								<GradientStop Color="Black" Offset="0"/>
+								<GradientStop Color="White" Offset="1"/>
+							</LinearGradientBrush>
+						</DataGrid.BorderBrush>
+						<DataGrid.Columns>
+							<DataGridTextColumn Header="#" Width="40" />
+							<DataGridTextColumn Header="ITEM NAME" Width="*" />
+							<DataGridTextColumn Header="TAG" Width="150" />
+							<DataGridTextColumn Header="PRICE ($)" Width="120" />
+							<DataGridTemplateColumn Header="ACTION" Width="100" CellTemplate="{DynamicResource BudgetActionCellTemplate}" />
+						</DataGrid.Columns>
+					</DataGrid>
+					<GroupBox Grid.Column="1" Margin="15,0" Header="Add New Item" FontSize="14.667" Foreground="#CC000000">
+						<StackPanel Margin="5,5">
+							<Label Content="Item Name" HorizontalAlignment="Left" Style="{DynamicResource formLabel}" />
+							<TextBox x:Name="budgetNewItemName" HorizontalAlignment="Left" TextWrapping="Wrap" VerticalAlignment="Top" FontSize="13.333" Width="240" Margin="5,0,0,5" />
+							<Label Content="Tag" HorizontalAlignment="Left" Style="{DynamicResource formLabel}" />
+							<TextBox x:Name="budgetNewTag" HorizontalAlignment="Left" TextWrapping="Wrap" VerticalAlignment="Top" FontSize="13.333" Width="150" Margin="5,0,5,5" />
+							<Label Content="Price" HorizontalAlignment="Left" Style="{DynamicResource formLabel}" />
+							<TextBox x:Name="budgetNewPrice" HorizontalAlignment="Left" TextWrapping="Wrap" VerticalAlignment="Top" FontSize="18.667" Width="150" Margin="5,0,5,5" Text="500" />
+							<StackPanel Orientation="Horizontal" Grid.Row="7" Grid.Column="0" Margin="5,20,5,0" >
+								<Button x:Name="budgetNewSave" Content="Add Item" HorizontalAlignment="Left" d:LayoutOverrides="Height" VerticalAlignment="Top" IsDefault="True" FontSize="14.667" FontWeight="Normal" Padding="20,5,20,7" />
+								<Button x:Name="budgetNewCancel" Content="Cancel" HorizontalAlignment="Left" VerticalAlignment="Top" FontSize="14.667" FontWeight="Normal" Padding="20,5,20,7" IsCancel="True" Margin="10,0,0,0" />
+							</StackPanel>
+						</StackPanel>
+					</GroupBox>
+					<metro:LinearProgressBar x:Name="budgetProgressBar" Height="10" VerticalAlignment="Center" Margin="0,15,0,0" Value="50" Grid.Row="1" Grid.ColumnSpan="2" />
+					<StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Grid.Row="2" Grid.ColumnSpan="2">
+						<Label Content="Budget ($):" HorizontalAlignment="Left" Margin="0,0,10,0" Foreground="#BF000000" FontSize="16" />
+						<Label x:Name="currentBudgetCounter" Content="250" FontSize="16" />
+						<Label Content="/" FontSize="16" />
+						<Label x:Name="maxBudgetCounter" Content="500" FontSize="16" />
+					</StackPanel>
+				</Grid>
+			</TabItem>
+			<TabItem Header="Guest List" IsSelected="True">
+				<StackPanel Height="350" Margin="10,20">
+					<DataGrid x:Name="guestsListGrid" Height="300" Margin="0" AutoGenerateColumns="False" HeadersVisibility="Column" IsReadOnly="True" GridLinesVisibility="None">
+						<DataGrid.BorderBrush>
+							<LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+								<GradientStop Color="Black" Offset="0"/>
+								<GradientStop Color="White" Offset="1"/>
+							</LinearGradientBrush>
+						</DataGrid.BorderBrush>
+						<DataGrid.Columns>
+							<DataGridTextColumn Header="#" Width="40" />
+							<DataGridTextColumn Header="MATRIC NO." Width="150" />
+							<DataGridTextColumn Header="NAME" Width="*" />
+							<DataGridTemplateColumn Header="ACTION" Width="250" CellTemplate="{DynamicResource GuestActionCellTemplate}" />
+						</DataGrid.Columns>
+					</DataGrid>
+					<metro:LinearProgressBar x:Name="capacityProgressBar" Height="10" VerticalAlignment="Center" Margin="0,15,0,0" Value="50" />
+					<StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+						<Label Content="Capacity:" HorizontalAlignment="Left" Margin="0,0,10,0" Foreground="#BF000000" FontSize="16" />
+						<Label x:Name="currentCapacityCounter" Content="250" FontSize="16" />
+						<Label Content="/" FontSize="16" />
+						<Label x:Name="maxCapacityCounter" Content="500" FontSize="16" />
+					</StackPanel>
+				</StackPanel>
+			</TabItem>
+		</TabControl>
+		<Separator Height="30" Margin="30,0" />
+		<StackPanel Orientation="Horizontal" Margin="45,0" >
+			<Button x:Name="saveButton" Content="Save" HorizontalAlignment="Left" d:LayoutOverrides="Height" VerticalAlignment="Top" IsDefault="True" FontSize="18.667" FontWeight="Normal" Padding="20,5,20,7" Click="saveButton_Click" />
+			<Button x:Name="cancelButton" Content="Cancel" HorizontalAlignment="Left" VerticalAlignment="Top" FontSize="18.667" FontWeight="Normal" Padding="20,5,20,7" IsCancel="True" Margin="10,0,0,0" Click="cancelButton_Click" />
+		</StackPanel>
+	</StackPanel>
 </Page>
