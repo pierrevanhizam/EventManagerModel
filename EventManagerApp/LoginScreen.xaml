@@ -52,7 +52,7 @@
             <Label Content="Password" FontSize="13.333" Margin="30,10,30,0" Padding="0,0,0,5" Foreground="#7F000000"/>
             <PasswordBox Margin="30,0" Height="35" Name="passwordText" />
             <DockPanel Height="35" Margin="30,20,30,0">
-                <Button x:Name="loginButton" Content="LOGIN"  HorizontalAlignment="Right" FontSize="13.333" Width="100" Padding="5,7" Click="LoginButton_Click" d:LayoutOverrides="Height" DockPanel.Dock="Right" />
+                <Button x:Name="loginButton" Content="LOGIN"  HorizontalAlignment="Right" FontSize="13.333" Width="100" Padding="5,7" Click="LoginButton_Click" d:LayoutOverrides="Height" DockPanel.Dock="Right" IsDefault="True" />
                 <metro:CircularProgressBar x:Name="loginLoadingIcon" Width="20" State="Indeterminate" DockPanel.Dock="Right" Margin="100,0,0,0" Visibility="Hidden" />
             </DockPanel>
         </StackPanel>
