@@ -56,7 +56,7 @@
         <TextBlock Margin="30,5" Foreground="#7F000000" Text="Guidelines for naming events will be displayed here." FontSize="13.333" Padding="5,0"></TextBlock>
         <TabControl DockPanel.Dock="Right" Margin="30,15,30,0">
             <TabItem Header="General" IsSelected="True">
-                <Grid Height="505" Margin="10,20">
+                <Grid Margin="10,20" Height="350">
                     <Grid.RowDefinitions>
                         <RowDefinition Height="0.25*"/>
                         <RowDefinition Height="0.25*"/>
@@ -65,7 +65,6 @@
                         <RowDefinition Height="0.25*"/>
                         <RowDefinition Height="0.25*"/>
                         <RowDefinition Height="0.4*"/>
-                        <RowDefinition Height="*"/>
                     </Grid.RowDefinitions>
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="0.2*"/>
@@ -99,10 +98,6 @@
                         <TextBox x:Name="eventBudgetBox" HorizontalAlignment="Left" TextWrapping="Wrap" VerticalAlignment="Top" FontSize="13.333" Text="1000" Width="75" />
                     </StackPanel>
                     <CheckBox x:Name="eventVisibleCheckbox" Content="Check this if you wish to have your event displayed on the front page." Grid.Row="6" Grid.Column="1" VerticalAlignment="Top"/>
-                    <StackPanel Orientation="Horizontal" Grid.Row="7" Grid.Column="0" >
-                        <Button x:Name="saveButton" Content="Save" HorizontalAlignment="Left" d:LayoutOverrides="Height" VerticalAlignment="Top" IsDefault="True" FontSize="18.667" FontWeight="Normal" Padding="20,5,20,7" Click="saveButton_Click" />
-                        <Button x:Name="cancelButton" Content="Cancel" HorizontalAlignment="Left" VerticalAlignment="Top" FontSize="18.667" FontWeight="Normal" Padding="20,5,20,7" IsCancel="True" Margin="10,0,0,0" Click="cancelButton_Click" />
-                    </StackPanel>
                 </Grid>
             </TabItem>
             <TabItem Header="Budget" IsEnabled="False">
@@ -115,6 +110,10 @@
                 </StackPanel>
             </TabItem>
         </TabControl>
-
+		<Separator Height="30" Margin="30,0" />
+		<StackPanel Orientation="Horizontal" Grid.Row="7" Grid.Column="0" Margin="45,0" >
+        	<Button x:Name="saveButton" Content="Save" HorizontalAlignment="Left" d:LayoutOverrides="Height" VerticalAlignment="Top" IsDefault="True" FontSize="18.667" FontWeight="Normal" Padding="20,5,20,7" Click="saveButton_Click" />
+        	<Button x:Name="cancelButton" Content="Cancel" HorizontalAlignment="Left" VerticalAlignment="Top" FontSize="18.667" FontWeight="Normal" Padding="20,5,20,7" IsCancel="True" Margin="10,0,0,0" Click="cancelButton_Click" />
+		</StackPanel>
     </StackPanel>
 </Page>
