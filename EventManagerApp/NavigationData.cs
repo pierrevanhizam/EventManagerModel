@@ -6,6 +6,9 @@ using model = EventManagerPro.Model;
 
 namespace EventManagerApp
 {
+    /// <summary>
+    /// Stores data to be passed between pages.
+    /// </summary>
     public class NavigationData
     {
         public string statusMessage { get; set; }

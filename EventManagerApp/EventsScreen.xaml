@@ -10,6 +10,7 @@
 	x:Name="Page"
 	Width="1024" Height="768" Background="{DynamicResource {x:Static SystemColors.WindowBrushKey}}">
     <Page.Resources>
+        <BooleanToVisibilityConverter x:Key="boolToVisibilityConverter" />
         <converters:DateSplitter x:Key="dateSplitter" />
         <Storyboard x:Key="StatusMessageFadeIn">
         	<DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(FrameworkElement.Height)" Storyboard.TargetName="statusMessage">
@@ -25,10 +26,24 @@
             <Setter Property="Background" Value="#FFCC0000" />
             <Setter Property="BorderBrush" Value="#FFFF0000" />
         </Style>
-        <DataTemplate x:Key="ActionCellTemplate">
+        <DataTemplate x:Key="OwnerActionCellTemplate">
             <StackPanel Orientation="Horizontal">
                 <Button Content="EDIT" HorizontalAlignment="Left" Width="Auto" d:LayoutOverrides="Height" FontWeight="Normal" FontSize="12" Padding="8,5" Tag="{Binding Id}" Click="editButton_Click" />
                 <Button Content="DELETE" Background="Red" HorizontalAlignment="Left" Width="Auto" d:LayoutOverrides="Height" FontWeight="Normal" FontSize="12" Padding="8,5" Tag="{Binding Id}" Margin="5,0,0,0" Click="deleteButton_Click" />
+            </StackPanel>
+        </DataTemplate>
+        <DataTemplate x:Key="RegisterActionCellTemplate">
+            <StackPanel Orientation="Horizontal">
+                <Button Content="UNREGISTER" Background="LightBlue" HorizontalAlignment="Left" Width="Auto" d:LayoutOverrides="Height" FontWeight="Normal" FontSize="12" Padding="8,5" Tag="{Binding CurEvent.Id}" Visibility="{Binding Path=IsRegistered, Converter={StaticResource boolToVisibilityConverter}, UpdateSourceTrigger=PropertyChanged}" Click="unregisterButton_Click" />
+            </StackPanel>
+        </DataTemplate>
+        <DataTemplate x:Key="EventActionCellTemplate">
+            <StackPanel Orientation="Horizontal">
+                <Button Content="INFO" Background="LightGray" HorizontalAlignment="Left" Width="Auto" d:LayoutOverrides="Height" FontWeight="Normal" FontSize="12" Padding="8,5" Tag="{Binding CurEvent.Id}" Click="infoButton_Click" />
+                <Button Content="REGISTER" Background="Green" HorizontalAlignment="Left" Width="Auto" d:LayoutOverrides="Height" FontWeight="Normal" FontSize="12" Padding="8,5" Tag="{Binding CurEvent.Id}" Margin="5,0,0,0" Visibility="{Binding Path=CanRegister, Converter={StaticResource boolToVisibilityConverter}, UpdateSourceTrigger=PropertyChanged}" Click="registerButton_Click" />
+                <Button Content="UNREGISTER" Background="LightBlue" HorizontalAlignment="Left" Width="Auto" d:LayoutOverrides="Height" FontWeight="Normal" FontSize="12" Padding="8,5" Tag="{Binding CurEvent.Id}" Margin="5,0,0,0" Visibility="{Binding Path=IsRegistered, Converter={StaticResource boolToVisibilityConverter}, UpdateSourceTrigger=PropertyChanged}" Click="unregisterButton_Click" />
+                <Button Content="EDIT" HorizontalAlignment="Left" Width="Auto" d:LayoutOverrides="Height" FontWeight="Normal" FontSize="12" Padding="8,5" Tag="{Binding CurEvent.Id}" Visibility="{Binding Path=IsOwner, Converter={StaticResource boolToVisibilityConverter}, UpdateSourceTrigger=PropertyChanged}" Margin="5,0,0,0" Click="editButton_Click" />
+                <Button Content="DELETE" Background="Red" HorizontalAlignment="Left" Width="Auto" d:LayoutOverrides="Height" FontWeight="Normal" FontSize="12" Padding="8,5" Tag="{Binding CurEvent.Id}" Margin="5,0,0,0" Visibility="{Binding Path=IsOwner, Converter={StaticResource boolToVisibilityConverter}, UpdateSourceTrigger=PropertyChanged}" Click="deleteButton_Click" />
             </StackPanel>
         </DataTemplate>
     </Page.Resources>
@@ -57,11 +72,11 @@
                             </LinearGradientBrush>
                         </DataGrid.BorderBrush>
                         <DataGrid.Columns>
-                            <DataGridTextColumn Header="EVENT NAME" Width="*" Binding="{Binding Name}" />
-                            <DataGridTextColumn Header="DATE" Width="100" Binding="{Binding Path=Start,Converter={StaticResource dateSplitter},ConverterParameter=date}" />
-                            <DataGridTextColumn Header="TIME" Width="120" Binding="{Binding Path=Start,Converter={StaticResource dateSplitter},ConverterParameter=time}" />
-                            <DataGridTextColumn Header="VENUE" Width="250" Binding="{Binding Venue}" SortMemberPath="Name"  />
-                            <!--<DataGridTemplateColumn Header="ACTION(S)" CellTemplate="{DynamicResource ActionCellTemplate}" />-->
+                            <DataGridTextColumn Header="EVENT NAME" Width="*" Binding="{Binding CurEvent.Name}" />
+                            <DataGridTextColumn Header="DATE" Width="100" Binding="{Binding Path=CurEvent.Start,Converter={StaticResource dateSplitter},ConverterParameter=date}" />
+                            <DataGridTextColumn Header="TIME" Width="120" Binding="{Binding Path=CurEvent.Start,Converter={StaticResource dateSplitter},ConverterParameter=time}" />
+                            <DataGridTextColumn Header="VENUE" Width="250" Binding="{Binding CurEvent.Venue}" SortMemberPath="Name"  />
+                            <DataGridTemplateColumn Header="ACTION(S)" Width="*" CellTemplate="{StaticResource EventActionCellTemplate}" />
                         </DataGrid.Columns>
                     </DataGrid>
                     <metro:CircularProgressBar x:Name="upcomingEventsLoadingIcon" Width="32" State="Indeterminate" HorizontalAlignment="Center" Height="32" Visibility="Hidden" />
@@ -76,13 +91,21 @@
                             <DataGridTextColumn Header="DATE" Width="100" Binding="{Binding Path=Start,Converter={StaticResource dateSplitter},ConverterParameter=date}" />
                             <DataGridTextColumn Header="TIME" Width="120" Binding="{Binding Path=Start,Converter={StaticResource dateSplitter},ConverterParameter=time}" />
                             <DataGridTextColumn Header="VENUE" Width="250" Binding="{Binding Venue}" SortMemberPath="Name" />
-                            <DataGridTemplateColumn Header="ACTION(S)" CellTemplate="{StaticResource ActionCellTemplate}" />
+                            <DataGridTemplateColumn Header="ACTION(S)" Width="150" CellTemplate="{StaticResource OwnerActionCellTemplate}" />
                         </DataGrid.Columns>
                     </DataGrid>
                     <metro:CircularProgressBar x:Name="createdEventsLoadingIcon_Copy" Width="32" State="Indeterminate" HorizontalAlignment="Center" Height="32" Visibility="Hidden" />
                     <Separator Height="10" Margin="0"/>
                     <Label Content="REGISTERED EVENTS" HorizontalAlignment="Left" Margin="0" FontSize="16" FontWeight="Bold"/>
-                    <Label Content="Oops! You don't seem to have any events registered under your account." HorizontalAlignment="Left" Margin="0" FontSize="14.667"/>
+                    <DataGrid x:Name="registeredEventsListGrid" Margin="5,10" AutoGenerateColumns="False" HeadersVisibility="Column" IsReadOnly="True" MaxHeight="300" ScrollViewer.HorizontalScrollBarVisibility="Hidden">
+                        <DataGrid.Columns>
+                            <DataGridTextColumn Header="EVENT NAME" Width="*" Binding="{Binding Name}" />
+                            <DataGridTextColumn Header="DATE" Width="100" Binding="{Binding Path=Start,Converter={StaticResource dateSplitter},ConverterParameter=date}" />
+                            <DataGridTextColumn Header="TIME" Width="120" Binding="{Binding Path=Start,Converter={StaticResource dateSplitter},ConverterParameter=time}" />
+                            <DataGridTextColumn Header="VENUE" Width="250" Binding="{Binding Venue}" SortMemberPath="Name" />
+                            <DataGridTemplateColumn Header="ACTION(S)" Width="150" CellTemplate="{StaticResource RegisterActionCellTemplate}" />
+                        </DataGrid.Columns>
+                    </DataGrid>
                 </StackPanel>
             </TabItem>
         </TabControl>

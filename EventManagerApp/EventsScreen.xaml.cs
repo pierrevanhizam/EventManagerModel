@@ -13,6 +13,7 @@ using System.Windows.Navigation;
 using System.Windows.Shapes;
 using model = EventManagerPro.Model;
 using System.Windows.Media.Animation;
+using System.Collections.ObjectModel;
 
 namespace EventManagerApp
 {
@@ -21,8 +22,7 @@ namespace EventManagerApp
     /// </summary>
     public partial class EventsScreen : Page
     {
-
-        private List<model.Event> _upcomingEventsList;
+        private ObservableCollection<EventItem> _upcomingEventsList;
         private List<model.Event> _createdEventsList;
         private model.Student _loggedInUser;
 
@@ -76,7 +76,7 @@ namespace EventManagerApp
             }
             else
             {
-                this._loggedInUser = navData.loggedInUser;
+                this._loggedInUser = this._loggedInUser = model.DomainModels.StudentModel.getByMatricId(navData.loggedInUser.MatricId);
                 this.loggedInUserLabel.Content = this._loggedInUser.Name;
                 this.updateScreen();
             }
@@ -134,12 +134,51 @@ namespace EventManagerApp
 
         protected void updateScreen()
         {
+            // Reload user data from database, since the list of registered events have changed.
+            this._loggedInUser = model.DomainModels.StudentModel.getByMatricId(this._loggedInUser.MatricId);
+
+            List<model.Event> upcomingEvents = model.DomainModels.EventModel.getAll();
+            this._upcomingEventsList = new ObservableCollection<EventItem>();
+            foreach ( model.Event e in upcomingEvents )
+            {
+                bool isRegistered = false;
+
+                foreach (model.Event r in this._loggedInUser.RegisteredEvents)
+                {
+                    if (r.Id == e.Id) isRegistered = true;
+                    Console.WriteLine(isRegistered);
+                }  
+                this._upcomingEventsList.Add(new EventItem(e, (e.Owner.MatricId == this._loggedInUser.MatricId), isRegistered));
+            }
+            this.upcomingEventsListGrid.ItemsSource = this._upcomingEventsList;
+
             // Load events based on logged in user (created events for now, registered events in the future).
             this._createdEventsList = model.DomainModels.EventModel.getByOwner(_loggedInUser.MatricId);
-            this._upcomingEventsList = model.DomainModels.EventModel.getNotByOwner(_loggedInUser.MatricId);
-
-            this.upcomingEventsListGrid.ItemsSource = this._upcomingEventsList;
             this.createdEventsListGrid.ItemsSource = this._createdEventsList;
+
+            this.registeredEventsListGrid.ItemsSource = this._loggedInUser.RegisteredEvents;
+        }
+
+        private void registerButton_Click(object sender, RoutedEventArgs e)
+        {
+            Button b = (Button)e.Source;
+            model.DomainModels.EventModel.registerGuest(this._loggedInUser.MatricId, Convert.ToInt32(b.Tag));
+
+            this.updateScreen();
+        }
+
+        private void unregisterButton_Click(object sender, RoutedEventArgs e)
+        {
+            Button b = (Button)e.Source;
+            
+            // Insert unregister guest DB call here.
+
+            this.updateScreen();
+        }
+
+        private void infoButton_Click(object sender, RoutedEventArgs e)
+        {
+            // Does not do anything at the moment.
         }
     }
 }
