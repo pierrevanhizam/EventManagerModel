@@ -89,6 +89,7 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Converters\DaySplitter.cs" />
+    <Compile Include="Converters\FormDateTimeConverter.cs" />
     <Compile Include="EditEventScreen.xaml.cs">
       <DependentUpon>EditEventScreen.xaml</DependentUpon>
     </Compile>

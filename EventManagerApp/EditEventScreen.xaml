@@ -6,11 +6,12 @@
     xmlns:metro="http://schemas.codeplex.com/elysium/theme"
     xmlns:sys="clr-namespace:System;assembly=mscorlib"
     xmlns:col="clr-namespace:System.Collections;assembly=mscorlib"
-	xmlns:EventManagerApp_Converters="clr-namespace:EventManagerApp.Converters" mc:Ignorable="d"
+	xmlns:converters="clr-namespace:EventManagerApp.Converters" mc:Ignorable="d"
 	x:Class="EventManagerApp.EditEventScreen"
 	x:Name="Page"
 	Width="1024" Height="768" Background="{DynamicResource {x:Static SystemColors.WindowBrushKey}}">
     <Page.Resources>
+        <converters:FormDateTimeConverter x:Key="formDateTimeConverter" />
     	<DataTemplate x:Key="GuestActionCellTemplate">
             <StackPanel Orientation="Horizontal">
                 <Button Content="DELETE" Background="Red" HorizontalAlignment="Left" Width="Auto" d:LayoutOverrides="Height" FontWeight="Normal" FontSize="12" Padding="8,5" Margin="5,0,0,0" />
@@ -55,7 +56,6 @@
             <sys:DateTime>22:00</sys:DateTime>
             <sys:DateTime>23:00</sys:DateTime>
         </col:ArrayList>
-    	<EventManagerApp_Converters:DateSplitter x:Key="dateSplitter" />
     </Page.Resources>
 	<StackPanel>
 		<StackPanel Orientation="Horizontal" Margin="0,15,30,0" d:LayoutOverrides="Width" HorizontalAlignment="Right">
@@ -64,7 +64,7 @@
 			<Button x:Name="logoutButton" Content="LOGOUT" Padding="8,0" Margin="10,0,0,0" FontSize="12" Background="#FF333333" Click="logoutButton_Click"/>
 		</StackPanel>
 		<Label x:Name="eventActionTitle" FontSize="32" HorizontalAlignment="Left" d:LayoutOverrides="HorizontalAlignment, GridBox" Content="{Binding Title, ElementName=Page}" Margin="30,10" Padding="0,5"/>
-		<TextBox TextWrapping="Wrap" Text="Event Name" Margin="30,10,30,0" FontSize="21.333" Width="500" HorizontalAlignment="Left" Padding="2" x:Name="eventNameBox" />
+		<TextBox TextWrapping="Wrap" Text="{Binding Path=CurEvent.Name, UpdateSourceTrigger=PropertyChanged}" Margin="30,10,30,0" FontSize="21.333" Width="500" HorizontalAlignment="Left" Padding="2" x:Name="eventNameBox" />
 		<TextBlock Margin="30,5" Foreground="#7F000000" Text="Guidelines for naming events will be displayed here." FontSize="13.333" Padding="5,0"/>
 		<TabControl DockPanel.Dock="Right" Margin="30,15,30,0">
 			<TabItem Header="General" IsSelected="True">
@@ -89,26 +89,24 @@
 					<Label Content="Capacity" HorizontalAlignment="Left" Style="{DynamicResource formLabel}" Grid.Row="4"/>
 					<Label Content="Budget" HorizontalAlignment="Left" Style="{DynamicResource formLabel}" Grid.Row="5"/>
 					<Label Content="Visible to Public?" HorizontalAlignment="Left" Style="{DynamicResource formLabel}" Grid.Row="6"/>
-					<DatePicker x:Name="eventDatePicker" Grid.Column="1" HorizontalAlignment="Left" FontSize="14.667" BorderThickness="1" Height="30" Width="120" VerticalAlignment="Top" SelectedDate="{x:Static sys:DateTime.Now}" DisplayDateStart="{x:Static sys:DateTime.Now}" />
+					<DatePicker x:Name="eventDatePicker" Grid.Column="1" HorizontalAlignment="Left" FontSize="14.667" BorderThickness="1" Height="30" Width="120" VerticalAlignment="Top" SelectedDate="{Binding Path=CurEvent.Start, UpdateSourceTrigger=PropertyChanged}" DisplayDateStart="{x:Static sys:DateTime.Now}" />
 					<StackPanel Orientation="Horizontal" Grid.Row="1" Grid.Column="1" >
-						<ComboBox x:Name="eventStartTimeBox" HorizontalAlignment="Left" d:LayoutOverrides="Height" VerticalAlignment="Top" ItemsSource="{Binding Source={StaticResource startHours}}" ItemStringFormat="t" SelectedIndex="0" />
+						<ComboBox x:Name="eventStartTimeBox" HorizontalAlignment="Left" d:LayoutOverrides="Height" VerticalAlignment="Top" ItemsSource="{Binding Source={StaticResource startHours}}" ItemStringFormat="t" SelectedValue="{Binding Path=CurEvent.Start, UpdateSourceTrigger=PropertyChanged, Converter={StaticResource formDateTimeConverter}, ConverterParameter=Hour}" />
 						<Label Content="to" Grid.Column="1" HorizontalAlignment="Left" d:LayoutOverrides="Height" VerticalAlignment="Top" Margin="10,0" FontSize="14.667"/>
-						<ComboBox x:Name="eventEndTimeBox" HorizontalAlignment="Left" d:LayoutOverrides="Height" VerticalAlignment="Top" ItemsSource="{Binding Source={StaticResource endHours}}" ItemStringFormat="t" SelectedIndex="0"/>
+                        <ComboBox x:Name="eventEndTimeBox" HorizontalAlignment="Left" d:LayoutOverrides="Height" VerticalAlignment="Top" ItemsSource="{Binding Source={StaticResource endHours}}" ItemStringFormat="t" SelectedValue="{Binding Path=CurEvent.End, UpdateSourceTrigger=PropertyChanged, Converter={StaticResource formDateTimeConverter}, ConverterParameter=Hour}" />
 					</StackPanel>
-					<ComboBox x:Name="eventVenueBox" HorizontalAlignment="Left"  d:LayoutOverrides="Height" VerticalAlignment="Top" Grid.Column="1" Grid.Row="2" Width="250"
-						ItemsSource="{Binding venues}">
-						<!--<ComboBoxItem Content="Lecture Theatre 5" IsSelected="True" d:IsHidden="True"/>-->
-					</ComboBox>
-					<TextBox x:Name="eventDescText" Grid.Column="1" HorizontalAlignment="Left" Grid.Row="3" TextWrapping="Wrap" VerticalAlignment="Top" Width="400" Height="80" FontSize="13.333" Text="This is a redunant example for a description for an event."/>
+                    <ComboBox x:Name="eventVenueBox" HorizontalAlignment="Left"  d:LayoutOverrides="Height" VerticalAlignment="Top" Grid.Column="1" Grid.Row="2" Width="250"
+						ItemsSource="{Binding venues}" DisplayMemberPath="Name" SelectedValuePath="Id" SelectedValue="{Binding Path=CurEvent.VenueId, UpdateSourceTrigger=PropertyChanged}" />
+                    <TextBox x:Name="eventDescText" Grid.Column="1" HorizontalAlignment="Left" Grid.Row="3" TextWrapping="Wrap" VerticalAlignment="Top" Width="400" Height="80" FontSize="13.333" Text="{Binding Path=CurEvent.Description, UpdateSourceTrigger=PropertyChanged}" />
 					<StackPanel Orientation="Horizontal" Grid.Row="4" Grid.Column="1" >
-						<TextBox x:Name="eventCapacityBox" HorizontalAlignment="Left" TextWrapping="Wrap" VerticalAlignment="Top" FontSize="13.333" Text="500" Width="75" />
+						<TextBox x:Name="eventCapacityBox" HorizontalAlignment="Left" TextWrapping="Wrap" VerticalAlignment="Top" FontSize="13.333" Text="{Binding Path=CurEvent.Capacity, UpdateSourceTrigger=PropertyChanged}" Width="75" />
 						<Label Content="pax" Grid.Column="1" HorizontalAlignment="Left" d:LayoutOverrides="Height" VerticalAlignment="Top" Margin="10,0" FontSize="14.667"/>
 					</StackPanel>
 					<StackPanel Orientation="Horizontal" Grid.Row="5" Grid.Column="1" >
 						<Label Content="$" Grid.Column="1" HorizontalAlignment="Left" d:LayoutOverrides="Height" VerticalAlignment="Top" FontSize="14.667"/>
-						<TextBox x:Name="eventBudgetBox" HorizontalAlignment="Left" TextWrapping="Wrap" VerticalAlignment="Top" FontSize="13.333" Text="1000" Width="75" />
+						<TextBox x:Name="eventBudgetBox" HorizontalAlignment="Left" TextWrapping="Wrap" VerticalAlignment="Top" FontSize="13.333" Text="{Binding Path=CurEvent.Budget, UpdateSourceTrigger=PropertyChanged}" Width="75" />
 					</StackPanel>
-					<CheckBox x:Name="eventVisibleCheckbox" Content="Check this if you wish to have your event displayed on the front page." Grid.Row="6" Grid.Column="1" VerticalAlignment="Top"/>
+                    <CheckBox x:Name="eventVisibleCheckbox" Content="Check this if you wish to have your event displayed on the front page." Grid.Row="6" Grid.Column="1" VerticalAlignment="Top" IsChecked="{Binding Path=VisibleOnLoginPage, UpdateSourceTrigger=PropertyChanged}"/>
 				</Grid>
 			</TabItem>
 			<TabItem Header="Itinerary" IsEnabled="False">
@@ -149,8 +147,8 @@
 							<Label Content="Price" HorizontalAlignment="Left" Style="{DynamicResource formLabel}" />
 							<TextBox x:Name="budgetNewPrice" HorizontalAlignment="Left" TextWrapping="Wrap" VerticalAlignment="Top" FontSize="18.667" Width="150" Margin="5,0,5,5" Text="500" />
 							<StackPanel Orientation="Horizontal" Grid.Row="7" Grid.Column="0" Margin="5,20,5,0" >
-								<Button x:Name="budgetNewSave" Content="Add Item" HorizontalAlignment="Left" d:LayoutOverrides="Height" VerticalAlignment="Top" IsDefault="True" FontSize="14.667" FontWeight="Normal" Padding="20,5,20,7" />
-								<Button x:Name="budgetNewCancel" Content="Cancel" HorizontalAlignment="Left" VerticalAlignment="Top" FontSize="14.667" FontWeight="Normal" Padding="20,5,20,7" IsCancel="True" Margin="10,0,0,0" />
+								<Button x:Name="budgetNewSave" Content="Add Item" HorizontalAlignment="Left" d:LayoutOverrides="Height" VerticalAlignment="Top" IsDefault="True" FontSize="14.667" FontWeight="Normal" Padding="20,5,20,7" Click="budgetNewSave_Click" />
+								<Button x:Name="budgetNewCancel" Click="budgetNewCancel_Click" Content="Cancel" HorizontalAlignment="Left" VerticalAlignment="Top" FontSize="14.667" FontWeight="Normal" Padding="20,5,20,7" IsCancel="True" Margin="10,0,0,0" />
 							</StackPanel>
 						</StackPanel>
 					</GroupBox>

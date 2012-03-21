@@ -1,4 +1,4 @@
-﻿// Default code generation is disabled for model 'C:\Users\zen9\Documents\Visual Studio 2010\Projects\EventManagerApp\Event\Event.edmx'. 
+﻿// Default code generation is disabled for model 'D:\Users\Melvin\Dropbox\NUS Stuff\CS2103\Project\EventManagerModel\Event\Event.edmx'. 
 // To enable default code generation, change the value of the 'Code Generation Strategy' designer
 // property to an alternate value. This property is available in the Properties Window when the model is
 // open in the designer.

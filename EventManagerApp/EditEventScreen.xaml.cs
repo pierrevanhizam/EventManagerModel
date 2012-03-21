@@ -20,26 +20,37 @@ namespace EventManagerApp
     /// </summary>
     public partial class EditEventScreen : Page
     {
-
-        public List<model.Venue> venues { get; set; }
-        public DateTime start;
-        public DateTime end;
-        public int ID = -1;
-        public int budget;
-        public int capacity;
-        public string description;
-        public string eventName;
-        public short visibleOnLoginPage;
-        public int venueID;
+        // Private fields.
+        private model.Event _curEvent;
         private model.Student _loggedInUser;
 
+        // Fields for use in XAML data binding.
+        public List<model.Venue> venues { get; set; }
+
+        public model.Event CurEvent
+        {
+            get { return this._curEvent; }
+        }
+
+        public Boolean VisibleOnLoginPage
+        {
+            get { return (this._curEvent.ViewAtLoginPage == 1); }
+            set { this._curEvent.ViewAtLoginPage = 0; }
+        }
+
+        // Constructor
         public EditEventScreen()
         {
             this.venues = model.DomainModels.VenueModel.getAll();
             InitializeComponent();
             this.DataContext = this;
+
             // Set the title according to current action (Edit or Add).
             this.Title = "Create Event";
+            this._curEvent = new model.Event();
+
+            // Set the ID to -1 since it's a new Event.
+            this._curEvent.Id = -1;
         }
 
         public void SetupNavigationHandler(NavigationService ns)
@@ -69,31 +80,8 @@ namespace EventManagerApp
                 {
                     this.Title = "Edit Event";
 
-                    // Load event data from database and assign it to their values accordingly.
-                    model.Event curEvent = model.DomainModels.EventModel.getByID(navData.eventID);
- 
-                    this.ID = curEvent.Id;
-                    this.eventNameBox.Text = curEvent.Name;
-                    this.eventDescText.Text = curEvent.Description;
-                    this.eventBudgetBox.Text = curEvent.Budget.ToString();
-                    this.eventCapacityBox.Text = curEvent.Capacity.ToString();
-                    this.eventDatePicker.SelectedDate = curEvent.Start;
-
-                    int count = 0;
-                    while(count < this.venues.Count)
-                    {
-                        if (this.venues[count].Id == curEvent.VenueId)
-                        {
-                            this.eventVenueBox.SelectedIndex = count;
-                            break;
-                        }
-                        count++;
-                    }
-
-                    this.eventStartTimeBox.SelectedValue = new DateTime().AddHours(curEvent.Start.Hour);
-                    this.eventEndTimeBox.SelectedValue = new DateTime().AddHours(curEvent.End.Hour);
-
-                    this.eventVisibleCheckbox.IsChecked = (curEvent.ViewAtLoginPage == 1);
+                    // Load event data from database and its data will bind onto the form.
+                    this._curEvent = model.DomainModels.EventModel.getByID(navData.eventID);
                 }
             }
             
@@ -101,41 +89,38 @@ namespace EventManagerApp
 
         private void saveButton_Click(object sender, RoutedEventArgs e)
         {
-            this.eventName = eventNameBox.Text;
-            this.description = eventDescText.Text;
-            this.budget = Convert.ToInt32(eventBudgetBox.Text);
-            this.capacity = Convert.ToInt32(eventCapacityBox.Text);
-
-            model.Venue selectedVenue = (model.Venue)this.eventVenueBox.SelectedValue;
-            this.venueID = selectedVenue.Id;
-
-            // get selected date from DatePicker (default is NOW())
-            DateTime selected_date = (DateTime)eventDatePicker.SelectedDate;
-
-            // merge date and time into DateTime
-            DateTime startHourDateTime = (DateTime)eventStartTimeBox.SelectedValue;
-            this.start = selected_date.Add(startHourDateTime.Subtract(new DateTime()));
-            DateTime endHourDateTime = (DateTime)eventEndTimeBox.SelectedValue;
-            this.end = selected_date.Add(endHourDateTime.Subtract(new DateTime()));
-
-            if (eventVisibleCheckbox.IsChecked.HasValue && (bool)(eventVisibleCheckbox.IsChecked))
-            {
-                this.visibleOnLoginPage = 1;
-            }
-            else
-            {
-                this.visibleOnLoginPage = 0;
-            }
-
-            if (this.ID != -1)
+            if (this._curEvent.Id != -1)
             {
                 // Update entry to database.
-                model.DomainModels.EventModel.update(this.ID, this._loggedInUser.MatricId, this.eventName, this.venueID, this.start, this.end, this.capacity, this.budget, this.description, this.visibleOnLoginPage);
+                // Melvin: Can't we just have a method from the model to take in the whole Event object instead?
+                model.DomainModels.EventModel.update(
+                    this._curEvent.Id,
+                    this._loggedInUser.MatricId,
+                    this._curEvent.Name,
+                    this._curEvent.VenueId,
+                    this._curEvent.Start,
+                    this._curEvent.End,
+                    this._curEvent.Capacity,
+                    Convert.ToInt32(this._curEvent.Budget),
+                    this._curEvent.Description,
+                    this._curEvent.ViewAtLoginPage
+               );
             }
             else
             {
                 // Create new event entry to database.
-                model.DomainModels.EventModel.create(this._loggedInUser.MatricId, this.eventName, this.venueID, this.start, this.end, this.capacity, this.budget, this.description, this.visibleOnLoginPage);
+                // Melvin: Can't we just have a method from the model to take in the whole Event object instead?
+                model.DomainModels.EventModel.create(
+                    this._loggedInUser.MatricId,
+                    this._curEvent.Name,
+                    this._curEvent.VenueId,
+                    this._curEvent.Start,
+                    this._curEvent.End,
+                    this._curEvent.Capacity,
+                    Convert.ToInt32(this._curEvent.Budget),
+                    this._curEvent.Description,
+                    this._curEvent.ViewAtLoginPage
+               );
             }
             
             
@@ -144,7 +129,7 @@ namespace EventManagerApp
             navData.loggedInUser = this._loggedInUser;
             navData.statusCode = NavigationData.STATUS_NOTICE;
 
-            if (this.ID != -1)
+            if (this._curEvent.Id != -1)
             {
                 navData.statusMessage = "Your event has been successfully edited.";
             }
@@ -182,6 +167,16 @@ namespace EventManagerApp
                 eventsScreen.SetupNavigationHandler(this.NavigationService);
                 this.NavigationService.Navigate(eventsScreen, navData);
             }
+        }
+
+        private void budgetNewSave_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void budgetNewCancel_Click(object sender, RoutedEventArgs e)
+        {
+
         }
 
     }
