@@ -144,10 +144,8 @@ namespace EventManagerApp
                 bool isRegistered = false;
 
                 foreach (model.Event r in this._loggedInUser.RegisteredEvents)
-                {
                     if (r.Id == e.Id) isRegistered = true;
-                    Console.WriteLine(isRegistered);
-                }  
+
                 this._upcomingEventsList.Add(new EventItem(e, (e.Owner.MatricId == this._loggedInUser.MatricId), isRegistered));
             }
             this.upcomingEventsListGrid.ItemsSource = this._upcomingEventsList;
@@ -162,18 +160,17 @@ namespace EventManagerApp
         private void registerButton_Click(object sender, RoutedEventArgs e)
         {
             Button b = (Button)e.Source;
-            model.DomainModels.EventModel.registerGuest(this._loggedInUser.MatricId, Convert.ToInt32(b.Tag));
-
-            this.updateScreen();
+            
+            if (model.DomainModels.EventModel.registerGuest(this._loggedInUser.MatricId, Convert.ToInt32(b.Tag)))
+                this.updateScreen();
         }
 
         private void unregisterButton_Click(object sender, RoutedEventArgs e)
         {
             Button b = (Button)e.Source;
-            
-            // Insert unregister guest DB call here.
 
-            this.updateScreen();
+            if (model.DomainModels.EventModel.unregisterGuest(this._loggedInUser.MatricId, Convert.ToInt32(b.Tag)))
+                this.updateScreen();
         }
 
         private void infoButton_Click(object sender, RoutedEventArgs e)

@@ -79,6 +79,50 @@ namespace EventManagerPro.Model.DomainModels
             }
         }
 
+        public static Event createObj(Event e)
+        {
+            using (var context = new EventContainer())
+            {
+                context.Events.Add(e);
+                context.SaveChanges();
+                return e;
+            }
+        }
+
+        public static Event updateObj(Event e)
+        {
+            using (var context = new EventContainer())
+            {
+                context.Entry(e).State = EntityState.Modified;
+                context.SaveChanges();
+
+                return e;
+            }
+        }
+
+        public static Boolean unregisterGuest(string matricId, int eventId)
+        {
+            using (var context = new EventContainer())
+            {
+                var runningEvent = (from e in context.Events.Include("Venue").Include("Owner").Include("Guests")
+                                    where e.Id == eventId
+                                    select e).FirstOrDefault();
+                var student = (from s in context.Students
+                               where s.MatricId == matricId
+                               select s).FirstOrDefault();
+                if (runningEvent == null || student == null)
+                {
+                    return false;
+                }
+                else
+                {
+                    runningEvent.Guests.Remove(student);
+                    context.SaveChanges();
+                    return true;
+                }
+            }
+        }
+
         public static void deleteById(int id)
         {
 

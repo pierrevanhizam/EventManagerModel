@@ -12,14 +12,15 @@
 	Width="1024" Height="768" Background="{DynamicResource {x:Static SystemColors.WindowBrushKey}}">
     <Page.Resources>
         <converters:FormDateTimeConverter x:Key="formDateTimeConverter" />
+        <converters:ProgressPercentageConverter x:Key="progressPercentageConverter" />
     	<DataTemplate x:Key="GuestActionCellTemplate">
             <StackPanel Orientation="Horizontal">
-                <Button Content="DELETE" Background="Red" HorizontalAlignment="Left" Width="Auto" d:LayoutOverrides="Height" FontWeight="Normal" FontSize="12" Padding="8,5" Margin="5,0,0,0" />
+                <Button Content="DELETE" Background="Red" HorizontalAlignment="Left" Width="Auto" d:LayoutOverrides="Height" FontWeight="Normal" FontSize="12" Padding="8,5" Tag="{Binding Path=MatricId}" Click="unregister_Click" />
             </StackPanel>
         </DataTemplate>
 		<DataTemplate x:Key="BudgetActionCellTemplate">
             <StackPanel Orientation="Horizontal">
-                <Button Content="DELETE" Background="Red" HorizontalAlignment="Left" Width="Auto" d:LayoutOverrides="Height" FontWeight="Normal" FontSize="12" Padding="8,5" Margin="5,0,0,0" />
+                <Button Content="DELETE" Background="Red" HorizontalAlignment="Left" Width="Auto" d:LayoutOverrides="Height" FontWeight="Normal" FontSize="12" Padding="8,5" />
             </StackPanel>
         </DataTemplate>
         <col:ArrayList x:Key="startHours">
@@ -99,7 +100,7 @@
 						ItemsSource="{Binding venues}" DisplayMemberPath="Name" SelectedValuePath="Id" SelectedValue="{Binding Path=CurEvent.VenueId, UpdateSourceTrigger=PropertyChanged}" />
                     <TextBox x:Name="eventDescText" Grid.Column="1" HorizontalAlignment="Left" Grid.Row="3" TextWrapping="Wrap" VerticalAlignment="Top" Width="400" Height="80" FontSize="13.333" Text="{Binding Path=CurEvent.Description, UpdateSourceTrigger=PropertyChanged}" />
 					<StackPanel Orientation="Horizontal" Grid.Row="4" Grid.Column="1" >
-						<TextBox x:Name="eventCapacityBox" HorizontalAlignment="Left" TextWrapping="Wrap" VerticalAlignment="Top" FontSize="13.333" Text="{Binding Path=CurEvent.Capacity, UpdateSourceTrigger=PropertyChanged}" Width="75" />
+						<TextBox x:Name="eventCapacityBox" HorizontalAlignment="Left" TextWrapping="Wrap" VerticalAlignment="Top" FontSize="13.333" Text="{Binding Path=CurEvent.Capacity, UpdateSourceTrigger=PropertyChanged}" Width="75" TextChanged="eventCapacityBox_TextChanged" />
 						<Label Content="pax" Grid.Column="1" HorizontalAlignment="Left" d:LayoutOverrides="Height" VerticalAlignment="Top" Margin="10,0" FontSize="14.667"/>
 					</StackPanel>
 					<StackPanel Orientation="Horizontal" Grid.Row="5" Grid.Column="1" >
@@ -135,13 +136,13 @@
 							<DataGridTextColumn Header="ITEM NAME" Width="*" />
 							<DataGridTextColumn Header="TAG" Width="150" />
 							<DataGridTextColumn Header="PRICE ($)" Width="120" />
-							<DataGridTemplateColumn Header="ACTION" Width="100" CellTemplate="{DynamicResource BudgetActionCellTemplate}" />
+                            <DataGridTemplateColumn Header="ACTION" Width="100" CellTemplate="{StaticResource BudgetActionCellTemplate}" />
 						</DataGrid.Columns>
 					</DataGrid>
 					<GroupBox Grid.Column="1" Margin="15,0" Header="Add New Item" FontSize="14.667" Foreground="#CC000000">
 						<StackPanel Margin="5,5">
 							<Label Content="Item Name" HorizontalAlignment="Left" Style="{DynamicResource formLabel}" />
-							<TextBox x:Name="budgetNewItemName" HorizontalAlignment="Left" TextWrapping="Wrap" VerticalAlignment="Top" FontSize="13.333" Width="240" Margin="5,0,0,5" />
+							<TextBox x:Name="budgetNewItemName" HorizontalAlignment="Left" TextWrapping="Wrap" VerticalAlignment="Top" FontSize="13.333" Width="200" Margin="5,0,0,5" />
 							<Label Content="Tag" HorizontalAlignment="Left" Style="{DynamicResource formLabel}" />
 							<TextBox x:Name="budgetNewTag" HorizontalAlignment="Left" TextWrapping="Wrap" VerticalAlignment="Top" FontSize="13.333" Width="150" Margin="5,0,5,5" />
 							<Label Content="Price" HorizontalAlignment="Left" Style="{DynamicResource formLabel}" />
@@ -163,7 +164,7 @@
 			</TabItem>
 			<TabItem Header="Guest List" IsSelected="True">
 				<StackPanel Height="350" Margin="10,20">
-					<DataGrid x:Name="guestsListGrid" Height="300" Margin="0" AutoGenerateColumns="False" HeadersVisibility="Column" IsReadOnly="True" GridLinesVisibility="None">
+					<DataGrid x:Name="guestsListGrid" Height="300" Margin="0" AutoGenerateColumns="False" HeadersVisibility="Column" IsReadOnly="True" GridLinesVisibility="None" ItemsSource="{Binding Path=CurEvent.Guests}">
 						<DataGrid.BorderBrush>
 							<LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
 								<GradientStop Color="Black" Offset="0"/>
@@ -172,17 +173,17 @@
 						</DataGrid.BorderBrush>
 						<DataGrid.Columns>
 							<DataGridTextColumn Header="#" Width="40" />
-							<DataGridTextColumn Header="MATRIC NO." Width="150" />
-							<DataGridTextColumn Header="NAME" Width="*" />
-							<DataGridTemplateColumn Header="ACTION" Width="250" CellTemplate="{DynamicResource GuestActionCellTemplate}" />
+                            <DataGridTextColumn Header="MATRIC NO." Width="150" Binding="{Binding Path=MatricId}" />
+                            <DataGridTextColumn Header="NAME" Width="*" Binding="{Binding Path=Name}" />
+							<DataGridTemplateColumn Header="ACTION" Width="250" CellTemplate="{StaticResource GuestActionCellTemplate}" />
 						</DataGrid.Columns>
 					</DataGrid>
-					<metro:LinearProgressBar x:Name="capacityProgressBar" Height="10" VerticalAlignment="Center" Margin="0,15,0,0" Value="50" />
+                    <metro:LinearProgressBar x:Name="capacityProgressBar" Height="10" VerticalAlignment="Center" Margin="0,15,0,0" Value="{Binding Path=CurEvent, Mode=OneWay, Converter={StaticResource progressPercentageConverter}, ConverterParameter=Guests}" Maximum="100" Minimum="0" />
 					<StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
 						<Label Content="Capacity:" HorizontalAlignment="Left" Margin="0,0,10,0" Foreground="#BF000000" FontSize="16" />
-						<Label x:Name="currentCapacityCounter" Content="250" FontSize="16" />
+                        <Label x:Name="currentCapacityCounter" Content="{Binding Path=CurEvent.Guests.Count, Mode=OneWay}" FontSize="16" />
 						<Label Content="/" FontSize="16" />
-						<Label x:Name="maxCapacityCounter" Content="500" FontSize="16" />
+                        <Label x:Name="maxCapacityCounter" Content="{Binding Path=CurEvent.Capacity}" FontSize="16" />
 					</StackPanel>
 				</StackPanel>
 			</TabItem>

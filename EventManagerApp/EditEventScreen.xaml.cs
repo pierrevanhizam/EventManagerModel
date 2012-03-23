@@ -32,6 +32,12 @@ namespace EventManagerApp
             get { return this._curEvent; }
         }
 
+        public double DoubleMaximumCapacity
+        {
+            get { return this._curEvent.Capacity; }
+            set { }
+        }
+
         public Boolean VisibleOnLoginPage
         {
             get { return (this._curEvent.ViewAtLoginPage == 1); }
@@ -92,8 +98,8 @@ namespace EventManagerApp
             if (this._curEvent.Id != -1)
             {
                 // Update entry to database.
-                // Melvin: Can't we just have a method from the model to take in the whole Event object instead?
-                model.DomainModels.EventModel.update(
+                model.DomainModels.EventModel.updateObj(this._curEvent);
+                /*model.DomainModels.EventModel.update(
                     this._curEvent.Id,
                     this._loggedInUser.MatricId,
                     this._curEvent.Name,
@@ -104,13 +110,13 @@ namespace EventManagerApp
                     Convert.ToInt32(this._curEvent.Budget),
                     this._curEvent.Description,
                     this._curEvent.ViewAtLoginPage
-               );
+               );*/
             }
             else
             {
                 // Create new event entry to database.
-                // Melvin: Can't we just have a method from the model to take in the whole Event object instead?
-                model.DomainModels.EventModel.create(
+                model.DomainModels.EventModel.createObj(this._curEvent);
+                /*model.DomainModels.EventModel.create(
                     this._loggedInUser.MatricId,
                     this._curEvent.Name,
                     this._curEvent.VenueId,
@@ -120,7 +126,7 @@ namespace EventManagerApp
                     Convert.ToInt32(this._curEvent.Budget),
                     this._curEvent.Description,
                     this._curEvent.ViewAtLoginPage
-               );
+               );*/
             }
             
             
@@ -167,6 +173,36 @@ namespace EventManagerApp
                 eventsScreen.SetupNavigationHandler(this.NavigationService);
                 this.NavigationService.Navigate(eventsScreen, navData);
             }
+        }
+
+        private void unregister_Click(object sender, RoutedEventArgs e)
+        {
+            Button b = (Button)e.Source;
+            
+            // Remove from current guest list.
+            if (model.DomainModels.EventModel.unregisterGuest(b.Tag.ToString(), this._curEvent.Id))
+            {
+                model.Event tempEvent = model.DomainModels.EventModel.getByID(this._curEvent.Id);
+                this._curEvent.Guests = tempEvent.Guests;
+
+                this.guestsListGrid.ItemsSource = this._curEvent.Guests;
+                this.guestsListGrid.Items.Refresh();
+
+                this.updateCapacityUI();
+            }
+        }
+
+        // Workaround to update the capacity progress bar when the value for capacity has changed.
+        private void eventCapacityBox_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            this.updateCapacityUI();
+        }
+
+        // Updates the UI when current capacity has changed (after user has deleted a registered Student).
+        private void updateCapacityUI()
+        {
+            capacityProgressBar.Value = ((double)(this._curEvent.Guests.Count) / this._curEvent.Capacity) * 100;
+            currentCapacityCounter.Content = this._curEvent.Guests.Count.ToString();
         }
 
         private void budgetNewSave_Click(object sender, RoutedEventArgs e)
