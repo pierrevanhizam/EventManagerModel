@@ -1,0 +1,84 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema xmlns="http://schemas.microsoft.com/ado/2008/09/edm" xmlns:cg="http://schemas.microsoft.com/ado/2006/04/codegeneration" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" Namespace="Event" Alias="Self" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation">
+  <EntityContainer Name="EventContainer" annotation:LazyLoadingEnabled="true">
+    <EntitySet Name="Students" EntityType="Event.Student" />
+    <EntitySet Name="Events" EntityType="Event.Event" />
+    <EntitySet Name="Venues" EntityType="Event.Venue" />
+    <AssociationSet Name="Organize" Association="Event.Organize">
+      <End Role="Student" EntitySet="Students" />
+      <End Role="Event" EntitySet="Events" />
+    </AssociationSet>
+    <AssociationSet Name="EventRegistratration" Association="Event.EventRegistratration">
+      <End Role="Student" EntitySet="Students" />
+      <End Role="Event" EntitySet="Events" />
+    </AssociationSet>
+    <AssociationSet Name="EventVenue" Association="Event.EventVenue">
+      <End Role="Event" EntitySet="Events" />
+      <End Role="Venue" EntitySet="Venues" />
+    </AssociationSet>
+  </EntityContainer>
+  <EntityType Name="Student">
+    <Key>
+      <PropertyRef Name="MatricId" />
+    </Key>
+    <Property Name="Name" Nullable="false" Type="String" />
+    <Property Type="String" Name="MatricId" Nullable="false" />
+    <Property Name="Password" Nullable="false" Type="String" />
+    <NavigationProperty Name="OwnedEvents" Relationship="Event.Organize" FromRole="Student" ToRole="Event" />
+    <NavigationProperty Name="RegisteredEvents" Relationship="Event.EventRegistratration" FromRole="Student" ToRole="Event" />
+  </EntityType>
+  <EntityType Name="Event">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Type="Int32" Name="Id" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Type="Int32" Name="Capacity" Nullable="false" />
+    <Property Type="DateTime" Name="Start" Nullable="false" />
+    <Property Type="DateTime" Name="End" Nullable="false" />
+    <Property Type="Decimal" Name="Budget" Nullable="false" />
+    <Property Type="String" Name="Name" Nullable="false" />
+    <Property Type="String" Name="Description" Nullable="false" />
+    <Property Type="DateTime" Name="TimeCreated" Nullable="false" />
+    <NavigationProperty Name="Owner" Relationship="Event.Organize" FromRole="Event" ToRole="Student" />
+    <Property Type="String" Name="StudentMatricId" Nullable="false" />
+    <NavigationProperty Name="Guests" Relationship="Event.EventRegistratration" FromRole="Event" ToRole="Student" />
+    <NavigationProperty Name="Venue" Relationship="Event.EventVenue" FromRole="Event" ToRole="Venue" />
+    <Property Type="Int32" Name="VenueId" Nullable="false" />
+    <Property Type="Int16" Name="ViewAtLoginPage" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Venue">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Type="Int32" Name="Id" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Type="String" Name="Name" Nullable="false" />
+  </EntityType>
+  <Association Name="Organize">
+    <End Type="Event.Student" Role="Student" Multiplicity="1" />
+    <End Type="Event.Event" Role="Event" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Student">
+        <PropertyRef Name="MatricId" />
+      </Principal>
+      <Dependent Role="Event">
+        <PropertyRef Name="StudentMatricId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="EventRegistratration">
+    <End Type="Event.Student" Role="Student" Multiplicity="*" />
+    <End Type="Event.Event" Role="Event" Multiplicity="*" />
+  </Association>
+  <Association Name="EventVenue">
+    <End Type="Event.Event" Role="Event" Multiplicity="*" />
+    <End Type="Event.Venue" Role="Venue" Multiplicity="1" />
+    <ReferentialConstraint>
+      <Principal Role="Venue">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Event">
+        <PropertyRef Name="VenueId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+</Schema>

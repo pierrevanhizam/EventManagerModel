@@ -1,0 +1,7 @@
+C:\Users\zen9\Desktop\CS2103Proj\Event\bin\Debug\Eventmodel.exe.config
+C:\Users\zen9\Desktop\CS2103Proj\Event\bin\Debug\Eventmodel.exe
+C:\Users\zen9\Desktop\CS2103Proj\Event\bin\Debug\Eventmodel.pdb
+C:\Users\zen9\Desktop\CS2103Proj\Event\bin\Debug\EntityFramework.dll
+C:\Users\zen9\Desktop\CS2103Proj\Event\bin\Debug\EntityFramework.xml
+C:\Users\zen9\Desktop\CS2103Proj\Event\obj\Debug\Eventmodel.exe
+C:\Users\zen9\Desktop\CS2103Proj\Event\obj\Debug\Eventmodel.pdb
