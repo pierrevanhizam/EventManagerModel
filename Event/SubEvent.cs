@@ -19,8 +19,10 @@ namespace EventManagerPro.Model
         public string Start { get; set; }
         public string End { get; set; }
         public int EventId { get; set; }
+        public int VenueId { get; set; }
     
         public virtual Event Event { get; set; }
+        public virtual Venue Venue { get; set; }
     }
     
 }

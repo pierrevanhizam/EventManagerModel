@@ -14,9 +14,16 @@ namespace EventManagerPro.Model
 {
     public partial class Venue
     {
+        public Venue()
+        {
+            this.SubEvents = new HashSet<SubEvent>();
+        }
+    
         public int Id { get; set; }
         public string Name { get; set; }
         public string Capacity { get; set; }
+    
+        public virtual ICollection<SubEvent> SubEvents { get; set; }
     }
     
 }

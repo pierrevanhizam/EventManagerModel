@@ -12,7 +12,7 @@ using System.Collections.Generic;
 
 namespace EventManagerPro.Model
 {
-    public partial class BudgetLine
+    public partial class BudgetItem
     {
         public int Id { get; set; }
         public string Name { get; set; }
