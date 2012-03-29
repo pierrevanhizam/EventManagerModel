@@ -125,8 +125,6 @@ namespace EventManagerPro.Model.DomainModels
 
         public static void deleteById(int id)
         {
-
-            Console.WriteLine(id);
             using (var context = new EventContainer())
             {
                 Event e = getByID(id);

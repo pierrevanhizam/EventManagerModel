@@ -12,11 +12,16 @@ using System.Collections.Generic;
 
 namespace EventManagerPro.Model
 {
-    public partial class Venue
+    public partial class Budget
     {
+        public Budget()
+        {
+            this.BudgetLines = new HashSet<BudgetLine>();
+        }
+    
         public int Id { get; set; }
-        public string Name { get; set; }
-        public string Capacity { get; set; }
+    
+        public virtual ICollection<BudgetLine> BudgetLines { get; set; }
     }
     
 }

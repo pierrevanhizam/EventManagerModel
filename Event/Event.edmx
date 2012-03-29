@@ -134,6 +134,21 @@
             <End Role="Event" EntitySet="Events" />
             <End Role="Venue" EntitySet="Venues" />
           </AssociationSet>
+          <EntitySet Name="Budgets" EntityType="Event.Budget" />
+          <EntitySet Name="BudgetLines" EntityType="Event.BudgetLine" />
+          <AssociationSet Name="BudgetBudgetLine" Association="Event.BudgetBudgetLine">
+            <End Role="Budget" EntitySet="Budgets" />
+            <End Role="BudgetLine" EntitySet="BudgetLines" />
+          </AssociationSet>
+          <AssociationSet Name="EventBudget" Association="Event.EventBudget">
+            <End Role="Event" EntitySet="Events" />
+            <End Role="Budget" EntitySet="Budgets" />
+          </AssociationSet>
+          <EntitySet Name="SubEvents" EntityType="Event.SubEvent" />
+          <AssociationSet Name="EventSubEvent" Association="Event.EventSubEvent">
+            <End Role="Event" EntitySet="Events" />
+            <End Role="SubEvent" EntitySet="SubEvents" />
+          </AssociationSet>
         </EntityContainer>
         <EntityType Name="Student">
           <Key>
@@ -150,10 +165,8 @@
             <PropertyRef Name="Id" />
           </Key>
           <Property Type="Int32" Name="Id" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Type="Int32" Name="Capacity" Nullable="false" />
           <Property Type="DateTime" Name="Start" Nullable="false" />
           <Property Type="DateTime" Name="End" Nullable="false" />
-          <Property Type="Decimal" Name="Budget" Nullable="false" />
           <Property Type="String" Name="Name" Nullable="false" />
           <Property Type="String" Name="Description" Nullable="false" />
           <Property Type="DateTime" Name="TimeCreated" Nullable="false" />
@@ -163,6 +176,8 @@
           <NavigationProperty Name="Venue" Relationship="Event.EventVenue" FromRole="Event" ToRole="Venue" />
           <Property Type="Int32" Name="VenueId" Nullable="false" />
           <Property Type="Int16" Name="ViewAtLoginPage" Nullable="false" />
+          <NavigationProperty Name="Budget" Relationship="Event.EventBudget" FromRole="Event" ToRole="Budget" />
+          <NavigationProperty Name="SubEvents" Relationship="Event.EventSubEvent" FromRole="Event" ToRole="SubEvent" />
         </EntityType>
         <EntityType Name="Venue">
           <Key>
@@ -170,6 +185,7 @@
           </Key>
           <Property Type="Int32" Name="Id" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Type="String" Name="Name" Nullable="false" />
+          <Property Type="String" Name="Capacity" Nullable="false" />
         </EntityType>
         <Association Name="Organize">
           <End Type="Event.Student" Role="Student" Multiplicity="1" />
@@ -199,6 +215,61 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <EntityType Name="Budget">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Type="Int32" Name="Id" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <NavigationProperty Name="BudgetLines" Relationship="Event.BudgetBudgetLine" FromRole="Budget" ToRole="BudgetLine" />
+        </EntityType>
+        <EntityType Name="BudgetLine">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Type="Int32" Name="Id" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Type="String" Name="Name" Nullable="false" />
+          <Property Type="String" Name="Cost" Nullable="false" />
+          <Property Type="Int32" Name="BudgetId" Nullable="false" />
+        </EntityType>
+        <Association Name="BudgetBudgetLine">
+          <End Type="Event.Budget" Role="Budget" Multiplicity="1" />
+          <End Type="Event.BudgetLine" Role="BudgetLine" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Budget">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="BudgetLine">
+              <PropertyRef Name="BudgetId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="EventBudget">
+          <End Type="Event.Event" Role="Event" Multiplicity="1" />
+          <End Type="Event.Budget" Role="Budget" Multiplicity="1" />
+        </Association>
+        <EntityType Name="SubEvent">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Type="Int32" Name="Id" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Type="String" Name="Name" Nullable="false" />
+          <Property Type="String" Name="Start" Nullable="false" />
+          <Property Type="String" Name="End" Nullable="false" />
+          <NavigationProperty Name="Event" Relationship="Event.EventSubEvent" FromRole="SubEvent" ToRole="Event" />
+          <Property Type="Int32" Name="EventId" Nullable="false" />
+        </EntityType>
+        <Association Name="EventSubEvent">
+          <End Type="Event.Event" Role="Event" Multiplicity="1" />
+          <End Type="Event.SubEvent" Role="SubEvent" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Event">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="SubEvent">
+              <PropertyRef Name="EventId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -218,10 +289,8 @@
       <EntityTypeMapping TypeName="IsTypeOf(Event.Event)">
         <MappingFragment StoreEntitySet="Events">
           <ScalarProperty Name="Id" ColumnName="Id" />
-          <ScalarProperty Name="Capacity" ColumnName="Capacity" />
           <ScalarProperty Name="Start" ColumnName="Start" />
           <ScalarProperty Name="End" ColumnName="End" />
-          <ScalarProperty Name="Budget" ColumnName="Budget" />
           <ScalarProperty Name="Name" ColumnName="Name" />
           <ScalarProperty Name="Description" ColumnName="Description" />
           <ScalarProperty Name="TimeCreated" ColumnName="TimeCreated" />
@@ -268,19 +337,35 @@
     <edmx:Diagrams>
       <Diagram Name="Event" >
         <EntityTypeShape EntityType="Event.Student" Width="1.5" PointX="0.5" PointY="0.75" Height="1.9802864583333335" />
-        <EntityTypeShape EntityType="Event.Event" Width="1.5" PointX="3.375" PointY="0.75" Height="3.7109993489583326" />
-        <EntityTypeShape EntityType="Event.Venue" Width="1.5" PointX="6.25" PointY="0.75" Height="1.4033821614583331" />
+        <EntityTypeShape EntityType="Event.Event" Width="1.5" PointX="3.375" PointY="0.75" Height="3.3263964843749996" />
+        <EntityTypeShape EntityType="Event.Venue" Width="1.5" PointX="6.25" PointY="0.75" Height="1.59568359375" />
         <AssociationConnector Association="Event.Organize">
-          <ConnectorPoint PointX="2" PointY="2.1045472462972006" />
-          <ConnectorPoint PointX="3.375" PointY="2.1045472462972006" />
+          <ConnectorPoint PointX="2" PointY="2.1114007393519083" />
+          <ConnectorPoint PointX="3.375" PointY="2.1114007393519083" />
         </AssociationConnector>
         <AssociationConnector Association="Event.EventRegistratration">
-          <ConnectorPoint PointX="2" PointY="1.3647736231486003" />
-          <ConnectorPoint PointX="3.375" PointY="1.3647736231486003" />
+          <ConnectorPoint PointX="2" PointY="1.3682003696759542" />
+          <ConnectorPoint PointX="3.375" PointY="1.3682003696759542" />
         </AssociationConnector>
         <AssociationConnector Association="Event.EventVenue">
-          <ConnectorPoint PointX="4.875" PointY="1.4516910807291668" />
-          <ConnectorPoint PointX="6.25" PointY="1.4516910807291668" />
+          <ConnectorPoint PointX="4.875" PointY="1.5478417968750002" />
+          <ConnectorPoint PointX="6.25" PointY="1.5478417968750002" />
+        </AssociationConnector>
+        <EntityTypeShape EntityType="Event.Budget" Width="1.5" PointX="0.75" PointY="3.875" Height="1.2110807291666665" />
+        <EntityTypeShape EntityType="Event.BudgetLine" Width="1.5" PointX="3.75" PointY="5.375" Height="1.5956835937499996" />
+        <AssociationConnector Association="Event.BudgetBudgetLine">
+          <ConnectorPoint PointX="2.25" PointY="4.7086393229166665" />
+          <ConnectorPoint PointX="5.09375" PointY="4.7086393229166665" />
+          <ConnectorPoint PointX="5.09375" PointY="5.375" />
+        </AssociationConnector>
+        <AssociationConnector Association="Event.EventBudget">
+          <ConnectorPoint PointX="3.375" PointY="4.0718489583333328" />
+          <ConnectorPoint PointX="2.25" PointY="4.0718489583333328" />
+        </AssociationConnector>
+        <EntityTypeShape EntityType="Event.SubEvent" Width="1.5" PointX="6.25" PointY="3.75" Height="1.7879850260416665" />
+        <AssociationConnector Association="Event.EventSubEvent">
+          <ConnectorPoint PointX="4.875" PointY="4.1054996744791659" />
+          <ConnectorPoint PointX="6.25" PointY="4.1054996744791659" />
         </AssociationConnector>
       </Diagram>
     </edmx:Diagrams>

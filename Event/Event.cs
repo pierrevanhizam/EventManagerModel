@@ -17,13 +17,12 @@ namespace EventManagerPro.Model
         public Event()
         {
             this.Guests = new HashSet<Student>();
+            this.SubEvents = new HashSet<SubEvent>();
         }
     
         public int Id { get; set; }
-        public int Capacity { get; set; }
         public System.DateTime Start { get; set; }
         public System.DateTime End { get; set; }
-        public decimal Budget { get; set; }
         public string Name { get; set; }
         public string Description { get; set; }
         public System.DateTime TimeCreated { get; set; }
@@ -34,11 +33,8 @@ namespace EventManagerPro.Model
         public virtual Student Owner { get; set; }
         public virtual ICollection<Student> Guests { get; set; }
         public virtual Venue Venue { get; set; }
-
-        public override string ToString()
-        {
-            return this.Name;
-        }
+        public virtual Budget Budget { get; set; }
+        public virtual ICollection<SubEvent> SubEvents { get; set; }
     }
     
 }

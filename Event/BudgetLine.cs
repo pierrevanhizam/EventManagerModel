@@ -12,11 +12,12 @@ using System.Collections.Generic;
 
 namespace EventManagerPro.Model
 {
-    public partial class Venue
+    public partial class BudgetLine
     {
         public int Id { get; set; }
         public string Name { get; set; }
-        public string Capacity { get; set; }
+        public string Cost { get; set; }
+        public int BudgetId { get; set; }
     }
     
 }
