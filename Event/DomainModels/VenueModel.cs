@@ -2,22 +2,61 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Data;
 
 namespace EventManagerPro.Model.DomainModels
 {
     public class VenueModel
     {
-        public static Venue create(string name)
+        public static Venue create(string name, int capacity)
         {
             using (var context = new EventContainer())
             {
                 Venue newVenue = new Venue
                 {
-                    Name = name
+                    Name = name,
+                    Capacity = capacity,
                 };
                 context.Venues.Add(newVenue);
                 context.SaveChanges();
                 return newVenue;
+            }
+        }
+
+        public static Venue update(string name, int capacity)
+        {
+            using (var context = new EventContainer())
+            {
+                Venue venue = new Venue
+                {
+                    Name = name,
+                    Capacity = capacity
+                };
+                context.Venues.Attach(venue);
+                context.Entry(venue).State = EntityState.Modified;
+                context.SaveChanges();
+                return venue;
+            }
+        }
+
+        public static Venue createObj(Venue e)
+        {
+            using (var context = new EventContainer())
+            {
+                context.Venues.Add(e);
+                context.SaveChanges();
+                return e;
+            }
+        }
+
+        public static Venue updateObj(Venue e)
+        {
+            using (var context = new EventContainer())
+            {
+                context.Entry(e).State = EntityState.Modified;
+                context.SaveChanges();
+
+                return e;
             }
         }
 

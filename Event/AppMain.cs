@@ -23,7 +23,7 @@ namespace EventManagerPro.Model
             Console.WriteLine("Student's name is {0}",student.Name);
             foreach (var ev in student.OwnedEvents)
             {
-                Console.WriteLine("{0} organizes {1} in {2}", student.Name, ev.Name, ev.Venue.Name);
+                Console.WriteLine("{0} organizes {1} in {2}", student.Name, ev.Name);
             }
             Console.WriteLine("First auth attempt, {0}",StudentModel.authenticate("U096988R", "asdqwe"));
             Console.WriteLine("Second auth attempt, {0}", StudentModel.authenticate("U096988R", "aqwe"));
@@ -47,7 +47,7 @@ namespace EventManagerPro.Model
             Console.WriteLine("Loading all events:");
             foreach (var s in allEvents)
             {
-                Console.WriteLine("EventName:{0},\nVenue:{1}\nOwner:{2}\n", s.Name, s.Venue.Name, s.Owner.Name);
+                Console.WriteLine("EventName:{0},\nVenue:{1}\nOwner:{2}\n", s.Name, s.Owner.Name);
             }
 
             // student registering event 

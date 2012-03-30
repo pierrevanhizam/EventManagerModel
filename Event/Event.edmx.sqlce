@@ -1,0 +1,263 @@
+
+-- --------------------------------------------------
+-- Entity Designer DDL Script for SQL Server Compact Edition
+-- --------------------------------------------------
+-- Date Created: 03/30/2012 08:39:07
+-- Generated from EDMX file: C:\Users\zen9\Desktop\CS2103Proj\Event\Event.edmx
+-- --------------------------------------------------
+
+
+-- --------------------------------------------------
+-- Dropping existing FOREIGN KEY constraints
+-- NOTE: if the constraint does not exist, an ignorable error will be reported.
+-- --------------------------------------------------
+
+    ALTER TABLE [Events] DROP CONSTRAINT [FK_Organize];
+GO
+    ALTER TABLE [EventRegistratration] DROP CONSTRAINT [FK_EventRegistratration_Student];
+GO
+    ALTER TABLE [EventRegistratration] DROP CONSTRAINT [FK_EventRegistratration_Event];
+GO
+    ALTER TABLE [BudgetItems] DROP CONSTRAINT [FK_BudgetBudgetLine];
+GO
+    ALTER TABLE [Events] DROP CONSTRAINT [FK_EventBudget];
+GO
+    ALTER TABLE [SubEvents] DROP CONSTRAINT [FK_EventSubEvent];
+GO
+    ALTER TABLE [SubEvents] DROP CONSTRAINT [FK_SubEventVenue];
+GO
+
+-- --------------------------------------------------
+-- Dropping existing tables
+-- NOTE: if the table does not exist, an ignorable error will be reported.
+-- --------------------------------------------------
+
+    DROP TABLE [Students];
+GO
+    DROP TABLE [Events];
+GO
+    DROP TABLE [Venues];
+GO
+    DROP TABLE [Budgets];
+GO
+    DROP TABLE [BudgetItems];
+GO
+    DROP TABLE [SubEvents];
+GO
+    DROP TABLE [EventRegistratration];
+GO
+
+-- --------------------------------------------------
+-- Creating all tables
+-- --------------------------------------------------
+
+-- Creating table 'Students'
+CREATE TABLE [Students] (
+    [Name] nvarchar(4000)  NOT NULL,
+    [MatricId] nvarchar(4000)  NOT NULL,
+    [Password] nvarchar(4000)  NOT NULL
+);
+GO
+
+-- Creating table 'Events'
+CREATE TABLE [Events] (
+    [Id] int IDENTITY(1,1) NOT NULL,
+    [Name] nvarchar(4000)  NOT NULL,
+    [Description] nvarchar(4000)  NOT NULL,
+    [TimeCreated] datetime  NOT NULL,
+    [StudentMatricId] nvarchar(4000)  NOT NULL,
+    [ViewAtLoginPage] smallint  NOT NULL,
+    [Start] datetime  NOT NULL,
+    [End] datetime  NOT NULL,
+    [Budget_Id] int  NOT NULL
+);
+GO
+
+-- Creating table 'Venues'
+CREATE TABLE [Venues] (
+    [Id] int IDENTITY(1,1) NOT NULL,
+    [Name] nvarchar(4000)  NOT NULL,
+    [Capacity] nvarchar(4000)  NOT NULL
+);
+GO
+
+-- Creating table 'Budgets'
+CREATE TABLE [Budgets] (
+    [Id] int IDENTITY(1,1) NOT NULL,
+    [AllocatedBudget] nvarchar(4000)  NOT NULL
+);
+GO
+
+-- Creating table 'BudgetItems'
+CREATE TABLE [BudgetItems] (
+    [Id] int IDENTITY(1,1) NOT NULL,
+    [Name] nvarchar(4000)  NOT NULL,
+    [Cost] nvarchar(4000)  NOT NULL,
+    [BudgetId] int  NOT NULL
+);
+GO
+
+-- Creating table 'SubEvents'
+CREATE TABLE [SubEvents] (
+    [Id] int IDENTITY(1,1) NOT NULL,
+    [Name] nvarchar(4000)  NOT NULL,
+    [Start] datetime  NOT NULL,
+    [End] datetime  NOT NULL,
+    [EventId] int  NOT NULL,
+    [VenueId] int  NOT NULL
+);
+GO
+
+-- Creating table 'EventRegistratration'
+CREATE TABLE [EventRegistratration] (
+    [Guests_MatricId] nvarchar(4000)  NOT NULL,
+    [RegisteredEvents_Id] int  NOT NULL
+);
+GO
+
+-- --------------------------------------------------
+-- Creating all PRIMARY KEY constraints
+-- --------------------------------------------------
+
+-- Creating primary key on [MatricId] in table 'Students'
+ALTER TABLE [Students]
+ADD CONSTRAINT [PK_Students]
+    PRIMARY KEY ([MatricId] );
+GO
+
+-- Creating primary key on [Id] in table 'Events'
+ALTER TABLE [Events]
+ADD CONSTRAINT [PK_Events]
+    PRIMARY KEY ([Id] );
+GO
+
+-- Creating primary key on [Id] in table 'Venues'
+ALTER TABLE [Venues]
+ADD CONSTRAINT [PK_Venues]
+    PRIMARY KEY ([Id] );
+GO
+
+-- Creating primary key on [Id] in table 'Budgets'
+ALTER TABLE [Budgets]
+ADD CONSTRAINT [PK_Budgets]
+    PRIMARY KEY ([Id] );
+GO
+
+-- Creating primary key on [Id] in table 'BudgetItems'
+ALTER TABLE [BudgetItems]
+ADD CONSTRAINT [PK_BudgetItems]
+    PRIMARY KEY ([Id] );
+GO
+
+-- Creating primary key on [Id] in table 'SubEvents'
+ALTER TABLE [SubEvents]
+ADD CONSTRAINT [PK_SubEvents]
+    PRIMARY KEY ([Id] );
+GO
+
+-- Creating primary key on [Guests_MatricId], [RegisteredEvents_Id] in table 'EventRegistratration'
+ALTER TABLE [EventRegistratration]
+ADD CONSTRAINT [PK_EventRegistratration]
+    PRIMARY KEY ([Guests_MatricId], [RegisteredEvents_Id] );
+GO
+
+-- --------------------------------------------------
+-- Creating all FOREIGN KEY constraints
+-- --------------------------------------------------
+
+-- Creating foreign key on [StudentMatricId] in table 'Events'
+ALTER TABLE [Events]
+ADD CONSTRAINT [FK_Organize]
+    FOREIGN KEY ([StudentMatricId])
+    REFERENCES [Students]
+        ([MatricId])
+    ON DELETE NO ACTION ON UPDATE NO ACTION;
+
+-- Creating non-clustered index for FOREIGN KEY 'FK_Organize'
+CREATE INDEX [IX_FK_Organize]
+ON [Events]
+    ([StudentMatricId]);
+GO
+
+-- Creating foreign key on [Guests_MatricId] in table 'EventRegistratration'
+ALTER TABLE [EventRegistratration]
+ADD CONSTRAINT [FK_EventRegistratration_Student]
+    FOREIGN KEY ([Guests_MatricId])
+    REFERENCES [Students]
+        ([MatricId])
+    ON DELETE NO ACTION ON UPDATE NO ACTION;
+GO
+
+-- Creating foreign key on [RegisteredEvents_Id] in table 'EventRegistratration'
+ALTER TABLE [EventRegistratration]
+ADD CONSTRAINT [FK_EventRegistratration_Event]
+    FOREIGN KEY ([RegisteredEvents_Id])
+    REFERENCES [Events]
+        ([Id])
+    ON DELETE NO ACTION ON UPDATE NO ACTION;
+
+-- Creating non-clustered index for FOREIGN KEY 'FK_EventRegistratration_Event'
+CREATE INDEX [IX_FK_EventRegistratration_Event]
+ON [EventRegistratration]
+    ([RegisteredEvents_Id]);
+GO
+
+-- Creating foreign key on [BudgetId] in table 'BudgetItems'
+ALTER TABLE [BudgetItems]
+ADD CONSTRAINT [FK_BudgetBudgetLine]
+    FOREIGN KEY ([BudgetId])
+    REFERENCES [Budgets]
+        ([Id])
+    ON DELETE NO ACTION ON UPDATE NO ACTION;
+
+-- Creating non-clustered index for FOREIGN KEY 'FK_BudgetBudgetLine'
+CREATE INDEX [IX_FK_BudgetBudgetLine]
+ON [BudgetItems]
+    ([BudgetId]);
+GO
+
+-- Creating foreign key on [Budget_Id] in table 'Events'
+ALTER TABLE [Events]
+ADD CONSTRAINT [FK_EventBudget]
+    FOREIGN KEY ([Budget_Id])
+    REFERENCES [Budgets]
+        ([Id])
+    ON DELETE NO ACTION ON UPDATE NO ACTION;
+
+-- Creating non-clustered index for FOREIGN KEY 'FK_EventBudget'
+CREATE INDEX [IX_FK_EventBudget]
+ON [Events]
+    ([Budget_Id]);
+GO
+
+-- Creating foreign key on [EventId] in table 'SubEvents'
+ALTER TABLE [SubEvents]
+ADD CONSTRAINT [FK_EventSubEvent]
+    FOREIGN KEY ([EventId])
+    REFERENCES [Events]
+        ([Id])
+    ON DELETE NO ACTION ON UPDATE NO ACTION;
+
+-- Creating non-clustered index for FOREIGN KEY 'FK_EventSubEvent'
+CREATE INDEX [IX_FK_EventSubEvent]
+ON [SubEvents]
+    ([EventId]);
+GO
+
+-- Creating foreign key on [VenueId] in table 'SubEvents'
+ALTER TABLE [SubEvents]
+ADD CONSTRAINT [FK_SubEventVenue]
+    FOREIGN KEY ([VenueId])
+    REFERENCES [Venues]
+        ([Id])
+    ON DELETE NO ACTION ON UPDATE NO ACTION;
+
+-- Creating non-clustered index for FOREIGN KEY 'FK_SubEventVenue'
+CREATE INDEX [IX_FK_SubEventVenue]
+ON [SubEvents]
+    ([VenueId]);
+GO
+
+-- --------------------------------------------------
+-- Script has ended
+-- --------------------------------------------------
