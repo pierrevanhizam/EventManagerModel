@@ -9,6 +9,9 @@
     <EntitySet Name="Students" EntityType="Event.Store.Students" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="Events" EntityType="Event.Store.Events" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="Venues" EntityType="Event.Store.Venues" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="Budgets" EntityType="Event.Store.Budgets" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="BudgetItems" EntityType="Event.Store.BudgetItems" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="SubEvents" EntityType="Event.Store.SubEvents" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="EventRegistratration" EntityType="Event.Store.EventRegistratration" store:Type="Tables" Schema="dbo" />
     <AssociationSet Name="Organize" Association="Event.Store.Organize">
       <End Role="Student" EntitySet="Students" />
@@ -22,8 +25,20 @@
       <End Role="Event" EntitySet="Events" />
       <End Role="EventRegistratration" EntitySet="EventRegistratration" />
     </AssociationSet>
-    <AssociationSet Name="EventVenue" Association="Event.Store.EventVenue">
+    <AssociationSet Name="BudgetBudgetLine" Association="Event.Store.BudgetBudgetLine">
+      <End Role="Budget" EntitySet="Budgets" />
+      <End Role="BudgetLine" EntitySet="BudgetItems" />
+    </AssociationSet>
+    <AssociationSet Name="EventBudget" Association="Event.Store.EventBudget">
       <End Role="Event" EntitySet="Events" />
+      <End Role="Budget" EntitySet="Budgets" />
+    </AssociationSet>
+    <AssociationSet Name="EventSubEvent" Association="Event.Store.EventSubEvent">
+      <End Role="Event" EntitySet="Events" />
+      <End Role="SubEvent" EntitySet="SubEvents" />
+    </AssociationSet>
+    <AssociationSet Name="SubEventVenue" Association="Event.Store.SubEventVenue">
+      <End Role="SubEvent" EntitySet="SubEvents" />
       <End Role="Venue" EntitySet="Venues" />
     </AssociationSet>
   </EntityContainer>
@@ -40,16 +55,13 @@
       <PropertyRef Name="Id" />
     </Key>
     <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-    <Property Name="Capacity" Type="int" Nullable="false" />
-    <Property Name="Start" Type="datetime" Nullable="false" />
-    <Property Name="End" Type="datetime" Nullable="false" />
-    <Property Name="Budget" Type="decimal" Nullable="false" />
     <Property Name="Name" Type="nvarchar" Nullable="false" />
     <Property Name="Description" Type="nvarchar" Nullable="false" />
     <Property Name="TimeCreated" Type="datetime" Nullable="false" />
     <Property Name="StudentMatricId" Type="nvarchar" Nullable="false" />
     <Property Name="VenueId" Type="int" Nullable="false" />
     <Property Name="ViewAtLoginPage" Type="smallint" Nullable="false" />
+    <Property Name="Budget_Id" Type="int" Nullable="false" />
   </EntityType>
   <EntityType Name="Venues">
     <Key>
@@ -57,6 +69,34 @@
     </Key>
     <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
     <Property Name="Name" Type="nvarchar" Nullable="false" />
+    <Property Name="Capacity" Type="nvarchar" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Budgets">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="AllocatedBudget" Type="nvarchar" Nullable="false" />
+  </EntityType>
+  <EntityType Name="BudgetItems">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Name" Type="nvarchar" Nullable="false" />
+    <Property Name="Cost" Type="nvarchar" Nullable="false" />
+    <Property Name="BudgetId" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="SubEvents">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Name" Type="nvarchar" Nullable="false" />
+    <Property Name="Start" Type="nvarchar" Nullable="false" />
+    <Property Name="End" Type="nvarchar" Nullable="false" />
+    <Property Name="EventId" Type="int" Nullable="false" />
+    <Property Name="VenueId" Type="int" Nullable="false" />
   </EntityType>
   <EntityType Name="EventRegistratration">
     <Key>
@@ -78,14 +118,50 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
-  <Association Name="EventVenue">
+  <Association Name="BudgetBudgetLine">
+    <End Role="Budget" Type="Event.Store.Budgets" Multiplicity="1" />
+    <End Role="BudgetLine" Type="Event.Store.BudgetItems" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Budget">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="BudgetLine">
+        <PropertyRef Name="BudgetId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="EventBudget">
     <End Role="Event" Type="Event.Store.Events" Multiplicity="*" />
+    <End Role="Budget" Type="Event.Store.Budgets" Multiplicity="1" />
+    <ReferentialConstraint>
+      <Principal Role="Budget">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Event">
+        <PropertyRef Name="Budget_Id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="EventSubEvent">
+    <End Role="Event" Type="Event.Store.Events" Multiplicity="1" />
+    <End Role="SubEvent" Type="Event.Store.SubEvents" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Event">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="SubEvent">
+        <PropertyRef Name="EventId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="SubEventVenue">
+    <End Role="SubEvent" Type="Event.Store.SubEvents" Multiplicity="*" />
     <End Role="Venue" Type="Event.Store.Venues" Multiplicity="1" />
     <ReferentialConstraint>
       <Principal Role="Venue">
         <PropertyRef Name="Id" />
       </Principal>
-      <Dependent Role="Event">
+      <Dependent Role="SubEvent">
         <PropertyRef Name="VenueId" />
       </Dependent>
     </ReferentialConstraint>
@@ -304,6 +380,37 @@
         <MappingFragment StoreEntitySet="Venues">
           <ScalarProperty Name="Id" ColumnName="Id" />
           <ScalarProperty Name="Name" ColumnName="Name" />
+          <ScalarProperty Name="Capacity" ColumnName="Capacity" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Budgets">
+      <EntityTypeMapping TypeName="IsTypeOf(Event.Budget)">
+        <MappingFragment StoreEntitySet="Budgets">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="AllocatedBudget" ColumnName="AllocatedBudget" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="BudgetItems">
+      <EntityTypeMapping TypeName="IsTypeOf(Event.BudgetItem)">
+        <MappingFragment StoreEntitySet="BudgetItems">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="Name" ColumnName="Name" />
+          <ScalarProperty Name="Cost" ColumnName="Cost" />
+          <ScalarProperty Name="BudgetId" ColumnName="BudgetId" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="SubEvents">
+      <EntityTypeMapping TypeName="IsTypeOf(Event.SubEvent)">
+        <MappingFragment StoreEntitySet="SubEvents">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="Name" ColumnName="Name" />
+          <ScalarProperty Name="Start" ColumnName="Start" />
+          <ScalarProperty Name="End" ColumnName="End" />
+          <ScalarProperty Name="EventId" ColumnName="EventId" />
+          <ScalarProperty Name="VenueId" ColumnName="VenueId" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
@@ -313,6 +420,14 @@
       </EndProperty>
       <EndProperty Name="Event">
         <ScalarProperty Name="Id" ColumnName="RegisteredEvents_Id" />
+      </EndProperty>
+    </AssociationSetMapping>
+    <AssociationSetMapping Name="EventBudget" TypeName="Event.EventBudget" StoreEntitySet="Events">
+      <EndProperty Name="Budget">
+        <ScalarProperty Name="Id" ColumnName="Budget_Id" />
+      </EndProperty>
+      <EndProperty Name="Event">
+        <ScalarProperty Name="Id" ColumnName="Id" />
       </EndProperty>
     </AssociationSetMapping>
   </EntityContainerMapping>
