@@ -20,7 +20,7 @@ namespace EventManagerPro.Model
         }
     
         public int Id { get; set; }
-        public string AllocatedBudget { get; set; }
+        public int AllocatedBudget { get; set; }
     
         public virtual ICollection<BudgetItem> BudgetLines { get; set; }
     }

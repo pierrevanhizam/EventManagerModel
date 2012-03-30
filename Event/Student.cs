@@ -12,17 +12,20 @@ using System.Collections.Generic;
 
 namespace EventManagerPro.Model
 {
-    public partial class SubEvent
+    public partial class Student
     {
-        public int Id { get; set; }
-        public string Name { get; set; }
-        public System.DateTime Start { get; set; }
-        public System.DateTime End { get; set; }
-        public int EventId { get; set; }
-        public int VenueId { get; set; }
+        public Student()
+        {
+            this.OwnedEvents = new HashSet<Event>();
+            this.RegisteredEvents = new HashSet<Event>();
+        }
     
-        public virtual Event Event { get; set; }
-        public virtual Venue Venue { get; set; }
+        public string Name { get; set; }
+        public string MatricId { get; set; }
+        public string Password { get; set; }
+    
+        public virtual ICollection<Event> OwnedEvents { get; set; }
+        public virtual ICollection<Event> RegisteredEvents { get; set; }
     }
     
 }
