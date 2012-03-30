@@ -22,7 +22,9 @@ namespace EventManagerApp.Converters
             {
                 case "Guests":
                     current = (double)curEvent.Guests.Count;
-                    max = curEvent.Capacity;
+                   // max = curEvent.Capacity;
+                    // TODO: remap capacity
+                    max = 100; // dummy filler
                     break;
             }
 

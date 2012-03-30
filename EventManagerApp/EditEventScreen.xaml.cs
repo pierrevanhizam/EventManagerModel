@@ -34,7 +34,7 @@ namespace EventManagerApp
 
         public double DoubleMaximumCapacity
         {
-            get { return this._curEvent.Capacity; }
+            get { return 100; } //this._curEvent.Capacity; }
             set { }
         }
 
@@ -201,7 +201,7 @@ namespace EventManagerApp
         // Updates the UI when current capacity has changed (after user has deleted a registered Student).
         private void updateCapacityUI()
         {
-            capacityProgressBar.Value = ((double)(this._curEvent.Guests.Count) / this._curEvent.Capacity) * 100;
+            capacityProgressBar.Value = ((double)(this._curEvent.Guests.Count) / 100) * 100;//this._curEvent.Capacity) * 100;
             currentCapacityCounter.Content = this._curEvent.Guests.Count.ToString();
         }
 
