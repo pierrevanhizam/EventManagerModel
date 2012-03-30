@@ -59,7 +59,6 @@
     <Property Name="Description" Type="nvarchar" Nullable="false" />
     <Property Name="TimeCreated" Type="datetime" Nullable="false" />
     <Property Name="StudentMatricId" Type="nvarchar" Nullable="false" />
-    <Property Name="VenueId" Type="int" Nullable="false" />
     <Property Name="ViewAtLoginPage" Type="smallint" Nullable="false" />
     <Property Name="Start" Type="datetime" Nullable="false" />
     <Property Name="End" Type="datetime" Nullable="false" />
@@ -95,8 +94,8 @@
     </Key>
     <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
     <Property Name="Name" Type="nvarchar" Nullable="false" />
-    <Property Name="Start" Type="nvarchar" Nullable="false" />
-    <Property Name="End" Type="nvarchar" Nullable="false" />
+    <Property Name="Start" Type="datetime" Nullable="false" />
+    <Property Name="End" Type="datetime" Nullable="false" />
     <Property Name="EventId" Type="int" Nullable="false" />
     <Property Name="VenueId" Type="int" Nullable="false" />
   </EntityType>
@@ -249,7 +248,6 @@
           <NavigationProperty Name="Owner" Relationship="Event.Organize" FromRole="Event" ToRole="Student" />
           <Property Type="String" Name="StudentMatricId" Nullable="false" />
           <NavigationProperty Name="Guests" Relationship="Event.EventRegistratration" FromRole="Event" ToRole="Student" />
-          <Property Type="Int32" Name="VenueId" Nullable="false" />
           <Property Type="Int16" Name="ViewAtLoginPage" Nullable="false" />
           <NavigationProperty Name="Budget" Relationship="Event.EventBudget" FromRole="Event" ToRole="Budget" />
           <NavigationProperty Name="SubEvents" Relationship="Event.EventSubEvent" FromRole="Event" ToRole="SubEvent" />
@@ -320,8 +318,8 @@
           </Key>
           <Property Type="Int32" Name="Id" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Type="String" Name="Name" Nullable="false" />
-          <Property Type="String" Name="Start" Nullable="false" />
-          <Property Type="String" Name="End" Nullable="false" />
+          <Property Type="DateTime" Name="Start" Nullable="false" />
+          <Property Type="DateTime" Name="End" Nullable="false" />
           <NavigationProperty Name="Event" Relationship="Event.EventSubEvent" FromRole="SubEvent" ToRole="Event" />
           <Property Type="Int32" Name="EventId" Nullable="false" />
           <NavigationProperty Name="Venue" Relationship="Event.SubEventVenue" FromRole="SubEvent" ToRole="Venue" />
@@ -374,7 +372,6 @@
           <ScalarProperty Name="Description" ColumnName="Description" />
           <ScalarProperty Name="TimeCreated" ColumnName="TimeCreated" />
           <ScalarProperty Name="StudentMatricId" ColumnName="StudentMatricId" />
-          <ScalarProperty Name="VenueId" ColumnName="VenueId" />
           <ScalarProperty Name="ViewAtLoginPage" ColumnName="ViewAtLoginPage" />
           <ScalarProperty Name="Start" ColumnName="Start" />
           <ScalarProperty Name="End" ColumnName="End" />
@@ -457,15 +454,15 @@
     <edmx:Diagrams>
       <Diagram Name="Event" >
         <EntityTypeShape EntityType="Event.Student" Width="1.5" PointX="0.5" PointY="0.75" Height="1.9802864583333335" />
-        <EntityTypeShape EntityType="Event.Event" Width="1.5" PointX="3.375" PointY="0.75" Height="3.5186979166666656" />
+        <EntityTypeShape EntityType="Event.Event" Width="1.5" PointX="3.375" PointY="0.75" Height="3.3263964843749996" />
         <EntityTypeShape EntityType="Event.Venue" Width="1.5" PointX="6.25" PointY="0.75" Height="1.59568359375" />
         <AssociationConnector Association="Event.Organize">
-          <ConnectorPoint PointX="2" PointY="2.1118575273411504" />
-          <ConnectorPoint PointX="3.375" PointY="2.1118575273411504" />
+          <ConnectorPoint PointX="2" PointY="2.1118576110019545" />
+          <ConnectorPoint PointX="3.375" PointY="2.1118576110019545" />
         </AssociationConnector>
         <AssociationConnector Association="Event.EventRegistratration">
-          <ConnectorPoint PointX="2" PointY="1.3684287636705752" />
-          <ConnectorPoint PointX="3.375" PointY="1.3684287636705752" />
+          <ConnectorPoint PointX="2" PointY="1.3684288055009772" />
+          <ConnectorPoint PointX="3.375" PointY="1.3684288055009772" />
         </AssociationConnector>
         <EntityTypeShape EntityType="Event.Budget" Width="1.5" PointX="0.75" PointY="3.875" Height="1.5956835937499996" />
         <EntityTypeShape EntityType="Event.BudgetItem" Width="1.5" PointX="3.75" PointY="5.375" Height="1.5956835937499996" />
@@ -475,13 +472,14 @@
           <ConnectorPoint PointX="5.09375" PointY="5.375" />
         </AssociationConnector>
         <AssociationConnector Association="Event.EventBudget">
-          <ConnectorPoint PointX="3.375" PointY="4.0718489583333328" />
-          <ConnectorPoint PointX="2.25" PointY="4.0718489583333328" />
+          <ConnectorPoint PointX="3.375" PointY="3.3338927291666667" />
+          <ConnectorPoint PointX="2.15625" PointY="3.3338927291666667" />
+          <ConnectorPoint PointX="2.15625" PointY="3.875" />
         </AssociationConnector>
         <EntityTypeShape EntityType="Event.SubEvent" Width="1.5" PointX="6.25" PointY="3.75" Height="1.7879850260416665" />
         <AssociationConnector Association="Event.EventSubEvent">
-          <ConnectorPoint PointX="4.875" PointY="4.0093489583333328" />
-          <ConnectorPoint PointX="6.25" PointY="4.0093489583333328" />
+          <ConnectorPoint PointX="4.875" PointY="3.9131982421875" />
+          <ConnectorPoint PointX="6.25" PointY="3.9131982421875" />
         </AssociationConnector>
         <AssociationConnector Association="Event.SubEventVenue">
           <ConnectorPoint PointX="7" PointY="3.75" />

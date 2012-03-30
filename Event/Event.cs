@@ -25,7 +25,6 @@ namespace EventManagerPro.Model
         public string Description { get; set; }
         public System.DateTime TimeCreated { get; set; }
         public string StudentMatricId { get; set; }
-        public int VenueId { get; set; }
         public short ViewAtLoginPage { get; set; }
         public System.DateTime Start { get; set; }
         public System.DateTime End { get; set; }

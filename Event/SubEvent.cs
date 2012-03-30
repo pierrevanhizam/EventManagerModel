@@ -16,8 +16,8 @@ namespace EventManagerPro.Model
     {
         public int Id { get; set; }
         public string Name { get; set; }
-        public string Start { get; set; }
-        public string End { get; set; }
+        public System.DateTime Start { get; set; }
+        public System.DateTime End { get; set; }
         public int EventId { get; set; }
         public int VenueId { get; set; }
     
