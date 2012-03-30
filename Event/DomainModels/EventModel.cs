@@ -19,7 +19,6 @@ namespace EventManagerPro.Model.DomainModels
                     Description = description,
                     Start = start,
                     End = end,
-                    VenueId = venueId,
                     TimeCreated = DateTime.Now,
                     ViewAtLoginPage = viewAtLoginPage,
                 };
@@ -33,7 +32,7 @@ namespace EventManagerPro.Model.DomainModels
         {
             using (var context = new EventContainer())
             {
-                var runningEvent = (from e in context.Events.Include("Venue").Include("Owner").Include("Guests")
+                var runningEvent = (from e in context.Events.Include("SubEvents").Include("Owner").Include("Guests").Include("Budget")
                                     where e.Id == eventId
                                     select e).FirstOrDefault();
                 var student = (from s in context.Students
@@ -64,7 +63,6 @@ namespace EventManagerPro.Model.DomainModels
                     Description = description,
                     Start = start,
                     End = end,
-                    VenueId = venueId,
                     TimeCreated = DateTime.Now,
                     ViewAtLoginPage = viewAtLoginPage,
                 };
@@ -100,7 +98,7 @@ namespace EventManagerPro.Model.DomainModels
         {
             using (var context = new EventContainer())
             {
-                var runningEvent = (from e in context.Events.Include("Venue").Include("Owner").Include("Guests")
+                var runningEvent = (from e in context.Events.Include("Owner").Include("Guests")
                                     where e.Id == eventId
                                     select e).FirstOrDefault();
                 var student = (from s in context.Students
@@ -134,7 +132,7 @@ namespace EventManagerPro.Model.DomainModels
         {
             using (var context = new EventContainer())
             {
-                IEnumerable<Event> events = from s in context.Events.Include("Venue").Include("Owner").Include("Guests")
+                IEnumerable<Event> events = from s in context.Events.Include("SubEvents").Include("Owner").Include("Guests").Include("Budget")
                                             orderby s.TimeCreated descending
                                             select s;
                 return events.ToList();
@@ -145,7 +143,7 @@ namespace EventManagerPro.Model.DomainModels
         {
             using (var context = new EventContainer())
             {
-                IEnumerable<Event> events = from s in context.Events.Include("Venue").Include("Owner").Include("Guests")
+                IEnumerable<Event> events = from s in context.Events.Include("SubEvents").Include("Owner").Include("Guests").Include("Budget")
                                             where s.ViewAtLoginPage == 1
                                             orderby s.TimeCreated descending
                                             select s;
@@ -157,7 +155,7 @@ namespace EventManagerPro.Model.DomainModels
         {
             using (var context = new EventContainer())
             {
-                IEnumerable<Event> events = from s in context.Events.Include("Venue").Include("Owner").Include("Guests")
+                IEnumerable<Event> events = from s in context.Events.Include("SubEvents").Include("Owner").Include("Guests").Include("Budget")
                                             where s.ViewAtLoginPage == 1 && s.Start.Month == month
                                             orderby s.TimeCreated descending
                                             select s;
@@ -169,7 +167,7 @@ namespace EventManagerPro.Model.DomainModels
         {
             using (var context = new EventContainer())
             {
-                IEnumerable<Event> events = from s in context.Events.Include("Venue").Include("Owner").Include("Guests")
+                IEnumerable<Event> events = from s in context.Events.Include("SubEvents").Include("Owner").Include("Guests").Include("Budget")
                                             where s.ViewAtLoginPage == 1 && s.Start.Year == date.Year && s.Start.Month == date.Month
                                             orderby s.TimeCreated descending
                                             select s;
@@ -181,7 +179,7 @@ namespace EventManagerPro.Model.DomainModels
         {
             using (var context = new EventContainer())
             {
-                IEnumerable<Event> events = from s in context.Events.Include("Venue").Include("Owner").Include("Guests")
+                IEnumerable<Event> events = from s in context.Events.Include("SubEvents").Include("Owner").Include("Guests").Include("Budget")
                                             where s.StudentMatricId != matricId
                                             orderby s.TimeCreated descending
                                             select s;
@@ -193,7 +191,7 @@ namespace EventManagerPro.Model.DomainModels
         {
             using (var context = new EventContainer())
             {
-                IEnumerable<Event> events = from s in context.Events.Include("Venue").Include("Owner").Include("Guests")
+                IEnumerable<Event> events = from s in context.Events.Include("SubEvents").Include("Owner").Include("Guests").Include("Budget")
                                             where s.StudentMatricId == matricId
                                             orderby s.TimeCreated descending
                                             select s;
@@ -205,7 +203,7 @@ namespace EventManagerPro.Model.DomainModels
         {
             using (var context = new EventContainer())
             {
-                var events = from s in context.Events.Include("Venue").Include("Owner").Include("Guests")
+                var events = from s in context.Events.Include("SubEvents").Include("Owner").Include("Guests").Include("Budget")
                              where s.Id == id
                              select s;
                 return events.FirstOrDefault();
