@@ -30,8 +30,8 @@ namespace EventManagerPro.Model
      
             // Venue
             Console.WriteLine("\nTESTING VENUE MANAGER:");
-            var newVenue = VenueModel.create("LT19 school of computing");
-            Console.WriteLine("Created venue: {0} with ID: {1}\n", newVenue.Name, newVenue.Id);
+            //var newVenue = VenueModel.create("LT19 school of computing");
+            //Console.WriteLine("Created venue: {0} with ID: {1}\n", newVenue.Name, newVenue.Id);
             var venues = VenueModel.getAll();
             Console.WriteLine("A list of venues:");
             foreach (var v in venues)

@@ -70,14 +70,14 @@
     </Key>
     <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
     <Property Name="Name" Type="nvarchar" Nullable="false" />
-    <Property Name="Capacity" Type="nvarchar" Nullable="false" />
+    <Property Name="Capacity" Type="int" Nullable="false" />
   </EntityType>
   <EntityType Name="Budgets">
     <Key>
       <PropertyRef Name="Id" />
     </Key>
     <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-    <Property Name="AllocatedBudget" Type="nvarchar" Nullable="false" />
+    <Property Name="AllocatedBudget" Type="int" Nullable="false" />
   </EntityType>
   <EntityType Name="BudgetItems">
     <Key>
@@ -85,7 +85,7 @@
     </Key>
     <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
     <Property Name="Name" Type="nvarchar" Nullable="false" />
-    <Property Name="Cost" Type="nvarchar" Nullable="false" />
+    <Property Name="Cost" Type="int" Nullable="false" />
     <Property Name="BudgetId" Type="int" Nullable="false" />
   </EntityType>
   <EntityType Name="SubEvents">
