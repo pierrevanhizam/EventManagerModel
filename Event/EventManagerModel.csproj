@@ -50,6 +50,12 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Budget.cs">
+      <DependentUpon>EventModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="BudgetItem.cs">
+      <DependentUpon>EventModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="DomainModels\EventModel.cs" />
     <Compile Include="Event.cs">
       <DependentUpon>EventModel.tt</DependentUpon>
@@ -74,6 +80,9 @@
     <Compile Include="DomainModels\StudentModel.cs" />
     <Compile Include="DomainModels\VenueModel.cs" />
     <Compile Include="Student.cs">
+      <DependentUpon>EventModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="SubEvent.cs">
       <DependentUpon>EventModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Venue.cs">

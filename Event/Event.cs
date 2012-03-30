@@ -27,6 +27,8 @@ namespace EventManagerPro.Model
         public string StudentMatricId { get; set; }
         public int VenueId { get; set; }
         public short ViewAtLoginPage { get; set; }
+        public System.DateTime Start { get; set; }
+        public System.DateTime End { get; set; }
     
         public virtual Student Owner { get; set; }
         public virtual ICollection<Student> Guests { get; set; }

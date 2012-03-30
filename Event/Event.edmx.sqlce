@@ -2,7 +2,7 @@
 -- --------------------------------------------------
 -- Entity Designer DDL Script for SQL Server Compact Edition
 -- --------------------------------------------------
--- Date Created: 03/30/2012 08:16:27
+-- Date Created: 03/30/2012 08:22:57
 -- Generated from EDMX file: C:\Users\zen9\Desktop\CS2103Proj\Event\Event.edmx
 -- --------------------------------------------------
 
@@ -18,7 +18,13 @@ GO
 GO
     ALTER TABLE [EventRegistratration] DROP CONSTRAINT [FK_EventRegistratration_Event];
 GO
-    ALTER TABLE [Events] DROP CONSTRAINT [FK_EventVenue];
+    ALTER TABLE [BudgetItems] DROP CONSTRAINT [FK_BudgetBudgetLine];
+GO
+    ALTER TABLE [Events] DROP CONSTRAINT [FK_EventBudget];
+GO
+    ALTER TABLE [SubEvents] DROP CONSTRAINT [FK_EventSubEvent];
+GO
+    ALTER TABLE [SubEvents] DROP CONSTRAINT [FK_SubEventVenue];
 GO
 
 -- --------------------------------------------------
@@ -31,6 +37,12 @@ GO
     DROP TABLE [Events];
 GO
     DROP TABLE [Venues];
+GO
+    DROP TABLE [Budgets];
+GO
+    DROP TABLE [BudgetItems];
+GO
+    DROP TABLE [SubEvents];
 GO
     DROP TABLE [EventRegistratration];
 GO
@@ -56,6 +68,8 @@ CREATE TABLE [Events] (
     [StudentMatricId] nvarchar(4000)  NOT NULL,
     [VenueId] int  NOT NULL,
     [ViewAtLoginPage] smallint  NOT NULL,
+    [Start] datetime  NOT NULL,
+    [End] datetime  NOT NULL,
     [Budget_Id] int  NOT NULL
 );
 GO
