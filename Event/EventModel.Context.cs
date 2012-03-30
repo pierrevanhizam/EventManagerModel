@@ -29,7 +29,7 @@ namespace EventManagerPro.Model
         public DbSet<Event> Events { get; set; }
         public DbSet<Venue> Venues { get; set; }
         public DbSet<Budget> Budgets { get; set; }
-        public DbSet<BudgetLine> BudgetLines { get; set; }
+        public DbSet<BudgetItem> BudgetItems { get; set; }
         public DbSet<SubEvent> SubEvents { get; set; }
     }
 }

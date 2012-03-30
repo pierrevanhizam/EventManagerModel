@@ -130,15 +130,11 @@
             <End Role="Student" EntitySet="Students" />
             <End Role="Event" EntitySet="Events" />
           </AssociationSet>
-          <AssociationSet Name="EventVenue" Association="Event.EventVenue">
-            <End Role="Event" EntitySet="Events" />
-            <End Role="Venue" EntitySet="Venues" />
-          </AssociationSet>
           <EntitySet Name="Budgets" EntityType="Event.Budget" />
-          <EntitySet Name="BudgetLines" EntityType="Event.BudgetLine" />
+          <EntitySet Name="BudgetItems" EntityType="Event.BudgetItem" />
           <AssociationSet Name="BudgetBudgetLine" Association="Event.BudgetBudgetLine">
             <End Role="Budget" EntitySet="Budgets" />
-            <End Role="BudgetLine" EntitySet="BudgetLines" />
+            <End Role="BudgetLine" EntitySet="BudgetItems" />
           </AssociationSet>
           <AssociationSet Name="EventBudget" Association="Event.EventBudget">
             <End Role="Event" EntitySet="Events" />
@@ -148,6 +144,10 @@
           <AssociationSet Name="EventSubEvent" Association="Event.EventSubEvent">
             <End Role="Event" EntitySet="Events" />
             <End Role="SubEvent" EntitySet="SubEvents" />
+          </AssociationSet>
+          <AssociationSet Name="SubEventVenue" Association="Event.SubEventVenue">
+            <End Role="SubEvent" EntitySet="SubEvents" />
+            <End Role="Venue" EntitySet="Venues" />
           </AssociationSet>
         </EntityContainer>
         <EntityType Name="Student">
@@ -165,15 +165,12 @@
             <PropertyRef Name="Id" />
           </Key>
           <Property Type="Int32" Name="Id" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Type="DateTime" Name="Start" Nullable="false" />
-          <Property Type="DateTime" Name="End" Nullable="false" />
           <Property Type="String" Name="Name" Nullable="false" />
           <Property Type="String" Name="Description" Nullable="false" />
           <Property Type="DateTime" Name="TimeCreated" Nullable="false" />
           <NavigationProperty Name="Owner" Relationship="Event.Organize" FromRole="Event" ToRole="Student" />
           <Property Type="String" Name="StudentMatricId" Nullable="false" />
           <NavigationProperty Name="Guests" Relationship="Event.EventRegistratration" FromRole="Event" ToRole="Student" />
-          <NavigationProperty Name="Venue" Relationship="Event.EventVenue" FromRole="Event" ToRole="Venue" />
           <Property Type="Int32" Name="VenueId" Nullable="false" />
           <Property Type="Int16" Name="ViewAtLoginPage" Nullable="false" />
           <NavigationProperty Name="Budget" Relationship="Event.EventBudget" FromRole="Event" ToRole="Budget" />
@@ -186,6 +183,7 @@
           <Property Type="Int32" Name="Id" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Type="String" Name="Name" Nullable="false" />
           <Property Type="String" Name="Capacity" Nullable="false" />
+          <NavigationProperty Name="SubEvents" Relationship="Event.SubEventVenue" FromRole="Venue" ToRole="SubEvent" />
         </EntityType>
         <Association Name="Organize">
           <End Type="Event.Student" Role="Student" Multiplicity="1" />
@@ -203,26 +201,15 @@
           <End Type="Event.Student" Role="Student" Multiplicity="*" />
           <End Type="Event.Event" Role="Event" Multiplicity="*" />
         </Association>
-        <Association Name="EventVenue">
-          <End Type="Event.Event" Role="Event" Multiplicity="*" />
-          <End Type="Event.Venue" Role="Venue" Multiplicity="1" />
-          <ReferentialConstraint>
-            <Principal Role="Venue">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="Event">
-              <PropertyRef Name="VenueId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <EntityType Name="Budget">
           <Key>
             <PropertyRef Name="Id" />
           </Key>
           <Property Type="Int32" Name="Id" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <NavigationProperty Name="BudgetLines" Relationship="Event.BudgetBudgetLine" FromRole="Budget" ToRole="BudgetLine" />
+          <Property Type="String" Name="AllocatedBudget" Nullable="false" />
         </EntityType>
-        <EntityType Name="BudgetLine">
+        <EntityType Name="BudgetItem">
           <Key>
             <PropertyRef Name="Id" />
           </Key>
@@ -233,7 +220,7 @@
         </EntityType>
         <Association Name="BudgetBudgetLine">
           <End Type="Event.Budget" Role="Budget" Multiplicity="1" />
-          <End Type="Event.BudgetLine" Role="BudgetLine" Multiplicity="*" />
+          <End Type="Event.BudgetItem" Role="BudgetLine" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Budget">
               <PropertyRef Name="Id" />
@@ -257,6 +244,8 @@
           <Property Type="String" Name="End" Nullable="false" />
           <NavigationProperty Name="Event" Relationship="Event.EventSubEvent" FromRole="SubEvent" ToRole="Event" />
           <Property Type="Int32" Name="EventId" Nullable="false" />
+          <NavigationProperty Name="Venue" Relationship="Event.SubEventVenue" FromRole="SubEvent" ToRole="Venue" />
+          <Property Type="Int32" Name="VenueId" Nullable="false" />
         </EntityType>
         <Association Name="EventSubEvent">
           <End Type="Event.Event" Role="Event" Multiplicity="1" />
@@ -267,6 +256,18 @@
             </Principal>
             <Dependent Role="SubEvent">
               <PropertyRef Name="EventId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="SubEventVenue">
+          <End Type="Event.SubEvent" Role="SubEvent" Multiplicity="*" />
+          <End Type="Event.Venue" Role="Venue" Multiplicity="1" />
+          <ReferentialConstraint>
+            <Principal Role="Venue">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="SubEvent">
+              <PropertyRef Name="VenueId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -289,8 +290,6 @@
       <EntityTypeMapping TypeName="IsTypeOf(Event.Event)">
         <MappingFragment StoreEntitySet="Events">
           <ScalarProperty Name="Id" ColumnName="Id" />
-          <ScalarProperty Name="Start" ColumnName="Start" />
-          <ScalarProperty Name="End" ColumnName="End" />
           <ScalarProperty Name="Name" ColumnName="Name" />
           <ScalarProperty Name="Description" ColumnName="Description" />
           <ScalarProperty Name="TimeCreated" ColumnName="TimeCreated" />
@@ -340,32 +339,33 @@
         <EntityTypeShape EntityType="Event.Event" Width="1.5" PointX="3.375" PointY="0.75" Height="3.3263964843749996" />
         <EntityTypeShape EntityType="Event.Venue" Width="1.5" PointX="6.25" PointY="0.75" Height="1.59568359375" />
         <AssociationConnector Association="Event.Organize">
-          <ConnectorPoint PointX="2" PointY="2.1114007393519083" />
-          <ConnectorPoint PointX="3.375" PointY="2.1114007393519083" />
+          <ConnectorPoint PointX="2" PointY="2.1118504998336238" />
+          <ConnectorPoint PointX="3.375" PointY="2.1118504998336238" />
         </AssociationConnector>
         <AssociationConnector Association="Event.EventRegistratration">
-          <ConnectorPoint PointX="2" PointY="1.3682003696759542" />
-          <ConnectorPoint PointX="3.375" PointY="1.3682003696759542" />
+          <ConnectorPoint PointX="2" PointY="1.3684252499168119" />
+          <ConnectorPoint PointX="3.375" PointY="1.3684252499168119" />
         </AssociationConnector>
-        <AssociationConnector Association="Event.EventVenue">
-          <ConnectorPoint PointX="4.875" PointY="1.5478417968750002" />
-          <ConnectorPoint PointX="6.25" PointY="1.5478417968750002" />
-        </AssociationConnector>
-        <EntityTypeShape EntityType="Event.Budget" Width="1.5" PointX="0.75" PointY="3.875" Height="1.2110807291666665" />
-        <EntityTypeShape EntityType="Event.BudgetLine" Width="1.5" PointX="3.75" PointY="5.375" Height="1.5956835937499996" />
+        <EntityTypeShape EntityType="Event.Budget" Width="1.5" PointX="0.75" PointY="3.875" Height="1.5956835937499996" />
+        <EntityTypeShape EntityType="Event.BudgetItem" Width="1.5" PointX="3.75" PointY="5.375" Height="1.5956835937499996" />
         <AssociationConnector Association="Event.BudgetBudgetLine">
-          <ConnectorPoint PointX="2.25" PointY="4.7086393229166665" />
-          <ConnectorPoint PointX="5.09375" PointY="4.7086393229166665" />
+          <ConnectorPoint PointX="2.25" PointY="4.83568334375" />
+          <ConnectorPoint PointX="5.09375" PointY="4.83568334375" />
           <ConnectorPoint PointX="5.09375" PointY="5.375" />
         </AssociationConnector>
         <AssociationConnector Association="Event.EventBudget">
-          <ConnectorPoint PointX="3.375" PointY="4.0718489583333328" />
-          <ConnectorPoint PointX="2.25" PointY="4.0718489583333328" />
+          <ConnectorPoint PointX="3.375" PointY="3.3338927291666667" />
+          <ConnectorPoint PointX="2.15625" PointY="3.3338927291666667" />
+          <ConnectorPoint PointX="2.15625" PointY="3.875" />
         </AssociationConnector>
         <EntityTypeShape EntityType="Event.SubEvent" Width="1.5" PointX="6.25" PointY="3.75" Height="1.7879850260416665" />
         <AssociationConnector Association="Event.EventSubEvent">
-          <ConnectorPoint PointX="4.875" PointY="4.1054996744791659" />
-          <ConnectorPoint PointX="6.25" PointY="4.1054996744791659" />
+          <ConnectorPoint PointX="4.875" PointY="3.9131982421875" />
+          <ConnectorPoint PointX="6.25" PointY="3.9131982421875" />
+        </AssociationConnector>
+        <AssociationConnector Association="Event.SubEventVenue">
+          <ConnectorPoint PointX="7" PointY="3.75" />
+          <ConnectorPoint PointX="7" PointY="2.537985026041667" />
         </AssociationConnector>
       </Diagram>
     </edmx:Diagrams>

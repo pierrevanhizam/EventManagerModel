@@ -16,12 +16,13 @@ namespace EventManagerPro.Model
     {
         public Budget()
         {
-            this.BudgetLines = new HashSet<BudgetLine>();
+            this.BudgetLines = new HashSet<BudgetItem>();
         }
     
         public int Id { get; set; }
+        public string AllocatedBudget { get; set; }
     
-        public virtual ICollection<BudgetLine> BudgetLines { get; set; }
+        public virtual ICollection<BudgetItem> BudgetLines { get; set; }
     }
     
 }
