@@ -56,7 +56,10 @@
     <Compile Include="BudgetItem.cs">
       <DependentUpon>EventModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="DomainModels\BudgetItemModel.cs" />
+    <Compile Include="DomainModels\BudgetModel.cs" />
     <Compile Include="DomainModels\EventModel.cs" />
+    <Compile Include="DomainModels\SubEventModel.cs" />
     <Compile Include="Event.cs">
       <DependentUpon>EventModel.tt</DependentUpon>
     </Compile>
