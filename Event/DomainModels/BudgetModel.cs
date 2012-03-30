@@ -5,7 +5,7 @@ using System.Text;
 
 namespace EventManagerPro.Model.DomainModels
 {
-    class Budget
+    class BudgetModel
     {
     }
 }
