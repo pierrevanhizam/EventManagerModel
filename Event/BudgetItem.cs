@@ -16,7 +16,7 @@ namespace EventManagerPro.Model
     {
         public int Id { get; set; }
         public string Name { get; set; }
-        public string Cost { get; set; }
+        public int Cost { get; set; }
         public int BudgetId { get; set; }
     }
     

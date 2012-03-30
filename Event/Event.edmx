@@ -260,7 +260,7 @@
           </Key>
           <Property Type="Int32" Name="Id" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Type="String" Name="Name" Nullable="false" />
-          <Property Type="String" Name="Capacity" Nullable="false" />
+          <Property Type="Int32" Name="Capacity" Nullable="false" />
           <NavigationProperty Name="SubEvents" Relationship="Event.SubEventVenue" FromRole="Venue" ToRole="SubEvent" />
         </EntityType>
         <Association Name="Organize">
@@ -285,7 +285,7 @@
           </Key>
           <Property Type="Int32" Name="Id" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <NavigationProperty Name="BudgetLines" Relationship="Event.BudgetBudgetLine" FromRole="Budget" ToRole="BudgetLine" />
-          <Property Type="String" Name="AllocatedBudget" Nullable="false" />
+          <Property Type="Int32" Name="AllocatedBudget" Nullable="false" />
         </EntityType>
         <EntityType Name="BudgetItem">
           <Key>
@@ -293,7 +293,7 @@
           </Key>
           <Property Type="Int32" Name="Id" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Type="String" Name="Name" Nullable="false" />
-          <Property Type="String" Name="Cost" Nullable="false" />
+          <Property Type="Int32" Name="Cost" Nullable="false" />
           <Property Type="Int32" Name="BudgetId" Nullable="false" />
         </EntityType>
         <Association Name="BudgetBudgetLine">
